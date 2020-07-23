@@ -1,0 +1,177 @@
+import java.nio.file.Path
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+String xamarinTargetFrameworkVersion = 'v10.0' // Corresponds to compileSdkVersion
+
+Path frameworksPath = new File('/Library/Frameworks').toPath()
+Path monoFrameworkPath = frameworksPath.resolve('Mono.framework/Versions/Current')
+Path msbuildPath = monoFrameworkPath.resolve('Commands/msbuild')
+Path xamarinAndroidPath = frameworksPath.resolve('Xamarin.Android.framework/Versions/Current')
+
+Path projectPath = new File('../../JackettHarness/Android').toPath()
+Path appPath = projectPath.resolve('App')
+Path objPath = appPath.resolve('obj')
+
+String envPath = [System.getenv('PATH'), monoFrameworkPath.resolve('Commands').toString()].join(':')
+Path monoAndroidPath = xamarinAndroidPath.resolve("lib/xbuild-frameworks/MonoAndroid/$xamarinTargetFrameworkVersion/mono.android.jar")
+Path javaRuntimePath = xamarinAndroidPath.resolve("lib/xbuild/Xamarin/Android/java_runtime.jar")
+
+
+android {
+    compileSdkVersion project.compileSdkVersion
+    defaultConfig {
+        minSdkVersion project.minSdkVersion
+        targetSdkVersion project.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        debug {
+            java {
+                srcDirs objPath.resolve('Debug/android/src')
+                exclude 'android/**'
+            }
+            resources.srcDirs objPath.resolve('Debug/android/bin/unpacked')
+        }
+        release {
+            java {
+                srcDirs objPath.resolve('Release/android/src')
+                exclude 'android/**'
+            }
+            resources.srcDirs objPath.resolve('Release/android/bin/unpacked')
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Dependencies required to resolve build errors with Xamarin Android
+    implementation "androidx.transition:transition:1.3.1"
+    implementation "androidx.asynclayoutinflater:asynclayoutinflater:1.0.0"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
+    implementation "androidx.slidingpanelayout:slidingpanelayout:1.1.0"
+    implementation 'com.google.android.material:material:1.1.0'
+    // End
+
+    debugImplementation files(monoAndroidPath)
+    releaseImplementation files(monoAndroidPath)
+    androidTestImplementation files(monoAndroidPath)
+
+    debugImplementation files(javaRuntimePath)
+    releaseImplementation files(javaRuntimePath)
+    androidTestImplementation files(javaRuntimePath)
+
+    api project(':xamarininterface')
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+
+task copyDebugBindingsJar(type: Jar) {
+    from '../xamarininterface/build/tmp/kotlin-classes/debug', '../xamarininterface/build/intermediates/classes/debug'
+    archiveName "classes.jar"
+    destinationDir file(projectPath.resolve('Bindings/Jars'))
+    dependsOn tasks.getByPath(":xamarininterface:compileDebugSources")
+    exclude 'android/**'
+}
+
+task copyReleaseBindingsJar(type: Jar) {
+    from '../xamarininterface/build/tmp/kotlin-classes/release', '../xamarininterface/build/intermediates/classes/release'
+    archiveName "classes.jar"
+    destinationDir file(projectPath.resolve('Bindings/Jars'))
+    dependsOn tasks.getByPath(":xamarininterface:compileReleaseSources")
+    exclude 'android/**'
+}
+
+task cleanBindingsJar(type: Delete) {
+    delete projectPath.resolve('Bindings/Jars/classes.jar')
+}
+
+task cleanXamarin(type: Exec) {
+    workingDir appPath
+    executable msbuildPath
+    args '/target:clean'
+    inputs.dir(projectPath)
+    outputs.dirs(objPath.resolve('Debug'))
+    dependsOn cleanBindingsJar
+}
+
+task compileDebugXamarin(type: Exec) {
+    workingDir appPath
+    executable msbuildPath
+    args '/target:BuildApk', '/property:Configuration=Debug', '/property:Platform=AnyCPU'
+    inputs.dir(projectPath)
+    outputs.dirs(objPath.resolve('Debug'))
+    environment('PATH', envPath) // Workaround for /Library/Frameworks/Xamarin.Android.framework/Versions/Current/bin/generator: line 6: exec: mono: not found
+    dependsOn copyDebugBindingsJar
+}
+
+task compileReleaseXamarin(type: Exec) {
+    workingDir appPath
+    executable msbuildPath
+    args '/target:BuildApk', '/property:Configuration=Release', '/property:Platform=AnyCPU'
+    inputs.dir(projectPath)
+    outputs.dirs(objPath.resolve('Release'))
+    environment('PATH', envPath)
+    dependsOn copyReleaseBindingsJar
+}
+
+task unpackDebugXamarin(type: UnpackXamarinApk) {
+    apk file(objPath.resolve('Debug/android/bin/com.masterwok.jackettharness.apk'))
+    dependsOn compileDebugXamarin
+}
+
+task unpackReleaseXamarin(type: UnpackXamarinApk) {
+    apk file(objPath.resolve('Release/android/bin/com.masterwok.jackettharness.apk'))
+    dependsOn compileReleaseXamarin
+}
+
+class UnpackXamarinApk extends Copy {
+    def apk(File file) {
+        File directory = file.parentFile
+        Path outputDir = directory.toPath().resolve('unpacked')
+
+        from project.zipTree(file).matching {
+            include([
+                    'assemblies/**'
+                    ,'lib/**'
+                    , 'typemap.**'
+                    , 'environment'
+                    , 'NOTICE'
+            ])
+        }
+        into outputDir
+    }
+}
+
+afterEvaluate {
+    tasks.clean.dependsOn cleanXamarin
+
+    tasks.compileDebugKotlin.dependsOn unpackDebugXamarin
+    tasks.compileReleaseKotlin.dependsOn unpackReleaseXamarin
+
+    tasks.compileDebugJavaWithJavac.dependsOn unpackDebugXamarin
+    tasks.compileReleaseJavaWithJavac.dependsOn unpackReleaseXamarin
+
+    tasks.processDebugJavaRes.dependsOn unpackDebugXamarin
+    tasks.processReleaseJavaRes.dependsOn unpackReleaseXamarin
+
+    tasks.generateDebugSources.dependsOn compileDebugXamarin
+    tasks.generateReleaseSources.dependsOn compileReleaseXamarin
+}
+
+repositories {
+    mavenCentral()
+}

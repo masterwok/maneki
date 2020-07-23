@@ -1,0 +1,2 @@
+rootProject.name='Maneki'
+include ':app', ':xamarin', ':xamarininterface'
