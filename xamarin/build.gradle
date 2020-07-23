@@ -10,7 +10,7 @@ Path monoFrameworkPath = frameworksPath.resolve('Mono.framework/Versions/Current
 Path msbuildPath = monoFrameworkPath.resolve('Commands/msbuild')
 Path xamarinAndroidPath = frameworksPath.resolve('Xamarin.Android.framework/Versions/Current')
 
-Path projectPath = new File('../../JackettHarness/Android').toPath()
+Path projectPath = new File('../jackett-harness/Android').toPath()
 Path appPath = projectPath.resolve('App')
 Path objPath = appPath.resolve('obj')
 
@@ -114,7 +114,8 @@ task compileDebugXamarin(type: Exec) {
     args '/target:BuildApk', '/property:Configuration=Debug', '/property:Platform=AnyCPU'
     inputs.dir(projectPath)
     outputs.dirs(objPath.resolve('Debug'))
-    environment('PATH', envPath) // Workaround for /Library/Frameworks/Xamarin.Android.framework/Versions/Current/bin/generator: line 6: exec: mono: not found
+    environment('PATH', envPath)
+    // Workaround for /Library/Frameworks/Xamarin.Android.framework/Versions/Current/bin/generator: line 6: exec: mono: not found
     dependsOn copyDebugBindingsJar
 }
 
@@ -146,7 +147,7 @@ class UnpackXamarinApk extends Copy {
         from project.zipTree(file).matching {
             include([
                     'assemblies/**'
-                    ,'lib/**'
+                    , 'lib/**'
                     , 'typemap.**'
                     , 'environment'
                     , 'NOTICE'
