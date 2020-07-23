@@ -1,0 +1,3 @@
+[submodule "jackett-harness"]
+	path = jackett-harness
+	url = git@github.com:masterwok/jackett-harness.git
