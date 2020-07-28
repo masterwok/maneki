@@ -2,10 +2,8 @@ package com.masterwok.shrimplesearch
 
 import android.app.Activity
 import android.os.Bundle
-import com.masterwok.jackett.JackettHarness
 import com.masterwok.xamarin.JackettHarnessFactory
 import com.masterwok.xamarininterface.contracts.ICardigannDefinitionRepository
-import com.masterwok.xamarininterface.contracts.IJackettHarness
 import com.masterwok.xamarininterface.contracts.IJackettHarnessCallbacks
 
 class MainActivity : Activity() {
