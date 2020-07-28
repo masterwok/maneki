@@ -32,6 +32,8 @@ class SearchFragment : Fragment() {
         AppInjector
             .searchComponent
             .inject(this)
+
+        viewModel.initialize()
     }
 
     override fun onCreateView(
