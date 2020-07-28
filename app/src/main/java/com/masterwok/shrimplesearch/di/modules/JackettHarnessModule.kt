@@ -1,11 +1,9 @@
 package com.masterwok.shrimplesearch.di.modules
 
-import com.masterwok.shrimplesearch.common.data.callbacks.JackettHarnessListener
 import com.masterwok.shrimplesearch.common.data.repositories.CardigannDefinitionRepository
 import com.masterwok.xamarin.JackettHarnessFactory
 import com.masterwok.xamarin.JackettHarnessFactoryImpl
 import com.masterwok.xamarininterface.contracts.ICardigannDefinitionRepository
-import com.masterwok.xamarininterface.contracts.IJackettHarnessListener
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -18,6 +16,7 @@ import javax.inject.Singleton
 )
 class JackettHarnessModule {
 
+    @Suppress("RedundantModalityModifier", "unused")
     @Module
     interface Declarations {
         @Singleton
