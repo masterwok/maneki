@@ -1,3 +1,5 @@
+import java.nio.file.Path
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -35,6 +37,12 @@ android {
 
     aaptOptions {
         noCompress 'dll'
+    }
+
+    sourceSets {
+        main {
+            assets.srcDirs += '../jackett-harness/Jackett/Jackett.Common/Definitions/'
+        }
     }
 }
 
