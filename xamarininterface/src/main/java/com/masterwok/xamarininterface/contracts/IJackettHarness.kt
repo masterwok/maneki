@@ -6,4 +6,6 @@ interface IJackettHarness {
 
     fun initialize()
 
+    fun setListener(jackettHarnessListener: IJackettHarnessListener)
+
 }

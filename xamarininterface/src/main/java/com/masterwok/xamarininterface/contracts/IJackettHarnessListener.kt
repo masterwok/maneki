@@ -1,6 +1,6 @@
 package com.masterwok.xamarininterface.contracts
 
-interface IJackettHarnessCallbacks {
+interface IJackettHarnessListener {
 
     fun onIndexersInitialized()
 
