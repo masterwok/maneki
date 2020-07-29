@@ -14,9 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginEnd="8dp"
+        android:contentDescription="@string/app_name"
         android:tint="?color_toolbar_icon_tint"
-        app:srcCompat="@mipmap/ic_shrimple_smile"
-        android:contentDescription="@string/app_name" />
+        app:srcCompat="@mipmap/ic_shrimple_smile" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/toolbar_maneki"
@@ -24,7 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fontFamily="@font/eina_03_semi_bold"
+        android:letterSpacing=".1"
         android:text="@string/toolbar_maneki"
         android:textColor="?color_header_title"
-        android:textSize="18sp"/>
+        android:textSize="18sp" />
 </androidx.appcompat.widget.Toolbar>

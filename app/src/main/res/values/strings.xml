@@ -8,6 +8,7 @@
 
     <string name="splash_description">Initializing space cats&#8230;</string>
     <string name="splash_progress">%d/%d</string>
+    <string name="splash_maneki">MANEKI</string>
 
     <string name="toolbar_maneki">MANEKI</string>
 
