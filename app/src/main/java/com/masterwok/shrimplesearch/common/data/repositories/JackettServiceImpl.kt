@@ -13,7 +13,9 @@ class JackettServiceImpl constructor(
     private val jackettHarness: IJackettHarness
 ) : JackettService {
 
-    private val jackettHarnessListener: JackettHarnessListener = JackettHarnessListener(this)
+    private val jackettHarnessListener: IJackettHarnessListener = JackettHarnessListener(this)
+
+    private val listeners = mutableListOf<JackettService.Listener>()
 
     init {
         jackettHarness.setListener(jackettHarnessListener)
@@ -28,20 +30,27 @@ class JackettServiceImpl constructor(
         }
     }
 
+    override fun addListener(listener: JackettService.Listener) {
+        listeners.add(listener)
+    }
+
+    override fun removeListener(listener: JackettService.Listener) {
+        listeners.remove(listener)
+    }
+
     private class JackettHarnessListener(
-        jackettService: JackettService
+        jackettService: JackettServiceImpl
     ) : IJackettHarnessListener {
 
         private val weakJackettService = WeakReference(jackettService)
 
         override fun onIndexersInitialized() = weakJackettService.get().notNull { jackettService ->
-
+            jackettService.listeners.forEach { it.onIndexersInitialized() }
         }
 
         override fun OnIndexerInitialized() = weakJackettService.get().notNull { jackettService ->
-
+            jackettService.listeners.forEach { it.OnIndexerInitialized() }
         }
-
     }
 
 }
