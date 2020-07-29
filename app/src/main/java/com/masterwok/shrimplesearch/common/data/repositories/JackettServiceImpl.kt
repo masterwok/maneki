@@ -1,24 +1,19 @@
 package com.masterwok.shrimplesearch.common.data.repositories
 
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettService
+import com.masterwok.shrimplesearch.common.utils.notNull
 import com.masterwok.xamarininterface.contracts.IJackettHarness
 import com.masterwok.xamarininterface.contracts.IJackettHarnessListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.withContext
+import java.lang.ref.WeakReference
 
 class JackettServiceImpl constructor(
     private val jackettHarness: IJackettHarness
 ) : JackettService {
 
-    private val jackettHarnessListener = object : IJackettHarnessListener {
-        override fun onIndexersInitialized() {
-            val indexerCount = jackettHarness.getIndexerCount()
-        }
-
-        override fun OnIndexerInitialized() {
-        }
-    }
+    private val jackettHarnessListener: JackettHarnessListener = JackettHarnessListener(this)
 
     init {
         jackettHarness.setListener(jackettHarnessListener)
@@ -31,6 +26,22 @@ class JackettServiceImpl constructor(
         if (!isInitialized) {
             jackettHarness.initialize()
         }
+    }
+
+    private class JackettHarnessListener(
+        jackettService: JackettService
+    ) : IJackettHarnessListener {
+
+        private val weakJackettService = WeakReference(jackettService)
+
+        override fun onIndexersInitialized() = weakJackettService.get().notNull { jackettService ->
+
+        }
+
+        override fun OnIndexerInitialized() = weakJackettService.get().notNull { jackettService ->
+
+        }
+
     }
 
 }
