@@ -24,10 +24,14 @@ class JackettServiceImpl constructor(
     override val isInitialized: Boolean get() = jackettHarness.isInitialized
 
     @ExperimentalCoroutinesApi
-    override suspend fun initialize() = withContext(Dispatchers.Default) {
+    override suspend fun initialize() = withContext(Dispatchers.IO) {
         if (!isInitialized) {
             jackettHarness.initialize()
         }
+    }
+
+    override suspend fun getIndexerCount(): Int = withContext(Dispatchers.IO) {
+        jackettHarness.getIndexerCount()
     }
 
     override fun addListener(listener: JackettService.Listener) {

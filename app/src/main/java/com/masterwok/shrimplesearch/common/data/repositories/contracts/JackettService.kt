@@ -7,6 +7,8 @@ interface JackettService {
 
     suspend fun initialize()
 
+    suspend fun getIndexerCount(): Int
+
     fun addListener(listener: Listener)
 
     fun removeListener(listener: Listener)
