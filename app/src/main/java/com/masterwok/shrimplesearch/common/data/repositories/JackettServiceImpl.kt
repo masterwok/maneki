@@ -13,6 +13,7 @@ class JackettServiceImpl constructor(
 
     private val jackettHarnessListener = object : IJackettHarnessListener {
         override fun onIndexersInitialized() {
+            val indexerCount = jackettHarness.getIndexerCount()
         }
 
         override fun OnIndexerInitialized() {

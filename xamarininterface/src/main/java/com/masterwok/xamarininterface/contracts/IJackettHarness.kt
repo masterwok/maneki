@@ -8,4 +8,6 @@ interface IJackettHarness {
 
     fun setListener(jackettHarnessListener: IJackettHarnessListener)
 
+    fun getIndexerCount(): Int
+
 }
