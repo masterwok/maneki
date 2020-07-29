@@ -52,8 +52,8 @@ class JackettServiceImpl constructor(
             jackettService.listeners.forEach { it.onIndexersInitialized() }
         }
 
-        override fun OnIndexerInitialized() = weakJackettService.get().notNull { jackettService ->
-            jackettService.listeners.forEach { it.OnIndexerInitialized() }
+        override fun onIndexerInitialized() = weakJackettService.get().notNull { jackettService ->
+            jackettService.listeners.forEach { it.onIndexerInitialized() }
         }
     }
 

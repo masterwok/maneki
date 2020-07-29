@@ -8,7 +8,7 @@ class JackettHarnessListener @Inject constructor(): IJackettHarnessListener {
     override fun onIndexersInitialized() {
     }
 
-    override fun OnIndexerInitialized() {
+    override fun onIndexerInitialized() {
     }
 
 }

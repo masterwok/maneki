@@ -4,6 +4,6 @@ interface IJackettHarnessListener {
 
     fun onIndexersInitialized()
 
-    fun OnIndexerInitialized()
+    fun onIndexerInitialized()
 
 }

@@ -17,7 +17,7 @@ interface JackettService {
 
         fun onIndexersInitialized()
 
-        fun OnIndexerInitialized()
+        fun onIndexerInitialized()
     }
 
 }

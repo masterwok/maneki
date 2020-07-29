@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettService
 import com.masterwok.shrimplesearch.features.splash.models.BootstrapInfo
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 
@@ -28,6 +27,13 @@ class SplashViewModel @Inject constructor(
     }
 
     fun initialize() = viewModelScope.launch {
+        _liveDataBootStrapInfo.postValue(
+            BootstrapInfo(
+                initializedCount = 0,
+                totalIndexerCount = jackettService.getIndexerCount()
+            )
+        )
+
         jackettService.initialize()
     }
 
@@ -39,22 +45,15 @@ class SplashViewModel @Inject constructor(
 
     override fun onIndexersInitialized() = _liveDataBootStrapCompleted.postValue(Unit)
 
-    override fun OnIndexerInitialized() {
-        viewModelScope.launch {
-            val currentBootstrapInfo = _liveDataBootStrapInfo.value
+    override fun onIndexerInitialized() {
+        _liveDataBootStrapInfo.postValue(
+            BootstrapInfo(
+                totalIndexerCount = checkNotNull(_liveDataBootStrapInfo.value?.totalIndexerCount),
+                initializedCount = checkNotNull(_liveDataBootStrapInfo.value?.initializedCount) + 1
+            )
+        )
 
-            val nextBootstrapInfo = currentBootstrapInfo
-                ?.copy(initializedCount = currentBootstrapInfo.initializedCount + 1)
-                ?: BootstrapInfo(
-                    initializedCount = 1,
-                    totalIndexerCount = jackettService.getIndexerCount()
-                )
-
-            // TODO (JT): The ordering of this is broken
-            _liveDataBootStrapInfo.postValue(nextBootstrapInfo)
-
-            count++
-        }
+        count++
     }
 
 }
