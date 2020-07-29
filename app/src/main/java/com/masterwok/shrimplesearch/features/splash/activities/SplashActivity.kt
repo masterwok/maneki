@@ -37,13 +37,18 @@ class SplashActivity : AppCompatActivity() {
     private fun subscribeToLiveData() {
         viewModel.liveDataBoostrapInfo.observe(this, this::onBootstrapInfoChange)
         viewModel.liveDataBootStrapCompleted.observe(this) {
-            val count = viewModel.count
-            val initializedCount = viewModel.liveDataBoostrapInfo.value?.initializedCount
-            val x = 1
         }
     }
 
+    private var highest = 0
+
     private fun onBootstrapInfoChange(bootstrapInfo: BootstrapInfo) {
+        highest = if (bootstrapInfo.initializedCount > highest) {
+            bootstrapInfo.initializedCount
+        } else {
+            highest
+        }
+
     }
 
 

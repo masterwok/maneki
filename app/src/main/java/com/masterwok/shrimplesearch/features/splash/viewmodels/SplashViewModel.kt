@@ -1,12 +1,17 @@
 package com.masterwok.shrimplesearch.features.splash.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettService
 import com.masterwok.shrimplesearch.features.splash.models.BootstrapInfo
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import javax.inject.Inject
 
 
@@ -43,17 +48,21 @@ class SplashViewModel @Inject constructor(
         super.onCleared()
     }
 
-    override fun onIndexersInitialized() = _liveDataBootStrapCompleted.postValue(Unit)
+    override fun onIndexersInitialized() {
+        viewModelScope.launch {
+            _liveDataBootStrapCompleted.value = Unit
+        }
+    }
 
     override fun onIndexerInitialized() {
-        _liveDataBootStrapInfo.postValue(
-            BootstrapInfo(
-                totalIndexerCount = checkNotNull(_liveDataBootStrapInfo.value?.totalIndexerCount),
-                initializedCount = checkNotNull(_liveDataBootStrapInfo.value?.initializedCount) + 1
-            )
-        )
+        viewModelScope.launch {
+            val newCount = checkNotNull(_liveDataBootStrapInfo.value?.initializedCount) + 1
 
-        count++
+            _liveDataBootStrapInfo.value = BootstrapInfo(
+                totalIndexerCount = checkNotNull(_liveDataBootStrapInfo.value?.totalIndexerCount),
+                initializedCount = newCount
+            )
+        }
     }
 
 }
