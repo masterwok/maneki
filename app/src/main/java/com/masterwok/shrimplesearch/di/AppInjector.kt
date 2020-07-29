@@ -20,6 +20,10 @@ class AppInjector {
             appComponent.searchComponent().create()
         }
 
+        val splashComponent by lazy {
+            appComponent.splashComponent().create()
+        }
+
         fun init(application: Application) {
             this.application = application
         }

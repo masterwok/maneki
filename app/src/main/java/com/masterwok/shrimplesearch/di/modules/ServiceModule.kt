@@ -15,6 +15,7 @@ import javax.inject.Singleton
 )
 class ServiceModule {
 
+    @Suppress("unused")
     @Singleton
     @Provides
     fun provideJackettService(
