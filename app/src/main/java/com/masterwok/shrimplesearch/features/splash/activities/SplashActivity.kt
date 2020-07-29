@@ -4,8 +4,10 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.di.AppInjector
+import com.masterwok.shrimplesearch.features.splash.models.BootstrapInfo
 import com.masterwok.shrimplesearch.features.splash.viewmodels.SplashViewModel
 import javax.inject.Inject
 
@@ -26,7 +28,21 @@ class SplashActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_splash)
 
+        subscribeToLiveData()
+
         viewModel.initialize()
     }
+
+    private fun subscribeToLiveData() {
+        viewModel.liveDataBoostrapInfo.observe(this, this::onBootstrapInfoChange)
+        viewModel.liveDataBootStrapCompleted.observe(this) {
+            val x = 1
+        }
+    }
+
+    private fun onBootstrapInfoChange(bootstrapInfo: BootstrapInfo) {
+        val x = 1
+    }
+
 
 }
