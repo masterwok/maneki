@@ -14,6 +14,7 @@ import javax.inject.Inject
 
 class SplashActivity : AppCompatActivity() {
 
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -36,12 +37,13 @@ class SplashActivity : AppCompatActivity() {
     private fun subscribeToLiveData() {
         viewModel.liveDataBoostrapInfo.observe(this, this::onBootstrapInfoChange)
         viewModel.liveDataBootStrapCompleted.observe(this) {
+            val count = viewModel.count
+            val initializedCount = viewModel.liveDataBoostrapInfo.value?.initializedCount
             val x = 1
         }
     }
 
     private fun onBootstrapInfoChange(bootstrapInfo: BootstrapInfo) {
-        val x = 1
     }
 
 

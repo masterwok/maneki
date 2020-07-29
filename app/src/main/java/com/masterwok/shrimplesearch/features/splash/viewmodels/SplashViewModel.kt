@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettService
 import com.masterwok.shrimplesearch.features.splash.models.BootstrapInfo
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 
@@ -19,6 +20,8 @@ class SplashViewModel @Inject constructor(
 
     val liveDataBoostrapInfo: LiveData<BootstrapInfo> = _liveDataBootStrapInfo
     val liveDataBootStrapCompleted: LiveData<Unit> = _liveDataBootStrapCompleted
+
+    var count: Int = 0
 
     init {
         jackettService.addListener(this)
@@ -47,7 +50,10 @@ class SplashViewModel @Inject constructor(
                     totalIndexerCount = jackettService.getIndexerCount()
                 )
 
+            // TODO (JT): The ordering of this is broken
             _liveDataBootStrapInfo.postValue(nextBootstrapInfo)
+
+            count++
         }
     }
 
