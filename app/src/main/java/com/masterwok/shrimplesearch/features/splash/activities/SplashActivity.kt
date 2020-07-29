@@ -1,5 +1,6 @@
 package com.masterwok.shrimplesearch.features.splash.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -9,11 +10,12 @@ import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.di.AppInjector
 import com.masterwok.shrimplesearch.features.splash.models.BootstrapInfo
 import com.masterwok.shrimplesearch.features.splash.viewmodels.SplashViewModel
+import com.masterwok.shrimplesearch.main.MainActivity
+import kotlinx.android.synthetic.main.activity_splash.*
 import javax.inject.Inject
 
 
 class SplashActivity : AppCompatActivity() {
-
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -35,21 +37,31 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun subscribeToLiveData() {
-        viewModel.liveDataBoostrapInfo.observe(this, this::onBootstrapInfoChange)
+        viewModel.liveDataBoostrapInfo.observe(this, this::configure)
         viewModel.liveDataBootStrapCompleted.observe(this) {
+            startMainActivity()
         }
     }
 
-    private var highest = 0
-
-    private fun onBootstrapInfoChange(bootstrapInfo: BootstrapInfo) {
-        highest = if (bootstrapInfo.initializedCount > highest) {
-            bootstrapInfo.initializedCount
-        } else {
-            highest
+    private fun configure(bootstrapInfo: BootstrapInfo) {
+        progressBar.apply {
+            progress = bootstrapInfo.initializedCount
+            max = bootstrapInfo.totalIndexerCount
         }
 
+        textViewIndexerProgressCount.text = getString(
+            R.string.splash_progress
+            , bootstrapInfo.initializedCount
+            , bootstrapInfo.totalIndexerCount
+        )
     }
 
+    private fun startMainActivity() {
+        startActivity(MainActivity.createIntent(this).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        })
+
+        overridePendingTransition(0, 0)
+    }
 
 }

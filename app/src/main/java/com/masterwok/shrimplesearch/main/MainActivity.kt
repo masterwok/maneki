@@ -1,5 +1,7 @@
 package com.masterwok.shrimplesearch.main
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -32,4 +34,7 @@ class MainActivity : AppCompatActivity() {
         navigationView.setupWithNavController(navController)
     }
 
+    companion object {
+        fun createIntent(context: Context) = Intent(context, MainActivity::class.java)
+    }
 }

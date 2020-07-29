@@ -6,4 +6,7 @@
     <string name="drawer_layout_menu_item_support">Support</string>
     <string name="drawer_layout_menu_item_client">Bittorent Client</string>
 
+    <string name="splash_description">Initializing space cats&#8230;</string>
+    <string name="splash_progress">%d/%d</string>
+
 </resources>

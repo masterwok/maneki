@@ -1,11 +1,76 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">?color_background</item>
+        <item name="colorPrimaryDark">?color_background</item>
+        <item name="android:statusBarColor" tools:targetApi="23">#FFFFFF</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+
+        <item name="style_toolbar">@style/AppTheme.Toolbar</item>
+
+        <item name="color_background">#FFFFFF</item>
+        <item name="color_header_title">#000000</item>
+        <item name="color_toolbar_icon_tint">#000000</item>
+        <item name="color_auto_complete_clear_tint">#000000</item>
+        <item name="color_edit_text_border">@android:color/transparent</item>
+        <item name="color_edit_text_background">#F4F4F4</item>
+
+        <item name="color_search_query_text">#676767</item>
+        <item name="color_search_query_text_hint">#676767</item>
+        <item name="color_search_result_title">#000000</item>
+        <item name="color_search_result_button_background">#ECECEC</item>
+        <item name="color_search_result_button_text">#000000</item>
+        <item name="color_search_result_down_arrow_tint">#000000</item>
+        <item name="color_search_result_up_arrow_tint">#000000</item>
+        <item name="color_search_result_uploaded_on_label">#000000</item>
+        <item name="color_search_result_uploaded_on">#000000</item>
+        <item name="color_search_result_seeders">#000000</item>
+        <item name="color_search_result_size_background">#000000</item>
+        <item name="color_search_result_size_label">#000000</item>
+        <item name="color_search_result_size">#000000</item>
+        <item name="color_search_result_file_count_label">#000000</item>
+        <item name="color_search_result_file_count">#000000</item>
+        <item name="color_search_caption_primary_text">#000000</item>
+        <item name="color_search_caption_secondary_text">#BFBFBF</item>
+        <item name="color_search_caption_drawable_tint">#E8E8E8</item>
+        <item name="color_progress_bar_foreground">#000000</item>
+        <item name="color_progress_bar_background">#F4F4F4</item>
+        <item name="color_search_auto_complete_cache_count_background">#676767</item>
+        <item name="color_search_auto_complete_cache_count">#F4F4F4</item>
+        <item name="color_text_view_size_text_color">#FFFFFF</item>
+        <item name="color_text_view_size_background">#000000</item>
+
+        <item name="dimen_search_search_border_width">0dp</item>
+        <item name="dimen_search_auto_complete_popup_top_radius">0dp</item>
+        <item name="dimen_search_auto_complete_popup_bottom_radius">3dp</item>
+        <item name="dimen_search_auto_complete_popup_inset_top">0dp</item>
+
+
+        <!-- Active thumb color & Active track color(30% transparency) -->
+        <item name="colorControlActivated">#0180F0</item>
+        <!-- Inactive thumb color -->
+        <item name="colorSwitchThumbNormal">#8D8D8D</item>
+        <!-- Inactive track color(30% transparency) -->
+        <item name="android:colorForeground">#8D8D8D</item>
+    </style>
+
+    <style name="AppTheme.Toolbar" parent="@style/ThemeOverlay.AppCompat">
+        <item name="colorAccent">@android:color/black</item>
+        <item name="colorControlNormal">@android:color/black</item>
+        <item name="android:colorControlActivated">@android:color/black</item>
+        <item name="android:colorBackground">@android:color/white</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:fontFamily">@font/eina_03_semi_bold</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Splash" parent="AppTheme.NoActionBar">
+        <item name="android:windowBackground">@android:color/white</item>
     </style>
 
 </resources>
