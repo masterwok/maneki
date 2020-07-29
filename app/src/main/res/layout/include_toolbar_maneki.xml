@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?color_background"
+    android:minHeight="?attr/actionBarSize"
+    app:theme="?style_toolbar">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginEnd="8dp"
+        android:tint="?color_toolbar_icon_tint"
+        app:srcCompat="@mipmap/ic_shrimple_smile"
+        android:contentDescription="@string/app_name" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/toolbar_maneki"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/eina_03_semi_bold"
+        android:text="@string/toolbar_maneki"
+        android:textColor="?color_header_title"
+        android:textSize="18sp"/>
+</androidx.appcompat.widget.Toolbar>

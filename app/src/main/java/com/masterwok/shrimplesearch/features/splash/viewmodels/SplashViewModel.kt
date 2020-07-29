@@ -25,8 +25,6 @@ class SplashViewModel @Inject constructor(
     val liveDataBoostrapInfo: LiveData<BootstrapInfo> = _liveDataBootStrapInfo
     val liveDataBootStrapCompleted: LiveData<Unit> = _liveDataBootStrapCompleted
 
-    var count: Int = 0
-
     init {
         jackettService.addListener(this)
     }
