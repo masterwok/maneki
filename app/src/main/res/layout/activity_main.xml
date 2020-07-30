@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:elevation="0dp"
-            tools:showIn="@layout/fragment_search">
+            tools:showIn="@layout/fragment_query_container">
 
             <include layout="@layout/include_toolbar_maneki" />
 

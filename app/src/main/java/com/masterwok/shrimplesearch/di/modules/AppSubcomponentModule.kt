@@ -1,12 +1,12 @@
 package com.masterwok.shrimplesearch.di.modules
 
-import com.masterwok.shrimplesearch.features.search.di.SearchSubcomponent
+import com.masterwok.shrimplesearch.features.query.di.QuerySubcomponent
 import com.masterwok.shrimplesearch.features.splash.di.SplashSubcomponent
 import dagger.Module
 
 @Module(
     subcomponents = [
-        SearchSubcomponent::class
+        QuerySubcomponent::class
         , SplashSubcomponent::class
     ]
 )

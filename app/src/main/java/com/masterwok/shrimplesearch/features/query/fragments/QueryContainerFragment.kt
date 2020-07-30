@@ -1,4 +1,4 @@
-package com.masterwok.shrimplesearch.features.search.fragments
+package com.masterwok.shrimplesearch.features.query.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -10,21 +10,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.di.AppInjector
-import com.masterwok.shrimplesearch.features.search.viewmodels.SearchViewModel
+import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
 import javax.inject.Inject
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SearchFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class SearchFragment : Fragment() {
+class QueryContainerFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel: SearchViewModel by viewModels { viewModelFactory }
+    private val viewModel: QueryViewModel by viewModels { viewModelFactory }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -41,7 +36,7 @@ class SearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(
-        R.layout.fragment_search
+        R.layout.fragment_query_container
         , container
         , false
     )
@@ -49,7 +44,7 @@ class SearchFragment : Fragment() {
     companion object {
 
         @JvmStatic
-        fun newInstance() = SearchFragment()
+        fun newInstance() = QueryContainerFragment()
 
     }
 }

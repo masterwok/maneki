@@ -7,6 +7,6 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.masterwok.shrimplesearch.features.search.fragments.SearchFragment"
-        tools:layout="@layout/fragment_search" />
+        android:name="com.masterwok.shrimplesearch.features.query.fragments.QueryContainerFragment"
+        tools:layout="@layout/fragment_query_container" />
 </navigation>

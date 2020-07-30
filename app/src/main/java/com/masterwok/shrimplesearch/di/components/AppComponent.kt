@@ -3,7 +3,7 @@ package com.masterwok.shrimplesearch.di.components
 import android.content.Context
 import com.masterwok.shrimplesearch.di.modules.AppSubcomponentModule
 import com.masterwok.shrimplesearch.di.modules.ServiceModule
-import com.masterwok.shrimplesearch.features.search.di.SearchSubcomponent
+import com.masterwok.shrimplesearch.features.query.di.QuerySubcomponent
 import com.masterwok.shrimplesearch.features.splash.di.SplashSubcomponent
 import com.masterwok.shrimplesearch.main.MainActivity
 import dagger.BindsInstance
@@ -23,7 +23,7 @@ interface AppComponent {
         fun create(@BindsInstance context: Context): AppComponent
     }
 
-    fun searchComponent(): SearchSubcomponent.Factory
+    fun searchComponent(): QuerySubcomponent.Factory
 
     fun splashComponent(): SplashSubcomponent.Factory
 

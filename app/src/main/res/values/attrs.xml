@@ -1,59 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="LetterSpacingTextView">
-        <attr name="textSpacing" format="float"/>
+        <attr name="textSpacing" format="float" />
     </declare-styleable>
 
     <!-- Style References -->
-    <attr name="style_toolbar" format="reference"/>
+    <attr name="style_toolbar" format="reference" />
 
     <!-- Common Colors -->
-    <attr name="color_background" format="reference|color"/>
-    <attr name="color_fab_icon_tint" format="reference|color"/>
-    <attr name="color_fab_remove_ads" format="reference|color"/>
-    <attr name="color_fab_clear_purchases" format="reference|color"/>
-    <attr name="color_snack_text" format="reference|color"/>
-    <attr name="color_snack_default" format="reference|color"/>
-    <attr name="color_snack_success" format="reference|color"/>
-    <attr name="color_snack_warning" format="reference|color"/>
-    <attr name="color_snack_error" format="reference|color"/>
-    <attr name="color_header_title" format="reference|color"/>
-    <attr name="color_edit_text_border" format="reference|color"/>
-    <attr name="color_edit_text_background" format="reference|color"/>
-    <attr name="color_toolbar_icon_tint" format="reference|color"/>
-    <attr name="color_auto_complete_clear_tint" format="reference|color"/>
+    <attr name="color_background" format="reference|color" />
+    <attr name="color_fab_icon_tint" format="reference|color" />
+    <attr name="color_fab_remove_ads" format="reference|color" />
+    <attr name="color_fab_clear_purchases" format="reference|color" />
+    <attr name="color_snack_text" format="reference|color" />
+    <attr name="color_snack_default" format="reference|color" />
+    <attr name="color_snack_success" format="reference|color" />
+    <attr name="color_snack_warning" format="reference|color" />
+    <attr name="color_snack_error" format="reference|color" />
+    <attr name="color_header_title" format="reference|color" />
+    <attr name="color_edit_text_border" format="reference|color" />
+    <attr name="color_edit_text_background" format="reference|color" />
+    <attr name="color_toolbar_icon_tint" format="reference|color" />
+    <attr name="color_auto_complete_clear_tint" format="reference|color" />
 
-    <attr name="color_progress_bar_foreground" format="reference|color"/>
-    <attr name="color_progress_bar_background" format="reference|color"/>
+    <attr name="color_progress_bar_foreground" format="reference|color" />
+    <attr name="color_progress_bar_background" format="reference|color" />
 
     <!-- Search Activity Colors -->
-    <attr name="color_search_query_text_hint" format="reference|color"/>
-    <attr name="color_search_query_text" format="reference|color"/>
-    <attr name="color_search_result_count" format="reference|color"/>
-    <attr name="color_search_result_title" format="reference|color"/>
-    <attr name="color_search_result_uploaded_on_label" format="reference|color"/>
-    <attr name="color_search_result_uploaded_on" format="reference|color"/>
-    <attr name="color_search_result_size_background" format="reference|color"/>
-    <attr name="color_search_result_size" format="reference|color"/>
-    <attr name="color_search_result_size_label" format="reference|color"/>
-    <attr name="color_search_result_file_count_label" format="reference|color"/>
-    <attr name="color_search_result_file_count" format="reference|color"/>
-    <attr name="color_search_result_seeders" format="reference|color"/>
-    <attr name="color_search_result_button_background" format="reference|color"/>
-    <attr name="color_search_result_button_text" format="reference|color"/>
-    <attr name="color_search_result_down_arrow_tint" format="reference|color"/>
-    <attr name="color_search_result_up_arrow_tint" format="reference|color"/>
-    <attr name="color_search_caption_primary_text" format="reference|color"/>
-    <attr name="color_search_caption_secondary_text" format="reference|color"/>
-    <attr name="color_search_caption_drawable_tint" format="reference|color"/>
-    <attr name="color_search_auto_complete_cache_count" format="reference|color"/>
-    <attr name="color_search_auto_complete_cache_count_background" format="reference|color"/>
-    <attr name="color_text_view_size_text_color" format="reference|color"/>
-    <attr name="color_text_view_size_background" format="reference|color"/>
+    <attr name="color_query_text_hint" format="reference|color" />
+    <attr name="color_query_text" format="reference|color" />
+    <attr name="color_query_result_count" format="reference|color" />
+    <attr name="color_query_result_title" format="reference|color" />
+    <attr name="color_query_result_uploaded_on_label" format="reference|color" />
+    <attr name="color_query_result_uploaded_on" format="reference|color" />
+    <attr name="color_query_result_size_background" format="reference|color" />
+    <attr name="color_query_result_size" format="reference|color" />
+    <attr name="color_query_result_size_label" format="reference|color" />
+    <attr name="color_query_result_file_count_label" format="reference|color" />
+    <attr name="color_query_result_file_count" format="reference|color" />
+    <attr name="color_query_result_seeders" format="reference|color" />
+    <attr name="color_query_result_button_background" format="reference|color" />
+    <attr name="color_query_result_button_text" format="reference|color" />
+    <attr name="color_query_result_down_arrow_tint" format="reference|color" />
+    <attr name="color_query_result_up_arrow_tint" format="reference|color" />
+    <attr name="color_query_caption_primary_text" format="reference|color" />
+    <attr name="color_query_caption_secondary_text" format="reference|color" />
+    <attr name="color_query_caption_drawable_tint" format="reference|color" />
+    <attr name="color_query_auto_complete_cache_count" format="reference|color" />
+    <attr name="color_query_auto_complete_cache_count_background" format="reference|color" />
+    <attr name="color_text_view_size_text_color" format="reference|color" />
+    <attr name="color_text_view_size_background" format="reference|color" />
 
     <!-- Search Activity Dimens -->
-    <attr name="dimen_search_search_border_width" format="reference|dimension"/>
-    <attr name="dimen_search_auto_complete_popup_top_radius" format="reference|dimension"/>
-    <attr name="dimen_search_auto_complete_popup_bottom_radius" format="reference|dimension"/>
-    <attr name="dimen_search_auto_complete_popup_inset_top" format="reference|dimension"/>
+    <attr name="dimen_query_border_width" format="reference|dimension" />
+    <attr name="dimen_query_auto_complete_popup_top_radius" format="reference|dimension" />
+    <attr name="dimen_query_auto_complete_popup_bottom_radius" format="reference|dimension" />
+    <attr name="dimen_query_auto_complete_popup_inset_top" format="reference|dimension" />
 </resources>

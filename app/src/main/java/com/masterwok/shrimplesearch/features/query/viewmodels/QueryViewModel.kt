@@ -1,4 +1,4 @@
-package com.masterwok.shrimplesearch.features.search.viewmodels
+package com.masterwok.shrimplesearch.features.query.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -6,7 +6,7 @@ import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettSe
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class SearchViewModel @Inject constructor(
+class QueryViewModel @Inject constructor(
     private val jackettService: JackettService
 ) : ViewModel() {
 
