@@ -26,6 +26,7 @@ class CardigannDefinitionRepository @Inject constructor(
         )
     }
 
+    // Why synchronous: https://www.remlab.net/op/nonblock.shtml
     private fun synchronousReadDefinitions(
         path: String
     ): String = BufferedReader(InputStreamReader(assetManager.open(path))).let {
@@ -33,17 +34,6 @@ class CardigannDefinitionRepository @Inject constructor(
         it.close()
         text
     }
-
-    // TODO (JT): Why is this slower?!
-//    private fun readDefinitionAsync(path: String) = async {
-//        return@async withContext(Dispatchers.IO) {
-//            BufferedReader(InputStreamReader(assetManager.open(path))).let {
-//                val text = it.readText()
-//                it.close()
-//                text
-//            }
-//        }
-//    }
 
     override fun getIndexerCount(): Int = readDefinitionPaths().count()
 
