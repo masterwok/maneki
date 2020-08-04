@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetTop="-2dp">
+
+    <shape android:shape="rectangle">
+        <solid android:color="?color_edit_text_background" />
+        <stroke
+            android:width="?dimen_query_border_width"
+            android:color="?color_edit_text_border" />
+        <corners
+            android:bottomLeftRadius="?dimen_query_auto_complete_popup_bottom_radius"
+            android:bottomRightRadius="?dimen_query_auto_complete_popup_bottom_radius"
+            android:topLeftRadius="?dimen_query_auto_complete_popup_top_radius"
+            android:topRightRadius="?dimen_query_auto_complete_popup_top_radius" />
+    </shape>
+
+</inset>

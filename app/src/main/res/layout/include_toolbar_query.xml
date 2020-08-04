@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:contentInsetStart="0dp"
+    android:contentInsetLeft="0dp"
+    android:contentInsetEnd="0dp"
+    android:contentInsetRight="0dp"
+    app:contentInsetEnd="0dp"
+    app:contentInsetLeft="0dp"
+    app:contentInsetRight="0dp"
+    app:contentInsetStart="0dp"
+    app:elevation="0dp"
+    app:layout_scrollFlags="scroll|enterAlways">
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextViewSearch"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        android:background="@drawable/background_edit_text_rounded"
+        android:fontFamily="@font/eina_03_regular"
+        android:hint="@string/search_hint"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:paddingLeft="18dp"
+        android:paddingRight="18dp"
+        android:popupBackground="@drawable/background_query_auto_complete_popup"
+        android:popupElevation="0dp"
+        android:textColor="?color_query_text"
+        android:textColorHint="?color_query_text_hint"
+        android:textSize="16sp" />
+
+</androidx.appcompat.widget.Toolbar>

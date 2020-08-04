@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Ripple is breaking default color state for this background-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <stroke
+                    android:width="?dimen_query_border_width"
+                    android:color="?color_edit_text_border"/>
+
+            <solid android:color="?color_edit_text_background"/>
+
+            <corners
+                    android:bottomRightRadius="3dp"
+                    android:bottomLeftRadius="3dp"
+                    android:topLeftRadius="3dp"
+                    android:topRightRadius="3dp"/>
+        </shape>
+    </item>
+</selector>
