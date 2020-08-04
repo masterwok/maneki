@@ -41,7 +41,7 @@ android {
 
     sourceSets {
         main {
-            assets.srcDirs += '../jackett-harness/Jackett/Jackett.Common/Definitions/'
+            assets.srcDirs += '../jackett-harness/Jackett/src/Jackett.Common/Definitions/'
         }
     }
 }
