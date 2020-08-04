@@ -1,5 +1,7 @@
 package com.masterwok.shrimplesearch.features.query.viewmodels
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettService
@@ -12,6 +14,14 @@ import javax.inject.Inject
 class QueryViewModel @Inject constructor(
     private val jackettService: JackettService
 ) : ViewModel(), JackettService.Listener {
+
+    private val _liveDataIndexerQueryResults = MutableLiveData<List<IndexerQueryResult>>()
+    private val _liveDataQueryCompleted = MutableLiveData<Unit>()
+
+    val liveDataIndexerQueryResults: LiveData<List<IndexerQueryResult>> =
+        _liveDataIndexerQueryResults
+
+    val liveDataQueryCompleted: LiveData<Unit> = _liveDataQueryCompleted;
 
     init {
         jackettService.addListener(this)
@@ -28,7 +38,16 @@ class QueryViewModel @Inject constructor(
     override fun onIndexerInitialized() = Unit
 
     override fun onIndexerQueryResult(indexerQueryResult: IndexerQueryResult) {
-        val x = 1
+        viewModelScope.launch {
+            _liveDataIndexerQueryResults.value =
+                (_liveDataIndexerQueryResults.value ?: emptyList()) + listOf(indexerQueryResult)
+        }
+    }
+
+    override fun onQueryCompleted() {
+        viewModelScope.launch {
+            _liveDataQueryCompleted.value = Unit
+        }
     }
 
     fun setQuery(query: Query) = viewModelScope.launch {

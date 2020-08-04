@@ -26,6 +26,8 @@ interface JackettService {
 
         fun onIndexerQueryResult(indexerQueryResult: IndexerQueryResult)
 
+        fun onQueryCompleted()
+
     }
 
 }

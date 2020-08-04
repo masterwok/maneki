@@ -9,10 +9,12 @@ import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.extensions.hideSoftKeyboard
 import com.masterwok.shrimplesearch.di.AppInjector
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
+import com.masterwok.xamarininterface.models.IndexerQueryResult
 import com.masterwok.xamarininterface.models.Query
 import kotlinx.android.synthetic.main.include_toolbar_query.*
 import javax.inject.Inject
@@ -54,7 +56,27 @@ class QueryFragment : Fragment() {
     }
 
     private fun subscribeToLiveData() {
-        // TODO (JT): Implement me
+        viewModel.liveDataIndexerQueryResults.observe(
+            viewLifecycleOwner,
+            this::onIndexerQueryResultsChange
+        )
+
+        viewModel.liveDataQueryCompleted.observe(viewLifecycleOwner) {
+            onQueryCompleted()
+        }
+    }
+
+    private fun onQueryCompleted() {
+        val results = viewModel
+            .liveDataIndexerQueryResults
+            .value
+            ?.flatMap { it.items }
+
+        val x = 1
+    }
+
+    private fun onIndexerQueryResultsChange(indexerQueryResults: List<IndexerQueryResult>) {
+
     }
 
     override fun onAttach(context: Context) {

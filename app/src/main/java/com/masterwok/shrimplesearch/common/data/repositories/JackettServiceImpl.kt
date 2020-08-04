@@ -67,6 +67,10 @@ class JackettServiceImpl constructor(
         ) = weakJackettService.get().notNull { jackettService ->
             jackettService.listeners.forEach { it.onIndexerQueryResult(indexerQueryResult) }
         }
+
+        override fun onQueryCompleted() = weakJackettService.get().notNull { jackettService ->
+            jackettService.listeners.forEach { it.onQueryCompleted() }
+        }
     }
 
 }

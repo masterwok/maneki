@@ -10,4 +10,6 @@ interface IJackettHarnessListener {
 
     fun onIndexerQueryResult(indexerQueryResult: IndexerQueryResult)
 
+    fun onQueryCompleted()
+
 }
