@@ -2,16 +2,19 @@ package com.masterwok.shrimplesearch.features.query.fragments
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-
 import com.masterwok.shrimplesearch.R
+import com.masterwok.shrimplesearch.common.extensions.hideSoftKeyboard
 import com.masterwok.shrimplesearch.di.AppInjector
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
+import com.masterwok.xamarininterface.models.Query
+import kotlinx.android.synthetic.main.include_toolbar_query.*
 import javax.inject.Inject
 
 
@@ -34,7 +37,20 @@ class QueryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        subscribeToViewComponents()
         subscribeToLiveData()
+    }
+
+    private fun subscribeToViewComponents() {
+        autoCompleteTextViewSearch.setOnEditorActionListener { textView, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                viewModel.setQuery(Query(textView.text.toString()))
+                activity?.hideSoftKeyboard()
+                true
+            } else {
+                false
+            }
+        }
     }
 
     private fun subscribeToLiveData() {
