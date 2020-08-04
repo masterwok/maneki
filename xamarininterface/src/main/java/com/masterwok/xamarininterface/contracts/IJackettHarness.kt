@@ -1,5 +1,7 @@
 package com.masterwok.xamarininterface.contracts
 
+import com.masterwok.xamarininterface.models.Query
+
 interface IJackettHarness {
 
     val isInitialized: Boolean
@@ -9,5 +11,9 @@ interface IJackettHarness {
     fun setListener(jackettHarnessListener: IJackettHarnessListener)
 
     fun getIndexerCount(): Int
+
+    fun query(query: Query)
+
+    fun cancelQuery()
 
 }
