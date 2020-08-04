@@ -1,17 +1,13 @@
 package com.masterwok.shrimplesearch.features.splash.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettService
 import com.masterwok.shrimplesearch.features.splash.models.BootstrapInfo
-import kotlinx.coroutines.Job
+import com.masterwok.xamarininterface.models.IndexerQueryResult
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import javax.inject.Inject
 
 
@@ -62,5 +58,7 @@ class SplashViewModel @Inject constructor(
             )
         }
     }
+
+    override fun onIndexerQueryResult(indexerQueryResult: IndexerQueryResult) = Unit
 
 }

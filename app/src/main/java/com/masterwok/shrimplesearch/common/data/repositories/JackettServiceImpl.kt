@@ -4,6 +4,8 @@ import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettSe
 import com.masterwok.shrimplesearch.common.utils.notNull
 import com.masterwok.xamarininterface.contracts.IJackettHarness
 import com.masterwok.xamarininterface.contracts.IJackettHarnessListener
+import com.masterwok.xamarininterface.models.IndexerQueryResult
+import com.masterwok.xamarininterface.models.Query
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.withContext
@@ -30,6 +32,10 @@ class JackettServiceImpl constructor(
         }
     }
 
+    override suspend fun query(query: Query) = withContext(Dispatchers.IO) {
+        jackettHarness.query(query)
+    }
+
     override suspend fun getIndexerCount(): Int = withContext(Dispatchers.IO) {
         jackettHarness.getIndexerCount()
     }
@@ -54,6 +60,12 @@ class JackettServiceImpl constructor(
 
         override fun onIndexerInitialized() = weakJackettService.get().notNull { jackettService ->
             jackettService.listeners.forEach { it.onIndexerInitialized() }
+        }
+
+        override fun onIndexerQueryResult(
+            indexerQueryResult: IndexerQueryResult
+        ) = weakJackettService.get().notNull { jackettService ->
+            jackettService.listeners.forEach { it.onIndexerQueryResult(indexerQueryResult) }
         }
     }
 

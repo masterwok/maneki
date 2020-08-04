@@ -1,11 +1,16 @@
 package com.masterwok.shrimplesearch.common.data.repositories.contracts
 
+import com.masterwok.xamarininterface.models.IndexerQueryResult
+import com.masterwok.xamarininterface.models.Query
+
 
 interface JackettService {
 
     val isInitialized: Boolean
 
     suspend fun initialize()
+
+    suspend fun query(query: Query)
 
     suspend fun getIndexerCount(): Int
 
@@ -18,6 +23,9 @@ interface JackettService {
         fun onIndexersInitialized()
 
         fun onIndexerInitialized()
+
+        fun onIndexerQueryResult(indexerQueryResult: IndexerQueryResult)
+
     }
 
 }
