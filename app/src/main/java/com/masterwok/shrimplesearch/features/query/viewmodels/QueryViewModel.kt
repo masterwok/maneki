@@ -15,7 +15,10 @@ class QueryViewModel @Inject constructor(
     private val jackettService: JackettService
 ) : ViewModel(), JackettService.Listener {
 
-    private val _liveDataIndexerQueryResults = MutableLiveData<List<IndexerQueryResult>>()
+    private val _liveDataIndexerQueryResults = MutableLiveData<List<IndexerQueryResult>>(
+        emptyList()
+    )
+
     private val _liveDataQueryCompleted = MutableLiveData<Unit>()
 
     val liveDataIndexerQueryResults: LiveData<List<IndexerQueryResult>> =
@@ -51,6 +54,7 @@ class QueryViewModel @Inject constructor(
     }
 
     fun setQuery(query: Query) = viewModelScope.launch {
+        _liveDataIndexerQueryResults.value = emptyList()
         jackettService.query(query)
     }
 
