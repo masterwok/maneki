@@ -8,11 +8,20 @@ import javax.inject.Inject
 
 class QueryViewModel @Inject constructor(
     private val jackettService: JackettService
-) : ViewModel() {
+) : ViewModel(), JackettService.Listener {
 
-    fun initialize() = viewModelScope.launch {
-        if (!jackettService.isInitialized) {
-            jackettService.initialize()
-        }
+    init {
+        jackettService.addListener(this)
     }
+
+    override fun onCleared() {
+        jackettService.removeListener(this)
+
+        super.onCleared()
+    }
+
+    override fun onIndexersInitialized() = Unit
+
+    override fun onIndexerInitialized() = Unit
+
 }

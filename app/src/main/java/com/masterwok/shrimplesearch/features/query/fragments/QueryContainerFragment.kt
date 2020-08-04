@@ -23,7 +23,7 @@ class QueryContainerFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel: QueryViewModel by viewModels { viewModelFactory }
+    private val viewModel: QueryViewModel by viewModels(this::requireActivity) { viewModelFactory }
 
     private lateinit var queryFragmentStatePagerAdapter: QueryFragmentStateAdapter
 
@@ -33,8 +33,6 @@ class QueryContainerFragment : Fragment() {
         AppInjector
             .searchComponent
             .inject(this)
-
-        viewModel.initialize()
     }
 
     override fun onCreateView(
