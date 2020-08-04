@@ -16,8 +16,8 @@ class AppInjector {
                 .create(application.applicationContext)
         }
 
-        val searchComponent by lazy {
-            appComponent.searchComponent().create()
+        val queryComponent by lazy {
+            appComponent.queryComponent().create()
         }
 
         val splashComponent by lazy {

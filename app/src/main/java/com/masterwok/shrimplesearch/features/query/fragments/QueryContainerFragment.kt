@@ -6,10 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.di.AppInjector
 import com.masterwok.shrimplesearch.features.query.adapters.QueryFragmentStateAdapter
@@ -31,7 +29,7 @@ class QueryContainerFragment : Fragment() {
         super.onAttach(context)
 
         AppInjector
-            .searchComponent
+            .queryComponent
             .inject(this)
     }
 

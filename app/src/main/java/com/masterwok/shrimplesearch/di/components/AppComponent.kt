@@ -23,7 +23,7 @@ interface AppComponent {
         fun create(@BindsInstance context: Context): AppComponent
     }
 
-    fun searchComponent(): QuerySubcomponent.Factory
+    fun queryComponent(): QuerySubcomponent.Factory
 
     fun splashComponent(): SplashSubcomponent.Factory
 

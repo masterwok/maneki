@@ -38,14 +38,14 @@ class QueryFragment : Fragment() {
     }
 
     private fun subscribeToLiveData() {
+        // TODO (JT): Implement me
     }
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
         AppInjector
-            .searchComponent
+            .queryComponent
             .inject(this)
     }
 
