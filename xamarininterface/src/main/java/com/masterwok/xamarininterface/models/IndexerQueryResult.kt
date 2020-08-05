@@ -4,7 +4,7 @@ import com.masterwok.xamarininterface.enums.QueryState
 
 data class IndexerQueryResult(
     val indexer: Indexer,
-    val items: List<QueryResultIem>,
+    val items: List<QueryResultItem>,
     val queryState: QueryState,
     val failureReason: String?
 )

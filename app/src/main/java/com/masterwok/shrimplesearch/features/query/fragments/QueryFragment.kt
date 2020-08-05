@@ -71,6 +71,7 @@ class QueryFragment : Fragment() {
             .liveDataIndexerQueryResults
             .value
             ?.flatMap { it.items }
+            ?.sortedByDescending { it.statInfo.seeders }
 
         val x = 1
     }
