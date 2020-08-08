@@ -18,6 +18,9 @@ import com.masterwok.shrimplesearch.common.extensions.hideSoftKeyboard
 import com.masterwok.shrimplesearch.di.AppInjector
 import com.masterwok.shrimplesearch.features.query.adapters.QueryResultsAdapter
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
+import com.masterwok.xamarininterface.enums.IndexerType
+import com.masterwok.xamarininterface.enums.QueryState
+import com.masterwok.xamarininterface.models.Indexer
 import com.masterwok.xamarininterface.models.IndexerQueryResult
 import com.masterwok.xamarininterface.models.Query
 import kotlinx.android.synthetic.main.fragment_query.*
@@ -87,9 +90,37 @@ class QueryFragment : Fragment() {
         progressBar.isVisible = false
     }
 
-    private fun onIndexerQueryResultsChange(indexerQueryResults: List<IndexerQueryResult>) {
-        queryResultsAdapter.configure(indexerQueryResults)
+    private fun onIndexerQueryResultsChange(queryResults: List<IndexerQueryResult>) {
+        if (queryResults.count() == 0) {
+            queryResultsAdapter.configure(queryResults)
+            return
+        }
+
+        val aggregateIndexerQueryResult = createAggregateIndexerQueryResult(queryResults)
+        val sortedQueryResults = sortQueryResults(queryResults)
+
+        queryResultsAdapter.configure(listOf(aggregateIndexerQueryResult) + sortedQueryResults)
     }
+
+    private fun sortQueryResults(
+        queryResults: List<IndexerQueryResult>
+    ): List<IndexerQueryResult> = queryResults.sortedByDescending { it.magnetCount }
+
+    private fun createAggregateIndexerQueryResult(
+        results: Collection<IndexerQueryResult>
+    ): IndexerQueryResult = IndexerQueryResult(
+        Indexer(
+            id = ""
+            , type = IndexerType.Aggregate
+            , displayName = getString(R.string.indexer_aggregate_display_name)
+            , displayDescription = null
+        )
+        , results.flatMap { it.items }
+        , queryState = QueryState.Success
+        , failureReason = null
+        , magnetCount = results.sumBy { it.magnetCount }
+        , linkCount = results.sumBy { it.linkCount }
+    )
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
