@@ -17,5 +17,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="indexer_aggregate_display_name">All</string>
+    <string name="stat_info_not_available">n/a</string>
+    <string name="indexer_query_result_item_published_on">Published On:</string>
 
 </resources>
