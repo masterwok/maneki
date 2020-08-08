@@ -44,19 +44,9 @@ class QueryResultsAdapter : RecyclerView.Adapter<QueryResultsAdapter.ViewHolder>
         , Configurable<IndexerQueryResult> {
 
         override fun configure(model: IndexerQueryResult) {
-            itemView.textViewIndexerName.text = model
-                .indexer
-                .displayName
-
-            itemView.textViewMagnetCount.text = model
-                .items
-                .count { it.linkInfo.magnetUri != null }
-                .toString()
-
-            itemView.textViewLinkCount.text = model
-                .items
-                .count { it.linkInfo.magnetUri == null }
-                .toString()
+            itemView.textViewIndexerName.text = model.indexer.displayName
+            itemView.textViewMagnetCount.text = model.magnetCount.toString()
+            itemView.textViewLinkCount.text = model.linkCount.toString()
         }
     }
 }
