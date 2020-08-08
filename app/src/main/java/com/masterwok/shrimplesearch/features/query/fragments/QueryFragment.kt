@@ -35,7 +35,7 @@ class QueryFragment : Fragment() {
 
     private val viewModel: QueryViewModel by viewModels(this::requireActivity) { viewModelFactory }
 
-    private val queryResultsAdapter: QueryResultsAdapter = QueryResultsAdapter {
+    private val queryResultsAdapter = QueryResultsAdapter {
         viewModel.setSelectedIndexerQueryResult(it)
     }
 
