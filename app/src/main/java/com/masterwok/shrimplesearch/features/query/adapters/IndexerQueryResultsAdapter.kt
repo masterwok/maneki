@@ -8,6 +8,7 @@ import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.contracts.Configurable
 import com.masterwok.shrimplesearch.common.extensions.getCurrentLocale
 import com.masterwok.shrimplesearch.common.extensions.getLocaleNumberFormat
+import com.masterwok.shrimplesearch.common.extensions.toHumanReadableByteCount
 import com.masterwok.xamarininterface.models.QueryResultItem
 import kotlinx.android.synthetic.main.view_indexer_query_result_item.view.*
 import java.text.DateFormat
@@ -86,7 +87,7 @@ class IndexerQueryResultsAdapter(
 
             itemView.textViewSize.text = statInfo
                 .size
-                ?.toString()
+                ?.toHumanReadableByteCount()
                 ?: stringNotAvailable
 
         }
