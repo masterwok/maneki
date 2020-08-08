@@ -1,9 +1,6 @@
 package com.masterwok.shrimplesearch.features.query.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettService
 import com.masterwok.xamarininterface.models.IndexerQueryResult
 import com.masterwok.xamarininterface.models.Query
@@ -15,14 +12,14 @@ class QueryViewModel @Inject constructor(
     private val jackettService: JackettService
 ) : ViewModel(), JackettService.Listener {
 
-    private val _liveDataIndexerQueryResults = MutableLiveData<List<IndexerQueryResult>>(
-        emptyList()
+    private val _liveDataIndexerQueryResults = MutableLiveData<MutableList<IndexerQueryResult>>(
+        mutableListOf()
     )
 
     private val _liveDataQueryCompleted = MutableLiveData<Unit>()
 
     val liveDataIndexerQueryResults: LiveData<List<IndexerQueryResult>> =
-        _liveDataIndexerQueryResults
+        _liveDataIndexerQueryResults.map { it.toList() }
 
     val liveDataQueryCompleted: LiveData<Unit> = _liveDataQueryCompleted;
 
@@ -42,8 +39,12 @@ class QueryViewModel @Inject constructor(
 
     override fun onIndexerQueryResult(indexerQueryResult: IndexerQueryResult) {
         viewModelScope.launch {
-            _liveDataIndexerQueryResults.value =
-                (_liveDataIndexerQueryResults.value ?: emptyList()) + listOf(indexerQueryResult)
+            val results = checkNotNull(_liveDataIndexerQueryResults.value)
+
+            results.add(indexerQueryResult)
+            results.sortByDescending { it.magnetCount }
+
+            _liveDataIndexerQueryResults.value = results
         }
     }
 
@@ -54,7 +55,7 @@ class QueryViewModel @Inject constructor(
     }
 
     fun setQuery(query: Query) = viewModelScope.launch {
-        _liveDataIndexerQueryResults.value = emptyList()
+        checkNotNull(_liveDataIndexerQueryResults.value).clear()
         jackettService.query(query)
     }
 

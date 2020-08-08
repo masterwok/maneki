@@ -6,5 +6,7 @@ data class IndexerQueryResult(
     val indexer: Indexer,
     val items: List<QueryResultItem>,
     val queryState: QueryState,
-    val failureReason: String?
+    val failureReason: String?,
+    val magnetCount: Int,
+    val linkCount: Int
 )
