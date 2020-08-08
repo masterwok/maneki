@@ -7,7 +7,7 @@
     <string name="drawer_layout_menu_item_client">Bittorent Client</string>
 
     <string name="splash_description">Initializing space cats&#8230;</string>
-    <string name="splash_progress">%d/%d</string>
+    <string name="splash_progress">%.0f%%</string>
     <string name="splash_maneki">MANEKI</string>
 
     <string name="toolbar_maneki">MANEKI</string>

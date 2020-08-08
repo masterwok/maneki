@@ -13,6 +13,7 @@ import com.masterwok.shrimplesearch.features.splash.viewmodels.SplashViewModel
 import com.masterwok.shrimplesearch.main.MainActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 import javax.inject.Inject
+import kotlin.math.ceil
 
 
 class SplashActivity : AppCompatActivity() {
@@ -51,8 +52,7 @@ class SplashActivity : AppCompatActivity() {
 
         textViewIndexerProgressCount.text = getString(
             R.string.splash_progress
-            , bootstrapInfo.initializedCount
-            , bootstrapInfo.totalIndexerCount
+            , ceil((bootstrapInfo.initializedCount.toDouble() / bootstrapInfo.totalIndexerCount) * 100)
         )
     }
 
