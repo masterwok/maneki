@@ -6,16 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.extensions.hideSoftKeyboard
 import com.masterwok.shrimplesearch.di.AppInjector
+import com.masterwok.shrimplesearch.features.query.adapters.QueryResultsAdapter
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
 import com.masterwok.xamarininterface.models.IndexerQueryResult
 import com.masterwok.xamarininterface.models.Query
+import kotlinx.android.synthetic.main.fragment_query.*
 import kotlinx.android.synthetic.main.include_toolbar_query.*
 import javax.inject.Inject
 
@@ -26,6 +31,8 @@ class QueryFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel: QueryViewModel by viewModels(this::requireActivity) { viewModelFactory }
+
+    private val queryResultsAdapter: QueryResultsAdapter = QueryResultsAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,8 +46,17 @@ class QueryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initRecyclerView()
         subscribeToViewComponents()
         subscribeToLiveData()
+    }
+
+    private fun initRecyclerView() {
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+            adapter = queryResultsAdapter
+        }
     }
 
     private fun subscribeToViewComponents() {
@@ -48,6 +64,7 @@ class QueryFragment : Fragment() {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 viewModel.setQuery(Query(textView.text.toString()))
                 activity?.hideSoftKeyboard()
+                progressBar.isVisible = true
                 true
             } else {
                 false
@@ -67,17 +84,11 @@ class QueryFragment : Fragment() {
     }
 
     private fun onQueryCompleted() {
-        val results = viewModel
-            .liveDataIndexerQueryResults
-            .value
-            ?.flatMap { it.items }
-            ?.sortedByDescending { it.statInfo.seeders }
-
-        val x = 1
+        progressBar.isVisible = false
     }
 
     private fun onIndexerQueryResultsChange(indexerQueryResults: List<IndexerQueryResult>) {
-
+        queryResultsAdapter.configure(indexerQueryResults)
     }
 
     override fun onAttach(context: Context) {
