@@ -6,6 +6,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.masterwok.shrimplesearch.features.query.fragments.IndexerQueryResultsFragment
 import com.masterwok.shrimplesearch.features.query.fragments.QueryFragment
+import kotlin.reflect.KClass
 
 class QueryFragmentStateAdapter(
     fragmentManager: FragmentManager
@@ -15,17 +16,22 @@ class QueryFragmentStateAdapter(
     , lifecycle
 ) {
 
-    private val fragmentCollection = listOf(
-        lazy { QueryFragment.newInstance() },
-        lazy { IndexerQueryResultsFragment.newInstance() }
+    private val fragmentMap = mapOf(
+        QueryFragment::class to lazy { QueryFragment.newInstance() },
+        IndexerQueryResultsFragment::class to lazy { IndexerQueryResultsFragment.newInstance() }
     )
 
     override fun getItemCount(): Int {
-        return fragmentCollection.count()
+        return fragmentMap.count()
     }
 
-    override fun createFragment(position: Int): Fragment {
-        return fragmentCollection[position].value
-    }
+    override fun createFragment(position: Int): Fragment = fragmentMap
+        .values
+        .toTypedArray()[position]
+        .value
+
+    fun getFragmentIndex(kClass: KClass<*>): Int = fragmentMap
+        .entries
+        .indexOfFirst { it.key == kClass }
 
 }

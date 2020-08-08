@@ -10,7 +10,9 @@ import com.masterwok.shrimplesearch.common.extensions.getLocaleNumberFormat
 import com.masterwok.xamarininterface.models.IndexerQueryResult
 import kotlinx.android.synthetic.main.view_indexer_query_result_item.view.*
 
-class QueryResultsAdapter : RecyclerView.Adapter<QueryResultsAdapter.ViewHolder>()
+class QueryResultsAdapter(
+    private val onQueryResultClicked: (IndexerQueryResult) -> Unit
+) : RecyclerView.Adapter<QueryResultsAdapter.ViewHolder>()
     , Configurable<List<IndexerQueryResult>> {
 
     private var configuredModel: List<IndexerQueryResult> = emptyList()
@@ -26,6 +28,7 @@ class QueryResultsAdapter : RecyclerView.Adapter<QueryResultsAdapter.ViewHolder>
                 , parent
                 , false
             )
+        , onQueryResultClicked
     )
 
     override fun getItemCount(): Int = configuredModel.count()
@@ -41,7 +44,10 @@ class QueryResultsAdapter : RecyclerView.Adapter<QueryResultsAdapter.ViewHolder>
         notifyDataSetChanged()
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    class ViewHolder(
+        itemView: View
+        , private val onQueryResultClicked: (IndexerQueryResult) -> Unit
+    ) : RecyclerView.ViewHolder(itemView)
         , Configurable<IndexerQueryResult> {
 
         override fun configure(model: IndexerQueryResult) {
@@ -50,6 +56,8 @@ class QueryResultsAdapter : RecyclerView.Adapter<QueryResultsAdapter.ViewHolder>
             itemView.textViewIndexerName.text = model.indexer.displayName
             itemView.textViewMagnetCount.text = numberFormat.format(model.magnetCount)
             itemView.textViewLinkCount.text = numberFormat.format(model.linkCount)
+
+            itemView.setOnClickListener { onQueryResultClicked(model) }
         }
     }
 }

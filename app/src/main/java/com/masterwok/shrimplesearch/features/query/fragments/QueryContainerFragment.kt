@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.di.AppInjector
 import com.masterwok.shrimplesearch.features.query.adapters.QueryFragmentStateAdapter
@@ -47,6 +48,15 @@ class QueryContainerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initViewPager()
+        subscribeToLiveData()
+    }
+
+    private fun subscribeToLiveData() {
+        viewModel.liveDataSelectedIndexerQueryResult.observe(viewLifecycleOwner) {
+            viewPager.currentItem = queryFragmentStatePagerAdapter.getFragmentIndex(
+                IndexerQueryResultsFragment::class
+            )
+        }
     }
 
     private fun initViewPager() {

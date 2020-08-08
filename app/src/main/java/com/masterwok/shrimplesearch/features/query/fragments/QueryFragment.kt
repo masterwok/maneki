@@ -35,7 +35,9 @@ class QueryFragment : Fragment() {
 
     private val viewModel: QueryViewModel by viewModels(this::requireActivity) { viewModelFactory }
 
-    private val queryResultsAdapter: QueryResultsAdapter = QueryResultsAdapter()
+    private val queryResultsAdapter: QueryResultsAdapter = QueryResultsAdapter {
+        viewModel.setSelectedIndexerQueryResult(it)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
