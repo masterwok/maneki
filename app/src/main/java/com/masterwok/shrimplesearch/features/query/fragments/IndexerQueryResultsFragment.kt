@@ -69,7 +69,9 @@ class IndexerQueryResultsFragment : Fragment() {
 
     private fun configure(
         indexerQueryResult: IndexerQueryResult
-    ) = queryResultsAdapter.configure(indexerQueryResult.items)
+    ) = queryResultsAdapter.configure(
+        indexerQueryResult.items.sortedByDescending { it.statInfo.seeders }
+    )
 
     companion object {
         @JvmStatic
