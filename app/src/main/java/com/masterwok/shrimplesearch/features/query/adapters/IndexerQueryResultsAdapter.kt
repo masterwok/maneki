@@ -23,7 +23,7 @@ class IndexerQueryResultsAdapter(
         LayoutInflater
             .from(parent.context)
             .inflate(
-                R.layout.view_indexer_query_result_item
+                R.layout.view_query_result_item
                 , parent
                 , false
             )

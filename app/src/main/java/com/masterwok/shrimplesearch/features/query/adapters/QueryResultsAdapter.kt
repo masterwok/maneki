@@ -8,7 +8,7 @@ import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.contracts.Configurable
 import com.masterwok.shrimplesearch.common.extensions.getLocaleNumberFormat
 import com.masterwok.xamarininterface.models.IndexerQueryResult
-import kotlinx.android.synthetic.main.view_indexer_query_result_item.view.*
+import kotlinx.android.synthetic.main.view_query_result_item.view.*
 
 class QueryResultsAdapter(
     private val onQueryResultClicked: (IndexerQueryResult) -> Unit
@@ -24,7 +24,7 @@ class QueryResultsAdapter(
         LayoutInflater
             .from(parent.context)
             .inflate(
-                R.layout.view_indexer_query_result_item
+                R.layout.view_query_result_item
                 , parent
                 , false
             )
