@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.contracts.Configurable
+import com.masterwok.shrimplesearch.common.extensions.getLocaleNumberFormat
 import com.masterwok.xamarininterface.models.IndexerQueryResult
 import kotlinx.android.synthetic.main.view_indexer_query_result_item.view.*
 
@@ -44,9 +45,11 @@ class QueryResultsAdapter : RecyclerView.Adapter<QueryResultsAdapter.ViewHolder>
         , Configurable<IndexerQueryResult> {
 
         override fun configure(model: IndexerQueryResult) {
+            val numberFormat = itemView.context.getLocaleNumberFormat()
+
             itemView.textViewIndexerName.text = model.indexer.displayName
-            itemView.textViewMagnetCount.text = model.magnetCount.toString()
-            itemView.textViewLinkCount.text = model.linkCount.toString()
+            itemView.textViewMagnetCount.text = numberFormat.format(model.magnetCount)
+            itemView.textViewLinkCount.text = numberFormat.format(model.linkCount)
         }
     }
 }

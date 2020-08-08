@@ -2,19 +2,14 @@ package com.masterwok.shrimplesearch.features.query.viewmodels
 
 import androidx.lifecycle.*
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettService
-import com.masterwok.xamarininterface.enums.IndexerType
-import com.masterwok.xamarininterface.enums.QueryState
-import com.masterwok.xamarininterface.models.Indexer
 import com.masterwok.xamarininterface.models.IndexerQueryResult
 import com.masterwok.xamarininterface.models.Query
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import javax.inject.Named
 
 
 class QueryViewModel @Inject constructor(
     private val jackettService: JackettService
-    , @Named("aggregate_indexer_query_result_id") private val aggregateIndexerQueryResultId: String
 ) : ViewModel(), JackettService.Listener {
 
     private val _liveDataIndexerQueryResults = MutableLiveData<MutableList<IndexerQueryResult>>(
