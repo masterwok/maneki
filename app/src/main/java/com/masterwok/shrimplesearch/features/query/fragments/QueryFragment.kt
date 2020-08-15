@@ -68,6 +68,7 @@ class QueryFragment : Fragment() {
         autoCompleteTextViewSearch.setOnEditorActionListener { textView, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 viewModel.setQuery(Query(textView.text.toString()))
+                queryResultsAdapter.configure(emptyList())
                 activity?.hideSoftKeyboard()
                 progressBar.isVisible = true
                 true

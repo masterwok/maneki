@@ -42,8 +42,8 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewIndexerName">
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:tint="@android:color/white"
             app:srcCompat="@drawable/ic_magnet_black" />
 
@@ -51,8 +51,9 @@
             android:id="@+id/textViewMagnetCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="4dp"
             android:textColor="@android:color/white"
+            android:textSize="12sp"
             tools:text="36" />
 
     </LinearLayout>
@@ -61,7 +62,7 @@
         android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/background_indexer_query_result_rounded"
         android:gravity="center"
@@ -72,8 +73,8 @@
 
         <ImageView
             android:id="@+id/imageView3"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:tint="@android:color/white"
             app:srcCompat="@drawable/ic_link_black_24dp" />
 
@@ -81,8 +82,9 @@
             android:id="@+id/textViewLinkCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="4dp"
             android:textColor="@android:color/white"
+            android:textSize="12sp"
             tools:text="8" />
 
     </LinearLayout>

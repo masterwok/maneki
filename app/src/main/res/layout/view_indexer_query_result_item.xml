@@ -60,8 +60,8 @@
         app:layout_constraintTop_toBottomOf="@+id/materialTextView">
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:tint="@android:color/white"
             app:srcCompat="@drawable/ic_arrow_upward_black_24dp" />
 
@@ -69,9 +69,10 @@
             android:id="@+id/textViewSeeders"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="4dp"
             android:textColor="@android:color/white"
-            tools:text="128" />
+            android:textSize="12sp"
+            tools:text="128,468" />
 
     </LinearLayout>
 
@@ -79,7 +80,7 @@
         android:id="@+id/linearLayout4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
         android:background="@drawable/background_indexer_query_result_rounded"
         android:gravity="center"
         android:orientation="horizontal"
@@ -88,8 +89,8 @@
         app:layout_constraintTop_toTopOf="@+id/linearLayout3">
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:tint="@android:color/white"
             app:srcCompat="@drawable/ic_arrow_downward_black_24dp" />
 
@@ -97,9 +98,10 @@
             android:id="@+id/textViewLeechers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="4dp"
             android:textColor="@android:color/white"
-            tools:text="24" />
+            android:textSize="12sp"
+            tools:text="128,468" />
 
     </LinearLayout>
 
@@ -108,7 +110,7 @@
         android:id="@+id/linearLayout5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
         android:background="@drawable/background_indexer_query_result_rounded"
         android:gravity="center"
         android:orientation="horizontal"
@@ -118,8 +120,8 @@
         app:layout_constraintTop_toTopOf="@+id/textViewSize">
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:tint="@android:color/white"
             app:srcCompat="@drawable/ic_insert_drive_file_black_24dp" />
 
@@ -127,9 +129,10 @@
             android:id="@+id/textViewFileCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="4dp"
             android:textColor="@android:color/white"
-            tools:text="4" />
+            android:textSize="12sp"
+            tools:text="1,000" />
 
     </LinearLayout>
 
@@ -137,13 +140,24 @@
         android:id="@+id/textViewSize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
         android:background="@drawable/background_indexer_query_result_rounded"
         android:padding="8dp"
         android:textColor="@android:color/white"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout4"
         app:layout_constraintStart_toEndOf="@+id/linearLayout4"
         app:layout_constraintTop_toTopOf="@+id/linearLayout4"
-        tools:text="128 Mb" />
+        tools:text="1,348.43 Kb" />
+
+    <ImageView
+        android:id="@+id/imageViewMagnet"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout5"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout5"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout5"
+        app:srcCompat="@drawable/ic_magnet_black" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package com.masterwok.shrimplesearch.features.query.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.contracts.Configurable
@@ -87,8 +88,10 @@ class IndexerQueryResultsAdapter(
 
             itemView.textViewSize.text = statInfo
                 .size
-                ?.toHumanReadableByteCount()
+                ?.toHumanReadableByteCount(true)
                 ?: stringNotAvailable
+
+            itemView.imageViewMagnet.isVisible = model.linkInfo.magnetUri != null
 
         }
     }

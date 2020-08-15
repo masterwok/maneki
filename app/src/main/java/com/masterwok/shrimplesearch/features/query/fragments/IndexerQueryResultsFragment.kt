@@ -67,11 +67,13 @@ class IndexerQueryResultsFragment : Fragment() {
         viewModel.liveDataSelectedIndexerQueryResult.observe(viewLifecycleOwner, ::configure)
     }
 
-    private fun configure(
-        indexerQueryResult: IndexerQueryResult
-    ) = queryResultsAdapter.configure(
-        indexerQueryResult.items.sortedByDescending { it.statInfo.seeders }
-    )
+    private fun configure(indexerQueryResult: IndexerQueryResult) {
+        recyclerView.scrollToPosition(0)
+
+        queryResultsAdapter.configure(
+            indexerQueryResult.items.sortedByDescending { it.statInfo.seeders }
+        )
+    }
 
     companion object {
         @JvmStatic
