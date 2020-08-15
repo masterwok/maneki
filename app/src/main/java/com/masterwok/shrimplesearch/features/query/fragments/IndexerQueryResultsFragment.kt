@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.di.AppInjector
 import com.masterwok.shrimplesearch.features.query.adapters.IndexerQueryResultsAdapter
+import com.masterwok.shrimplesearch.features.query.enums.QueryState
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
 import com.masterwok.xamarininterface.models.QueryResultItem
 import kotlinx.android.synthetic.main.fragment_indexer_query_results.*
@@ -62,6 +64,8 @@ class IndexerQueryResultsFragment : Fragment() {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             adapter = queryResultsAdapter
         }
+
+        viewModel.liveDataQueryState.observe(viewLifecycleOwner, ::onQueryStateChange)
     }
 
     private fun subscribeToLiveData() {
@@ -69,6 +73,13 @@ class IndexerQueryResultsFragment : Fragment() {
             viewLifecycleOwner
             , ::configure
         )
+    }
+
+    private fun onQueryStateChange(queryState: QueryState?) {
+        progressBar.isVisible = when (queryState) {
+            QueryState.Pending -> true
+            else -> false
+        }
     }
 
     private fun configure(queryResultItems: List<QueryResultItem>) {
