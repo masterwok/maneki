@@ -43,7 +43,7 @@ class IndexerQueryResultsFragment : Fragment() {
 
     private fun openQueryResultItem(
         queryResultItem: QueryResultItem
-    ) = activity.notNull { activity ->
+    ) = activity.notNull {
         val linkInfo = queryResultItem.linkInfo
         val uri = linkInfo.magnetUri ?: linkInfo.link ?: return
 
