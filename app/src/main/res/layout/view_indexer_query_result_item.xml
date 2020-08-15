@@ -12,6 +12,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/eina_03_semi_bold"
         android:maxLines="2"
         android:textColor="@android:color/black"
         android:textSize="18sp"
@@ -25,10 +26,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/eina_03_semi_bold"
         android:text="@string/indexer_query_result_item_published_on"
         android:textColor="@android:color/black"
         android:textSize="12sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/textViewTitle"
         app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
@@ -38,6 +39,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:fontFamily="@font/eina_03_regular"
         android:textColor="@android:color/black"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/materialTextView"
@@ -70,6 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
+            android:fontFamily="@font/eina_03_regular"
             android:textColor="@android:color/white"
             android:textSize="12sp"
             tools:text="128,468" />
@@ -99,6 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
+            android:fontFamily="@font/eina_03_regular"
             android:textColor="@android:color/white"
             android:textSize="12sp"
             tools:text="128,468" />
@@ -130,6 +134,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
+            android:fontFamily="@font/eina_03_regular"
             android:textColor="@android:color/white"
             android:textSize="12sp"
             tools:text="1,000" />
@@ -139,9 +144,11 @@
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textViewSize"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="4dp"
         android:background="@drawable/background_indexer_query_result_rounded"
+        android:fontFamily="@font/eina_03_regular"
+        android:gravity="center"
         android:padding="8dp"
         android:textColor="@android:color/white"
         android:textSize="12sp"

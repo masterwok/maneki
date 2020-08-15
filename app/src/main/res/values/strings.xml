@@ -19,5 +19,8 @@
     <string name="indexer_aggregate_display_name">All</string>
     <string name="stat_info_not_available">n/a</string>
     <string name="indexer_query_result_item_published_on">Published On:</string>
+    <string name="searchIcon">A search icon.</string>
+
+    <string name="search_placeholder_text">Use the toolbar above to search for magnets&#8230;</string>
 
 </resources>
