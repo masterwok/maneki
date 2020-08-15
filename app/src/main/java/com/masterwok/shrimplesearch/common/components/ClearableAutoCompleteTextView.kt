@@ -2,6 +2,7 @@ package com.masterwok.shrimplesearch.common.components
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView
@@ -26,7 +27,6 @@ class ClearableAutoCompleteTextView : AppCompatAutoCompleteTextView {
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        setDrawableRight()
         setOnTouchListener(null)
     }
 
@@ -72,5 +72,11 @@ class ClearableAutoCompleteTextView : AppCompatAutoCompleteTextView {
         }
         , null
     )
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        super.onRestoreInstanceState(state)
+
+        setDrawableRight()
+    }
 
 }
