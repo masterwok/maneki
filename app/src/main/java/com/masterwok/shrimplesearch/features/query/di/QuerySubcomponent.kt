@@ -1,7 +1,6 @@
 package com.masterwok.shrimplesearch.features.query.di
 
 import com.masterwok.shrimplesearch.features.query.fragments.IndexerQueryResultsFragment
-import com.masterwok.shrimplesearch.features.query.fragments.QueryContainerFragment
 import com.masterwok.shrimplesearch.features.query.fragments.QueryFragment
 import dagger.Subcomponent
 
@@ -18,7 +17,6 @@ interface QuerySubcomponent {
         fun create(): QuerySubcomponent
     }
 
-    fun inject(fragment: QueryContainerFragment)
     fun inject(fragment: QueryFragment)
     fun inject(fragment: IndexerQueryResultsFragment)
 

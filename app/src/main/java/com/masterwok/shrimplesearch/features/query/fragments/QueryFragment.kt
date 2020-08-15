@@ -6,21 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.TextView
-import androidx.annotation.DimenRes
-import androidx.annotation.DrawableRes
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.masterwok.shrimplesearch.R
-import com.masterwok.shrimplesearch.common.extensions.dpToPx
 import com.masterwok.shrimplesearch.common.extensions.hideSoftKeyboard
-import com.masterwok.shrimplesearch.common.utils.notNull
 import com.masterwok.shrimplesearch.di.AppInjector
 import com.masterwok.shrimplesearch.features.query.adapters.QueryResultsAdapter
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
@@ -32,6 +27,7 @@ import com.masterwok.xamarininterface.models.Query
 import kotlinx.android.synthetic.main.fragment_query.*
 import kotlinx.android.synthetic.main.include_toolbar_query.*
 import javax.inject.Inject
+import javax.inject.Named
 
 
 class QueryFragment : Fragment() {
@@ -39,10 +35,16 @@ class QueryFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    @Inject
+    @Named("aggregate_indexer_id")
+    lateinit var aggregateIndexerId: String
+
     private val viewModel: QueryViewModel by viewModels(this::requireActivity) { viewModelFactory }
 
     private val queryResultsAdapter = QueryResultsAdapter {
-        viewModel.setSelectedIndexerQueryResult(it)
+        viewModel.setSelectedIndexer(it.indexer)
+
+        findNavController().navigate(R.id.action_queryFragment_to_indexerQueryResultsFragment)
     }
 
     override fun onCreateView(
@@ -120,7 +122,7 @@ class QueryFragment : Fragment() {
         results: Collection<IndexerQueryResult>
     ): IndexerQueryResult = IndexerQueryResult(
         Indexer(
-            id = ""
+            id = aggregateIndexerId
             , type = IndexerType.Aggregate
             , displayName = getString(R.string.indexer_aggregate_display_name)
             , displayDescription = null
@@ -140,9 +142,5 @@ class QueryFragment : Fragment() {
             .inject(this)
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance() = QueryFragment()
-    }
 }
 

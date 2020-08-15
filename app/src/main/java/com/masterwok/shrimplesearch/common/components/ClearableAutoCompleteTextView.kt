@@ -26,6 +26,7 @@ class ClearableAutoCompleteTextView : AppCompatAutoCompleteTextView {
     override fun onFinishInflate() {
         super.onFinishInflate()
 
+        setDrawableRight()
         setOnTouchListener(null)
     }
 

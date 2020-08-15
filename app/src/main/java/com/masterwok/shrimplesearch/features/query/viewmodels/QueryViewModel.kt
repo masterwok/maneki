@@ -2,8 +2,10 @@ package com.masterwok.shrimplesearch.features.query.viewmodels
 
 import androidx.lifecycle.*
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettService
+import com.masterwok.xamarininterface.models.Indexer
 import com.masterwok.xamarininterface.models.IndexerQueryResult
 import com.masterwok.xamarininterface.models.Query
+import com.masterwok.xamarininterface.models.QueryResultItem
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,15 +19,29 @@ class QueryViewModel @Inject constructor(
     )
 
     private val _liveDataQueryCompleted = MutableLiveData<Unit>()
-    private val _liveDataSelectedIndexerQueryResult = MutableLiveData<IndexerQueryResult>()
-
-    val liveDataSelectedIndexerQueryResult: LiveData<IndexerQueryResult> =
-        _liveDataSelectedIndexerQueryResult
+    private val _liveDataSelectedIndexer = MutableLiveData<Indexer>()
 
     val liveDataIndexerQueryResults: LiveData<List<IndexerQueryResult>> =
         _liveDataIndexerQueryResults.map { it.toList() }
 
     val liveDataQueryCompleted: LiveData<Unit> = _liveDataQueryCompleted;
+
+    var liveDataSelectedIndexerQueryResultItem =
+        _liveDataIndexerQueryResults.map { indexerQueryResults ->
+
+            val selectedIndexer = _liveDataSelectedIndexer.value
+                ?: return@map emptyList<QueryResultItem>()
+
+            val indexerQueryResult = indexerQueryResults.firstOrNull {
+                it.indexer.id == selectedIndexer.id
+            }
+
+            val items = indexerQueryResult
+                ?.items
+                ?: indexerQueryResults.flatMap { it.items }
+
+            return@map items.sortedByDescending { it.statInfo.seeders }
+        }
 
     init {
         jackettService.addListener(this)
@@ -59,11 +75,12 @@ class QueryViewModel @Inject constructor(
 
     fun setQuery(query: Query) = viewModelScope.launch {
         _liveDataIndexerQueryResults.value?.clear()
+        _liveDataSelectedIndexer.value = null
         jackettService.query(query)
     }
 
-    fun setSelectedIndexerQueryResult(indexerQueryResult: IndexerQueryResult) {
-        _liveDataSelectedIndexerQueryResult.postValue(indexerQueryResult)
+    fun setSelectedIndexer(indexer: Indexer) {
+        _liveDataSelectedIndexer.postValue(indexer)
     }
 
 }

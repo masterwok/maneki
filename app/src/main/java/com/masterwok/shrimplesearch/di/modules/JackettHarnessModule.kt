@@ -9,11 +9,7 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module(
-    includes = [
-        JackettHarnessModule.Declarations::class
-    ]
-)
+@Module(includes = [JackettHarnessModule.Declarations::class])
 class JackettHarnessModule {
 
     @Suppress("RedundantModalityModifier", "unused")

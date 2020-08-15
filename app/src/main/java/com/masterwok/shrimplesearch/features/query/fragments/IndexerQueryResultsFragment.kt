@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -16,7 +17,7 @@ import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.di.AppInjector
 import com.masterwok.shrimplesearch.features.query.adapters.IndexerQueryResultsAdapter
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
-import com.masterwok.xamarininterface.models.IndexerQueryResult
+import com.masterwok.xamarininterface.models.QueryResultItem
 import kotlinx.android.synthetic.main.fragment_indexer_query_results.*
 import javax.inject.Inject
 
@@ -64,19 +65,16 @@ class IndexerQueryResultsFragment : Fragment() {
     }
 
     private fun subscribeToLiveData() {
-        viewModel.liveDataSelectedIndexerQueryResult.observe(viewLifecycleOwner, ::configure)
-    }
-
-    private fun configure(indexerQueryResult: IndexerQueryResult) {
-        recyclerView.scrollToPosition(0)
-
-        queryResultsAdapter.configure(
-            indexerQueryResult.items.sortedByDescending { it.statInfo.seeders }
+        viewModel.liveDataSelectedIndexerQueryResultItem.observe(
+            viewLifecycleOwner
+            , ::configure
         )
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance() = IndexerQueryResultsFragment()
+    private fun configure(queryResultItems: List<QueryResultItem>) {
+        recyclerView.scrollToPosition(0)
+
+        queryResultsAdapter.configure(queryResultItems)
     }
+
 }
