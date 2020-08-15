@@ -6,6 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.TextView
+import androidx.annotation.DimenRes
+import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,7 +18,9 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.masterwok.shrimplesearch.R
+import com.masterwok.shrimplesearch.common.extensions.dpToPx
 import com.masterwok.shrimplesearch.common.extensions.hideSoftKeyboard
+import com.masterwok.shrimplesearch.common.utils.notNull
 import com.masterwok.shrimplesearch.di.AppInjector
 import com.masterwok.shrimplesearch.features.query.adapters.QueryResultsAdapter
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
@@ -72,11 +78,31 @@ class QueryFragment : Fragment() {
                 activity?.hideSoftKeyboard()
                 progressBar.isVisible = true
                 linearLayoutQueryHint.isVisible = false
+                setAutoCompleteDrawableRight()
                 true
             } else {
                 false
             }
         }
+
+        autoCompleteTextViewSearch.setOnFocusChangeListener { _, isFocused ->
+            if (isFocused) {
+                setAutoCompleteDrawableRight()
+            }
+        }
+    }
+
+    private fun setAutoCompleteDrawableRight() = context?.notNull { context ->
+        autoCompleteTextViewSearch.setCompoundDrawablesWithIntrinsicBounds(
+            null
+            , null
+            , if (autoCompleteTextViewSearch.text.isNullOrEmpty()) {
+                null
+            } else {
+                ContextCompat.getDrawable(context, R.drawable.ic_auto_complete_clear)
+            }
+            , null
+        )
     }
 
     private fun subscribeToLiveData() {
