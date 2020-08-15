@@ -2,6 +2,7 @@ package com.masterwok.shrimplesearch.features.query.viewmodels
 
 import androidx.lifecycle.*
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettService
+import com.masterwok.shrimplesearch.features.query.enums.QueryState
 import com.masterwok.xamarininterface.models.Indexer
 import com.masterwok.xamarininterface.models.IndexerQueryResult
 import com.masterwok.xamarininterface.models.Query
@@ -18,13 +19,16 @@ class QueryViewModel @Inject constructor(
         mutableListOf()
     )
 
+    private val _liveDataQueryState = MutableLiveData<QueryState?>(null)
     private val _liveDataQueryCompleted = MutableLiveData<Unit>()
     private val _liveDataSelectedIndexer = MutableLiveData<Indexer>()
 
     val liveDataIndexerQueryResults: LiveData<List<IndexerQueryResult>> =
         _liveDataIndexerQueryResults.map { it.toList() }
 
-    val liveDataQueryCompleted: LiveData<Unit> = _liveDataQueryCompleted;
+    val liveDataQueryCompleted: LiveData<Unit> = _liveDataQueryCompleted
+
+    val liveDataQueryState = _liveDataQueryState
 
     var liveDataSelectedIndexerQueryResultItem =
         _liveDataIndexerQueryResults.map { indexerQueryResults ->
@@ -70,12 +74,14 @@ class QueryViewModel @Inject constructor(
     override fun onQueryCompleted() {
         viewModelScope.launch {
             _liveDataQueryCompleted.value = Unit
+            _liveDataQueryState.value = QueryState.Completed
         }
     }
 
     fun setQuery(query: Query) = viewModelScope.launch {
         _liveDataIndexerQueryResults.value?.clear()
         _liveDataSelectedIndexer.value = null
+        _liveDataQueryState.value = QueryState.Pending
         jackettService.query(query)
     }
 

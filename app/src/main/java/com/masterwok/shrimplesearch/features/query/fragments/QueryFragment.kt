@@ -18,9 +18,10 @@ import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.extensions.hideSoftKeyboard
 import com.masterwok.shrimplesearch.di.AppInjector
 import com.masterwok.shrimplesearch.features.query.adapters.QueryResultsAdapter
+import com.masterwok.shrimplesearch.features.query.enums.QueryState
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
 import com.masterwok.xamarininterface.enums.IndexerType
-import com.masterwok.xamarininterface.enums.QueryState
+import com.masterwok.xamarininterface.enums.IndexerQueryState
 import com.masterwok.xamarininterface.models.Indexer
 import com.masterwok.xamarininterface.models.IndexerQueryResult
 import com.masterwok.xamarininterface.models.Query
@@ -96,6 +97,20 @@ class QueryFragment : Fragment() {
         viewModel.liveDataQueryCompleted.observe(viewLifecycleOwner) {
             onQueryCompleted()
         }
+
+        viewModel.liveDataQueryState.observe(viewLifecycleOwner, ::onQueryStateChange)
+    }
+
+    private fun onQueryStateChange(queryState: QueryState?) {
+        linearLayoutQueryHint.isVisible = when (queryState) {
+            null -> true
+            else -> false
+        }
+
+        progressBar.isVisible = when (queryState) {
+            QueryState.Pending -> true
+            else -> false
+        }
     }
 
     private fun onQueryCompleted() {
@@ -128,7 +143,7 @@ class QueryFragment : Fragment() {
             , displayDescription = null
         )
         , results.flatMap { it.items }
-        , queryState = QueryState.Success
+        , queryState = IndexerQueryState.Success
         , failureReason = null
         , magnetCount = results.sumBy { it.magnetCount }
         , linkCount = results.sumBy { it.linkCount }

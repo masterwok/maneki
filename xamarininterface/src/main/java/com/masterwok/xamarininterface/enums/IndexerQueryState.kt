@@ -1,6 +1,6 @@
 package com.masterwok.xamarininterface.enums
 
-enum class QueryState {
+enum class IndexerQueryState {
     Success,
     Failure,
     Aborted
