@@ -30,22 +30,10 @@ class QueryViewModel @Inject constructor(
 
     val liveDataQueryState = _liveDataQueryState
 
-    var liveDataSelectedIndexerQueryResultItem =
-        _liveDataIndexerQueryResults.map { indexerQueryResults ->
-
-            val selectedIndexer = _liveDataSelectedIndexer.value
-                ?: return@map emptyList<QueryResultItem>()
-
-            val indexerQueryResult = indexerQueryResults.firstOrNull {
-                it.indexer.id == selectedIndexer.id
-            }
-
-            val items = indexerQueryResult
-                ?.items
-                ?: indexerQueryResults.flatMap { it.items }
-
-            return@map items.sortedByDescending { it.statInfo.seeders }
-        }
+    val liveDataSelectedIndexerQueryResultItem = MediatorLiveData<List<QueryResultItem>>().apply {
+        addSource(_liveDataIndexerQueryResults) { value = getSelectedIndexerQueryResults() }
+        addSource(_liveDataSelectedIndexer) { value = getSelectedIndexerQueryResults() }
+    }
 
     init {
         jackettService.addListener(this)
@@ -87,6 +75,24 @@ class QueryViewModel @Inject constructor(
 
     fun setSelectedIndexer(indexer: Indexer) {
         _liveDataSelectedIndexer.postValue(indexer)
+    }
+
+    private fun getSelectedIndexerQueryResults(): List<QueryResultItem> {
+        val queryResults = _liveDataIndexerQueryResults.value
+            ?: emptyList<IndexerQueryResult>()
+
+        val selectedIndexer = _liveDataSelectedIndexer.value
+            ?: return emptyList()
+
+        val indexerQueryResult = queryResults.firstOrNull {
+            it.indexer.id == selectedIndexer.id
+        }
+
+        val items = indexerQueryResult
+            ?.items
+            ?: (indexerQueryResult?.items ?: queryResults.flatMap { it.items })
+
+        return items.sortedByDescending { it.statInfo.seeders }
     }
 
 }
