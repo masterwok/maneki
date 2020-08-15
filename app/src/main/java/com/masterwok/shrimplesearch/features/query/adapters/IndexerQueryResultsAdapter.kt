@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.view_indexer_query_result_item.view.*
 import java.text.DateFormat
 
 class IndexerQueryResultsAdapter(
-    private val onQueryResultClicked: (QueryResultItem) -> Unit
+    private val onQueryResultItemClicked: (QueryResultItem) -> Unit
 ) : RecyclerView.Adapter<IndexerQueryResultsAdapter.ViewHolder>()
     , Configurable<List<QueryResultItem>> {
 
@@ -32,7 +32,7 @@ class IndexerQueryResultsAdapter(
                 , parent
                 , false
             )
-        , onQueryResultClicked
+        , onQueryResultItemClicked
     )
 
     override fun getItemCount(): Int = configuredModel.count()
@@ -93,6 +93,7 @@ class IndexerQueryResultsAdapter(
 
             itemView.imageViewMagnet.isVisible = model.linkInfo.magnetUri != null
 
+            itemView.setOnClickListener { onQueryResultItemClicked(model) }
         }
     }
 }

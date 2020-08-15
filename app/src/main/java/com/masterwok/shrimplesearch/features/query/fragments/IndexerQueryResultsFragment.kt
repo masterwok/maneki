@@ -1,11 +1,15 @@
 package com.masterwok.shrimplesearch.features.query.fragments
 
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ShareCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -15,12 +19,14 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.masterwok.shrimplesearch.R
+import com.masterwok.shrimplesearch.common.utils.notNull
 import com.masterwok.shrimplesearch.di.AppInjector
 import com.masterwok.shrimplesearch.features.query.adapters.IndexerQueryResultsAdapter
 import com.masterwok.shrimplesearch.features.query.enums.QueryState
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
 import com.masterwok.xamarininterface.models.QueryResultItem
 import kotlinx.android.synthetic.main.fragment_indexer_query_results.*
+import java.lang.Exception
 import javax.inject.Inject
 
 
@@ -31,7 +37,22 @@ class IndexerQueryResultsFragment : Fragment() {
 
     private val viewModel: QueryViewModel by viewModels(this::requireActivity) { viewModelFactory }
 
-    private val queryResultsAdapter = IndexerQueryResultsAdapter {
+    private val queryResultsAdapter = IndexerQueryResultsAdapter { queryResultItem ->
+        openQueryResultItem(queryResultItem)
+    }
+
+    private fun openQueryResultItem(
+        queryResultItem: QueryResultItem
+    ) = activity.notNull { activity ->
+        val linkInfo = queryResultItem.linkInfo
+        val uri = linkInfo.magnetUri ?: linkInfo.link ?: return
+
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW, uri).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            })
+        } catch (exception: ActivityNotFoundException) {
+        }
     }
 
     override fun onAttach(context: Context) {
