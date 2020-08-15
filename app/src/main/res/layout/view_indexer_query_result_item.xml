@@ -15,7 +15,7 @@
         android:fontFamily="@font/eina_03_semi_bold"
         android:maxLines="2"
         android:textColor="@android:color/black"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
