@@ -78,31 +78,11 @@ class QueryFragment : Fragment() {
                 activity?.hideSoftKeyboard()
                 progressBar.isVisible = true
                 linearLayoutQueryHint.isVisible = false
-                setAutoCompleteDrawableRight()
                 true
             } else {
                 false
             }
         }
-
-        autoCompleteTextViewSearch.setOnFocusChangeListener { _, isFocused ->
-            if (isFocused) {
-                setAutoCompleteDrawableRight()
-            }
-        }
-    }
-
-    private fun setAutoCompleteDrawableRight() = context?.notNull { context ->
-        autoCompleteTextViewSearch.setCompoundDrawablesWithIntrinsicBounds(
-            null
-            , null
-            , if (autoCompleteTextViewSearch.text.isNullOrEmpty()) {
-                null
-            } else {
-                ContextCompat.getDrawable(context, R.drawable.ic_auto_complete_clear)
-            }
-            , null
-        )
     }
 
     private fun subscribeToLiveData() {
