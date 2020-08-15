@@ -11,7 +11,11 @@
         android:id="@+id/coordinator_layout_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?color_background">
+        android:background="?color_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,10 +40,7 @@
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         </LinearLayout>
 
@@ -57,38 +58,39 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="vertical"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent">-->
+    <LinearLayout
+        android:id="@+id/linearLayoutQueryHint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-<!--        <ImageView-->
-<!--            android:id="@+id/imageView4"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center_horizontal"-->
-<!--            android:contentDescription="@string/searchIcon"-->
-<!--            android:src="@mipmap/ic_search"-->
-<!--            android:tint="@android:color/black" />-->
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/searchIcon"
+            android:src="@mipmap/ic_search"
+            android:tint="@android:color/black" />
 
-<!--        <com.google.android.material.textview.MaterialTextView-->
-<!--            android:id="@+id/textView"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center_horizontal"-->
-<!--            android:layout_marginTop="16dp"-->
-<!--            android:fontFamily="@font/eina_03_regular"-->
-<!--            android:text="@string/search_placeholder_text"-->
-<!--            android:textAlignment="center"-->
-<!--            android:textColor="@android:color/black"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/imageView4" />-->
-<!--    </LinearLayout>-->
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/eina_03_regular"
+            android:text="@string/search_placeholder_text"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

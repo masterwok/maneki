@@ -71,6 +71,7 @@ class QueryFragment : Fragment() {
                 queryResultsAdapter.configure(emptyList())
                 activity?.hideSoftKeyboard()
                 progressBar.isVisible = true
+                linearLayoutQueryHint.isVisible = false
                 true
             } else {
                 false
