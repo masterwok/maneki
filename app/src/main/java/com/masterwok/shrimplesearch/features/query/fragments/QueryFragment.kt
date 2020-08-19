@@ -75,7 +75,7 @@ class QueryFragment : Fragment() {
 
     private fun initNavigation() {
         val navController = findNavController()
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        val appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
 
         toolbar.setupWithNavController(navController, appBarConfiguration)
     }
