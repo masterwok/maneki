@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Hackers 1995" />
 
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/materialTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
 
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewPublishedOn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -61,13 +61,13 @@
         app:layout_constraintStart_toStartOf="@+id/textViewTitle"
         app:layout_constraintTop_toBottomOf="@+id/materialTextView">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:tint="@android:color/white"
             app:srcCompat="@drawable/ic_arrow_upward_black_24dp" />
 
-        <com.google.android.material.textview.MaterialTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewSeeders"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -91,13 +91,13 @@
         app:layout_constraintStart_toEndOf="@+id/linearLayout3"
         app:layout_constraintTop_toTopOf="@+id/linearLayout3">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:tint="@android:color/white"
             app:srcCompat="@drawable/ic_arrow_downward_black_24dp" />
 
-        <com.google.android.material.textview.MaterialTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewLeechers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -123,13 +123,13 @@
         app:layout_constraintStart_toEndOf="@+id/textViewSize"
         app:layout_constraintTop_toTopOf="@+id/textViewSize">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:tint="@android:color/white"
             app:srcCompat="@drawable/ic_insert_drive_file_black_24dp" />
 
-        <com.google.android.material.textview.MaterialTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewFileCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -141,7 +141,7 @@
 
     </LinearLayout>
 
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewSize"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -157,7 +157,7 @@
         app:layout_constraintTop_toTopOf="@+id/linearLayout4"
         tools:text="1,348.43 Kb" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageViewMagnet"
         android:layout_width="18dp"
         android:layout_height="18dp"

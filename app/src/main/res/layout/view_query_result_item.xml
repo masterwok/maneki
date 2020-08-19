@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewIndexerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="The Pirate Bay" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageView2"
         android:layout_width="42dp"
         android:layout_height="42dp"
@@ -42,13 +42,13 @@
         app:layout_constraintStart_toStartOf="@+id/textViewIndexerName"
         app:layout_constraintTop_toBottomOf="@+id/textViewIndexerName">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:tint="@android:color/white"
             app:srcCompat="@drawable/ic_magnet_black" />
 
-        <com.google.android.material.textview.MaterialTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewMagnetCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,14 +73,14 @@
         app:layout_constraintStart_toEndOf="@+id/linearLayout"
         app:layout_constraintTop_toBottomOf="@+id/textViewIndexerName">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageView3"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:tint="@android:color/white"
             app:srcCompat="@drawable/ic_link_black_24dp" />
 
-        <com.google.android.material.textview.MaterialTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewLinkCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

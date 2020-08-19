@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="?color_background">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView4"
         app:srcCompat="@mipmap/ic_shrimple_smile" />
 
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Maneki" />
 
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textView5"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
         app:mpb_progressTint="?color_progress_bar_foreground"
         app:mpb_useIntrinsicPadding="false" />
 
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewIndexerProgressCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
