@@ -3,7 +3,7 @@ package com.masterwok.shrimplesearch.features.splash.activities
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.masterwok.shrimplesearch.R
@@ -16,7 +16,7 @@ import javax.inject.Inject
 import kotlin.math.ceil
 
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : FragmentActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory

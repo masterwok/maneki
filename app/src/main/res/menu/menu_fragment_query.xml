@@ -5,5 +5,45 @@
         android:id="@+id/menu_item_sort"
         android:icon="@drawable/ic_sort_black_24dp"
         android:title="@string/menu_fragment_query_sort"
-        app:showAsAction="ifRoom" />
+        app:iconTint="?color_toolbar_icon_tint"
+        app:showAsAction="ifRoom|collapseActionView">
+        <menu>
+            <group
+                android:id="@+id/group_settings"
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/menu_item_sort_name"
+                    android:title="@string/menu_item_sort_name_asc" />
+                <item
+                    android:id="@+id/menu_item_sort_name_desc"
+                    android:title="@string/menu_item_sort_name_desc" />
+                <item
+                    android:id="@+id/menu_item_sort_size"
+                    android:title="@string/menu_item_sort_size_asc" />
+                <item
+                    android:id="@+id/menu_item_sort_size_desc"
+                    android:title="@string/menu_item_sort_size_desc" />
+                <item
+                    android:id="@+id/menu_item_sort_seeders"
+                    android:title="@string/menu_item_sort_seeders_asc" />
+                <!-- Seeders descending is the default selected value. -->
+                <item
+                    android:id="@+id/menu_item_sort_seeders_desc"
+                    android:checked="true"
+                    android:title="@string/menu_item_sort_seeders_desc" />
+                <item
+                    android:id="@+id/menu_item_sort_leechers"
+                    android:title="@string/menu_item_sort_leechers_asc" />
+                <item
+                    android:id="@+id/menu_item_sort_leechers_desc"
+                    android:title="@string/menu_item_sort_leechers_desc" />
+                <item
+                    android:id="@+id/menu_item_sort_uploaded_on"
+                    android:title="@string/men_item_sort_upload_date_asc" />
+                <item
+                    android:id="@+id/menu_item_sort_uploaded_on_desc"
+                    android:title="@string/men_item_sort_upload_date_desc" />
+            </group>
+        </menu>
+    </item>
 </menu>
