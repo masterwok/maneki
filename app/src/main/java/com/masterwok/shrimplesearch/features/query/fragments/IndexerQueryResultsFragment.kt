@@ -15,6 +15,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 
@@ -26,6 +30,7 @@ import com.masterwok.shrimplesearch.features.query.enums.QueryState
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
 import com.masterwok.xamarininterface.models.QueryResultItem
 import kotlinx.android.synthetic.main.fragment_indexer_query_results.*
+import kotlinx.android.synthetic.main.include_toolbar_maneki.*
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -75,8 +80,16 @@ class IndexerQueryResultsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initNavigation()
         initRecyclerView()
         subscribeToLiveData()
+    }
+
+    private fun initNavigation() {
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+
+        toolbar.setupWithNavController(navController, appBarConfiguration)
     }
 
     private fun initRecyclerView() {

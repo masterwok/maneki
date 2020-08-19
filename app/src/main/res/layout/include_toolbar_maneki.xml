@@ -4,9 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="?attr/actionBarSize"
     android:background="?color_background"
-    android:minHeight="?attr/actionBarSize"
     app:theme="?style_toolbar">
 
     <ImageView

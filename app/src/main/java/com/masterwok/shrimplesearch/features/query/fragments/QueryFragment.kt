@@ -11,7 +11,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.masterwok.shrimplesearch.R
@@ -26,6 +32,7 @@ import com.masterwok.xamarininterface.models.Indexer
 import com.masterwok.xamarininterface.models.IndexerQueryResult
 import com.masterwok.xamarininterface.models.Query
 import kotlinx.android.synthetic.main.fragment_query.*
+import kotlinx.android.synthetic.main.include_toolbar_maneki.*
 import kotlinx.android.synthetic.main.include_toolbar_query.*
 import javax.inject.Inject
 import javax.inject.Named
@@ -60,9 +67,17 @@ class QueryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initNavigation()
         initRecyclerView()
         subscribeToViewComponents()
         subscribeToLiveData()
+    }
+
+    private fun initNavigation() {
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+
+        toolbar.setupWithNavController(navController, appBarConfiguration)
     }
 
     private fun initRecyclerView() {
