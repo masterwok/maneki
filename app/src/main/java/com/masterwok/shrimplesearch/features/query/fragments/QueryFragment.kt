@@ -3,6 +3,7 @@ package com.masterwok.shrimplesearch.features.query.fragments
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
@@ -11,12 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,8 +23,8 @@ import com.masterwok.shrimplesearch.di.AppInjector
 import com.masterwok.shrimplesearch.features.query.adapters.QueryResultsAdapter
 import com.masterwok.shrimplesearch.features.query.enums.QueryState
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
-import com.masterwok.xamarininterface.enums.IndexerType
 import com.masterwok.xamarininterface.enums.IndexerQueryState
+import com.masterwok.xamarininterface.enums.IndexerType
 import com.masterwok.xamarininterface.models.Indexer
 import com.masterwok.xamarininterface.models.IndexerQueryResult
 import com.masterwok.xamarininterface.models.Query
@@ -55,10 +52,15 @@ class QueryFragment : Fragment() {
         findNavController().navigate(R.id.action_queryFragment_to_indexerQueryResultsFragment)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(
+    ): View = inflater.inflate(
         R.layout.fragment_query
         , container
         , false
@@ -67,10 +69,26 @@ class QueryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initToolbar()
         initNavigation()
         initRecyclerView()
         subscribeToViewComponents()
         subscribeToLiveData()
+    }
+
+    private fun initToolbar() {
+        toolbar.apply {
+            inflateMenu(R.menu.menu_fragment_query)
+            setOnMenuItemClickListener(this@QueryFragment::onOptionsItemSelected)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId != R.id.menu_item_sort) {
+            return false
+        }
+
+        return true
     }
 
     private fun initNavigation() {

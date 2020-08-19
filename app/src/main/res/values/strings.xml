@@ -22,5 +22,6 @@
     <string name="searchIcon">A search icon.</string>
 
     <string name="search_placeholder_text">Use the toolbar above to search for magnets&#8230;</string>
+    <string name="menu_fragment_query_sort">Sort</string>
 
 </resources>
