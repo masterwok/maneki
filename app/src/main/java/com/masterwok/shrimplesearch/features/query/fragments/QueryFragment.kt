@@ -57,24 +57,6 @@ class QueryFragment : Fragment() {
         findNavController().navigate(R.id.action_queryFragment_to_indexerQueryResultsFragment)
     }
 
-    private val sortComponentModel: SortComponent.Model by lazy {
-        SortComponent.Model(
-            IndexerQueryResultSortBy
-                .values()
-                .map { SortComponent.Pill(it.id, it::getDisplayValue) },
-            OrderBy
-                .values()
-                .map { SortComponent.Pill(it.id, it::getDisplayValue) },
-            SortComponent.Pill(
-                IndexerQueryResultSortBy.Leechers.id,
-                IndexerQueryResultSortBy.Leechers::getDisplayValue
-            ),
-            SortComponent.Pill(
-                OrderBy.Descending.id,
-                OrderBy.Descending::getDisplayValue
-            )
-        )
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -215,11 +197,26 @@ class QueryFragment : Fragment() {
     )
 
     private fun presentSortDialog() = context.notNull { context ->
+        val sortBy = viewModel.liveDataSort.value!!.first
+        val orderBy = viewModel.liveDataSort.value!!.second
+
         DialogUtil.presentSortDialog(
             context,
-            sortComponentModel
+            SortComponent.Model(
+                IndexerQueryResultSortBy
+                    .values()
+                    .map { SortComponent.Pill(it.id, it::getDisplayValue) },
+                OrderBy
+                    .values()
+                    .map { SortComponent.Pill(it.id, it::getDisplayValue) },
+                SortComponent.Pill(sortBy.id, sortBy::getDisplayValue),
+                SortComponent.Pill(orderBy.id, orderBy::getDisplayValue)
+            )
         ) { sortModel ->
-            val x = 1
+            viewModel.setSort(
+                IndexerQueryResultSortBy.getByValue(sortModel.selectedSortPill.id),
+                OrderBy.getByValue(sortModel.selectedOrderPill.id)
+            )
         }
     }
 

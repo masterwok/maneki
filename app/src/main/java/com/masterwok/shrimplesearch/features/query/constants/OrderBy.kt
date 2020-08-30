@@ -11,5 +11,10 @@ enum class OrderBy (val id: Int){
         Ascending -> context.getString(R.string.order_by_asecnding)
         Descending -> context.getString(R.string.order_by_descending)
     }
+
+
+    companion object {
+        fun getByValue(value: Int) = values().first { it.id == value }
+    }
 }
 

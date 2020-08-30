@@ -17,4 +17,9 @@ enum class IndexerQueryResultSortBy(val id: Int) {
         Size -> context.getString(R.string.component_sort_query_results_size)
         PublishedOn -> context.getString(R.string.component_sort_query_results_published_on)
     }
+
+    companion object {
+        fun getByValue(value: Int) = values().first { it.id == value }
+    }
+
 }
