@@ -3,8 +3,10 @@ package com.masterwok.shrimplesearch.features.query.components
 import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
+import android.widget.RadioGroup
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatCheckBox
+import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.setPadding
@@ -50,7 +52,7 @@ class SortByComponent : ConstraintLayout, Configurable<SortByComponent.Model> {
 
     private fun configureSortPills(sortPills: List<Pill>, selectedSortPill: Pill) {
         sortPills.forEach { pill ->
-            val checkBox = AppCompatCheckBox(context).apply {
+            val radioButton = AppCompatRadioButton(context).apply {
                 setBackgroundResource(R.drawable.background_pill)
                 setPadding(8.dpToPx(context))
                 typeface = ResourcesCompat.getFont(context, R.font.eina_03_regular)
@@ -62,7 +64,7 @@ class SortByComponent : ConstraintLayout, Configurable<SortByComponent.Model> {
                 minimumWidth = 0
             }
 
-            flexboxLayoutSort.addView(checkBox)
+            flexboxLayoutSort.addView(radioButton)
         }
     }
 
