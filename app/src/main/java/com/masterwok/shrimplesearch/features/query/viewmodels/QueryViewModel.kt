@@ -2,7 +2,7 @@ package com.masterwok.shrimplesearch.features.query.viewmodels
 
 import androidx.lifecycle.*
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettService
-import com.masterwok.shrimplesearch.features.query.enums.QueryState
+import com.masterwok.shrimplesearch.features.query.constants.QueryState
 import com.masterwok.xamarininterface.models.Indexer
 import com.masterwok.xamarininterface.models.IndexerQueryResult
 import com.masterwok.xamarininterface.models.Query

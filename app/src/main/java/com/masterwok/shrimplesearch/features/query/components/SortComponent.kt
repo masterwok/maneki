@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
 import android.widget.CompoundButton
-import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
@@ -12,7 +11,6 @@ import androidx.core.view.children
 import androidx.core.view.setPadding
 import com.google.android.flexbox.FlexboxLayout
 import com.masterwok.shrimplesearch.R
-import com.masterwok.shrimplesearch.common.contracts.Configurable
 import com.masterwok.shrimplesearch.common.contracts.ViewComponent
 import com.masterwok.shrimplesearch.common.extensions.dpToPx
 import kotlinx.android.synthetic.main.component_sort_by.view.*
@@ -58,11 +56,15 @@ class SortComponent : ConstraintLayout, ViewComponent<SortComponent.Model> {
     override fun getModel(): Model = Model(
         configuredModel.sortPills,
         configuredModel.orderPills,
-        Pill(getSelectedCompoundButtonTag(flexboxLayoutSort)),
-        Pill(getSelectedCompoundButtonTag(flexboxLayoutOrder))
+        configuredModel
+            .sortPills
+            .first { it.id == getSelectedId(flexboxLayoutSort) },
+        configuredModel
+            .sortPills
+            .first { it.id == getSelectedId(flexboxLayoutOrder) }
     )
 
-    private fun getSelectedCompoundButtonTag(flexBoxLayout: FlexboxLayout): Int = flexBoxLayout
+    private fun getSelectedId(flexBoxLayout: FlexboxLayout): Int = flexBoxLayout
         .children
         .filterIsInstance<CompoundButton>()
         .first { it.isChecked }
@@ -76,7 +78,7 @@ class SortComponent : ConstraintLayout, ViewComponent<SortComponent.Model> {
         flexBoxLayout.addView(
             createPillRadioButton(
                 flexBoxLayout,
-                pill.title,
+                pill,
                 pill == selectedSortPill
             )
         )
@@ -84,15 +86,15 @@ class SortComponent : ConstraintLayout, ViewComponent<SortComponent.Model> {
 
     private fun createPillRadioButton(
         flexBoxLayout: FlexboxLayout,
-        @StringRes pillTitle: Int,
+        pill: Pill,
         isChecked: Boolean
     ): AppCompatRadioButton = AppCompatRadioButton(context).apply {
         this.isChecked = isChecked
         setBackgroundResource(R.drawable.background_pill)
         setPadding(8.dpToPx(context))
-        tag = pillTitle
+        tag = pill.id
         typeface = ResourcesCompat.getFont(context, R.font.eina_03_regular)
-        text = context.getString(pillTitle)
+        text = pill.getTitle(context)
         gravity = Gravity.CENTER
         buttonDrawable = null
         minimumHeight = 0
@@ -126,7 +128,10 @@ class SortComponent : ConstraintLayout, ViewComponent<SortComponent.Model> {
         val selectedOrderPill: Pill
     )
 
-    data class Pill(@StringRes val title: Int)
+    data class Pill(
+        val id: Int,
+        val getTitle: (context: Context) -> String
+    )
 
 
 }

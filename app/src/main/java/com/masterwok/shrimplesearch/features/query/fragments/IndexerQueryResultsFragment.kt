@@ -3,21 +3,17 @@ package com.masterwok.shrimplesearch.features.query.fragments
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ShareCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,12 +22,11 @@ import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.utils.notNull
 import com.masterwok.shrimplesearch.di.AppInjector
 import com.masterwok.shrimplesearch.features.query.adapters.IndexerQueryResultsAdapter
-import com.masterwok.shrimplesearch.features.query.enums.QueryState
+import com.masterwok.shrimplesearch.features.query.constants.QueryState
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
 import com.masterwok.xamarininterface.models.QueryResultItem
 import kotlinx.android.synthetic.main.fragment_indexer_query_results.*
 import kotlinx.android.synthetic.main.include_toolbar_maneki.*
-import java.lang.Exception
 import javax.inject.Inject
 
 

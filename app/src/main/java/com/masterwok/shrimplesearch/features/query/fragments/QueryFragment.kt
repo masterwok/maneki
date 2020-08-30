@@ -24,7 +24,9 @@ import com.masterwok.shrimplesearch.common.utils.notNull
 import com.masterwok.shrimplesearch.di.AppInjector
 import com.masterwok.shrimplesearch.features.query.adapters.QueryResultsAdapter
 import com.masterwok.shrimplesearch.features.query.components.SortComponent
-import com.masterwok.shrimplesearch.features.query.enums.QueryState
+import com.masterwok.shrimplesearch.features.query.constants.IndexerQueryResultSortBy
+import com.masterwok.shrimplesearch.features.query.constants.OrderBy
+import com.masterwok.shrimplesearch.features.query.constants.QueryState
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
 import com.masterwok.xamarininterface.enums.IndexerQueryState
 import com.masterwok.xamarininterface.enums.IndexerType
@@ -53,6 +55,25 @@ class QueryFragment : Fragment() {
         viewModel.setSelectedIndexer(it.indexer)
 
         findNavController().navigate(R.id.action_queryFragment_to_indexerQueryResultsFragment)
+    }
+
+    private val sortComponentModel: SortComponent.Model by lazy {
+        SortComponent.Model(
+            IndexerQueryResultSortBy
+                .values()
+                .map { SortComponent.Pill(it.id, it::getDisplayValue) },
+            OrderBy
+                .values()
+                .map { SortComponent.Pill(it.id, it::getDisplayValue) },
+            SortComponent.Pill(
+                IndexerQueryResultSortBy.Leechers.id,
+                IndexerQueryResultSortBy.Leechers::getDisplayValue
+            ),
+            SortComponent.Pill(
+                OrderBy.Descending.id,
+                OrderBy.Descending::getDisplayValue
+            )
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -194,38 +215,14 @@ class QueryFragment : Fragment() {
     )
 
     private fun presentSortDialog() = context.notNull { context ->
-        DialogUtil.presentSortDialog(context, SORT_COMPONENT_MODEL) { sortModel ->
+        DialogUtil.presentSortDialog(
+            context,
+            sortComponentModel
+        ) { sortModel ->
             val x = 1
         }
     }
 
-
-    companion object {
-
-        private val SORT_PILL_LEECHERS = SortComponent.Pill(
-            R.string.component_sort_query_results_leechers
-        )
-
-        private val ORDER_PILL_DESCENDING = SortComponent.Pill(
-            R.string.component_sort_query_results_descending
-        )
-
-        private val SORT_COMPONENT_MODEL = SortComponent.Model(
-            listOf(
-                SortComponent.Pill(R.string.component_sort_query_results_name),
-                SortComponent.Pill(R.string.component_sort_query_results_peers),
-                SORT_PILL_LEECHERS,
-                SortComponent.Pill(R.string.component_sort_query_results_size),
-                SortComponent.Pill(R.string.component_sort_query_results_published_on)
-            ),
-            listOf(
-                SortComponent.Pill(R.string.component_sort_query_results_ascending),
-                ORDER_PILL_DESCENDING
-            ),
-            SORT_PILL_LEECHERS,
-            ORDER_PILL_DESCENDING
-        )
-    }
 
 }
 
