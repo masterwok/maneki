@@ -136,7 +136,7 @@ class QueryFragment : Fragment() {
     }
 
     private fun subscribeToLiveData() {
-        viewModel.liveDataIndexerQueryResults.observe(
+        viewModel.liveDataQueryResults.observe(
             viewLifecycleOwner,
             this::onIndexerQueryResultsChange
         )

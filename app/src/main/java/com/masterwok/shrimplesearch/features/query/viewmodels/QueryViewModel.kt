@@ -41,9 +41,6 @@ class QueryViewModel @Inject constructor(
     val liveDataSortIndexerQueryResults: LiveData<Pair<IndexerQueryResultSortBy, OrderBy>> =
         _liveDataSortIndexerQueryResults
 
-    val liveDataIndexerQueryResults: LiveData<List<IndexerQueryResult>> =
-        _liveDataIndexerQueryResults.map { it.toList() }
-
     val liveDataQueryCompleted: LiveData<Unit> = _liveDataQueryCompleted
 
     val liveDataQueryState = _liveDataQueryState
@@ -52,6 +49,11 @@ class QueryViewModel @Inject constructor(
         addSource(_liveDataSortIndexerQueryResults) { value = getSelectedIndexerQueryResults() }
         addSource(_liveDataIndexerQueryResults) { value = getSelectedIndexerQueryResults() }
         addSource(_liveDataSelectedIndexer) { value = getSelectedIndexerQueryResults() }
+    }
+
+    val liveDataQueryResults = MediatorLiveData<List<IndexerQueryResult>>().apply {
+        addSource(_liveDataSortQueryResults) { value = getIndexerQueryResults() }
+        addSource(_liveDataIndexerQueryResults) { value = getIndexerQueryResults() }
     }
 
     init {
@@ -74,13 +76,7 @@ class QueryViewModel @Inject constructor(
 
             results.add(indexerQueryResult)
 
-            val sortValue = checkNotNull(_liveDataSortQueryResults.value)
-
-            _liveDataIndexerQueryResults.value = sortIndexers(
-                results,
-                sortValue.first,
-                sortValue.second
-            ).toMutableList()
+            _liveDataIndexerQueryResults.value = results
         }
     }
 
@@ -110,6 +106,20 @@ class QueryViewModel @Inject constructor(
 
     fun setSelectedIndexer(indexer: Indexer) {
         _liveDataSelectedIndexer.postValue(indexer)
+    }
+
+
+    private fun getIndexerQueryResults(): List<IndexerQueryResult> {
+        val queryResults = _liveDataIndexerQueryResults.value
+            ?: emptyList<IndexerQueryResult>()
+
+        val sortValue = checkNotNull(_liveDataSortQueryResults.value)
+
+        return sortIndexers(
+            queryResults,
+            sortValue.first,
+            sortValue.second
+        )
     }
 
     private fun getSelectedIndexerQueryResults(): List<QueryResultItem> {
