@@ -24,7 +24,7 @@ import com.masterwok.shrimplesearch.common.extensions.hideSoftKeyboard
 import com.masterwok.shrimplesearch.common.utils.notNull
 import com.masterwok.shrimplesearch.di.AppInjector
 import com.masterwok.shrimplesearch.features.query.adapters.QueryResultsAdapter
-import com.masterwok.shrimplesearch.features.query.components.SortQueryResultsComponent
+import com.masterwok.shrimplesearch.features.query.components.SortByComponent
 import com.masterwok.shrimplesearch.features.query.enums.QueryState
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
 import com.masterwok.xamarininterface.enums.IndexerQueryState
@@ -195,8 +195,29 @@ class QueryFragment : Fragment() {
     )
 
     private fun presentSortDialog() = context.notNull { context ->
+        val sortPillLeechers = SortByComponent.Pill(R.string.component_sort_query_results_leechers)
+
+        val sortPills = listOf(
+            SortByComponent.Pill(R.string.component_sort_query_results_name),
+            SortByComponent.Pill(R.string.component_sort_query_results_peers),
+            sortPillLeechers,
+            SortByComponent.Pill(R.string.component_sort_query_results_size),
+            SortByComponent.Pill(R.string.component_sort_query_results_uploaded_on)
+        )
+
+        val sortComponent = SortByComponent(context).apply {
+            configure(
+                SortByComponent.Model(
+                    sortPills,
+                    emptyList(),
+                    sortPillLeechers,
+                    sortPillLeechers
+                )
+            )
+        }
+
         MaterialDialog(context).show {
-            customView(view = SortQueryResultsComponent(context))
+            customView(view = sortComponent)
             cornerRadius(16f)
             positiveButton {
                 title(res = R.string.button_done)
