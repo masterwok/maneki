@@ -33,6 +33,7 @@ class JackettServiceImpl constructor(
     }
 
     override suspend fun query(query: Query) = withContext(Dispatchers.IO) {
+        jackettHarness.cancelQuery()
         jackettHarness.query(query)
     }
 

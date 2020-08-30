@@ -67,9 +67,9 @@ class QueryViewModel @Inject constructor(
     }
 
     fun setQuery(query: Query) = viewModelScope.launch {
-        _liveDataIndexerQueryResults.value?.clear()
-        _liveDataSelectedIndexer.value = null
-        _liveDataQueryState.value = QueryState.Pending
+        _liveDataIndexerQueryResults.postValue(mutableListOf())
+        _liveDataSelectedIndexer.postValue(null)
+        _liveDataQueryState.postValue(QueryState.Pending)
         jackettService.query(query)
     }
 
