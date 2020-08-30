@@ -33,14 +33,17 @@
         app:showDivider="beginning|middle"
         app:showDividerHorizontal="middle">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatCheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_pill_sort_unselected"
+            android:background="@drawable/background_pill"
+            android:button="@android:color/transparent"
             android:fontFamily="@font/eina_03_regular"
+            android:gravity="center"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
             android:padding="8dp"
-            android:text="@string/component_sort_query_results_name"
-            android:textColor="@android:color/black" />
+            android:text="@string/component_sort_query_results_name" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
