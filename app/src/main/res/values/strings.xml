@@ -39,5 +39,7 @@
     <string name="query_result_sort_by_magnet_count">Magnet Count</string>
     <string name="query_result_sort_by_link_count">Link Count</string>
     <string name="query_result_sort_by_aggregate_count">Aggregate Count</string>
+    <string name="hint_no_search_results">No search results</string>
+    <string name="hint_no_search_results_description">No matching results found…</string>
 
 </resources>

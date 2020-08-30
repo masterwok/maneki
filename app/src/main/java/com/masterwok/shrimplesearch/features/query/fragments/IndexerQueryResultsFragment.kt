@@ -72,9 +72,7 @@ class IndexerQueryResultsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(
-        R.layout.fragment_indexer_query_results
-        , container
-        , false
+        R.layout.fragment_indexer_query_results, container, false
     )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -122,8 +120,7 @@ class IndexerQueryResultsFragment : Fragment() {
 
     private fun subscribeToLiveData() {
         viewModel.liveDataSelectedIndexerQueryResultItem.observe(
-            viewLifecycleOwner
-            , ::configure
+            viewLifecycleOwner, ::configure
         )
     }
 
@@ -138,6 +135,8 @@ class IndexerQueryResultsFragment : Fragment() {
         recyclerView.scrollToPosition(0)
 
         queryResultsAdapter.configure(queryResultItems)
+
+        linearLayoutNoResultsHint.isVisible = queryResultItems.count() == 0
     }
 
     private fun presentSortDialog() = context.notNull { context ->
