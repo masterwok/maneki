@@ -197,8 +197,8 @@ class QueryFragment : Fragment() {
     )
 
     private fun presentSortDialog() = context.notNull { context ->
-        val sortBy = viewModel.liveDataSort.value!!.first
-        val orderBy = viewModel.liveDataSort.value!!.second
+        val sortBy = checkNotNull(viewModel.liveDataSort.value).first
+        val orderBy = checkNotNull(viewModel.liveDataSort.value).second
 
         DialogUtil.presentSortDialog(
             context,

@@ -6,14 +6,14 @@ import com.masterwok.shrimplesearch.R
 enum class IndexerQueryResultSortBy(val id: Int) {
     Name(0),
     Peers(1),
-    Leechers(2),
+    Seeders(2),
     Size(3),
     PublishedOn(4);
 
     fun getDisplayValue(context: Context): String = when (this) {
         Name -> context.getString(R.string.component_sort_query_results_name)
         Peers -> context.getString(R.string.component_sort_query_results_peers)
-        Leechers -> context.getString(R.string.component_sort_query_results_leechers)
+        Seeders -> context.getString(R.string.component_sort_query_results_seeders)
         Size -> context.getString(R.string.component_sort_query_results_size)
         PublishedOn -> context.getString(R.string.component_sort_query_results_published_on)
     }

@@ -26,7 +26,7 @@ class QueryViewModel @Inject constructor(
     private val _liveDataSelectedIndexer = MutableLiveData<Indexer>()
 
     private val _liveDataSort = MutableLiveData<Pair<IndexerQueryResultSortBy, OrderBy>>(
-        IndexerQueryResultSortBy.Leechers to OrderBy.Descending
+        IndexerQueryResultSortBy.Seeders to OrderBy.Descending
     )
 
     val liveDataSort: LiveData<Pair<IndexerQueryResultSortBy, OrderBy>> = _liveDataSort
@@ -106,7 +106,40 @@ class QueryViewModel @Inject constructor(
             ?.items
             ?: (indexerQueryResult?.items ?: queryResults.flatMap { it.items })
 
-        return items.sortedByDescending { it.statInfo.seeders }
+        val sortValue = checkNotNull(_liveDataSort.value)
+
+        return sortQueryResultItems(
+            items,
+            sortValue.first,
+            sortValue.second
+        )
+    }
+
+    private fun sortQueryResultItems(
+        items: List<QueryResultItem>,
+        sortBy: IndexerQueryResultSortBy,
+        orderBy: OrderBy
+    ): List<QueryResultItem> = when (sortBy) {
+        IndexerQueryResultSortBy.Name -> when (orderBy) {
+            OrderBy.Ascending -> items.sortedBy { it.title }
+            OrderBy.Descending -> items.sortedByDescending { it.title }
+        }
+        IndexerQueryResultSortBy.Peers -> when (orderBy) {
+            OrderBy.Ascending -> items.sortedBy { it.statInfo.peers }
+            OrderBy.Descending -> items.sortedByDescending { it.statInfo.peers }
+        }
+        IndexerQueryResultSortBy.Seeders -> when (orderBy) {
+            OrderBy.Ascending -> items.sortedBy { it.statInfo.seeders }
+            OrderBy.Descending -> items.sortedByDescending { it.statInfo.seeders }
+        }
+        IndexerQueryResultSortBy.Size -> when (orderBy) {
+            OrderBy.Ascending -> items.sortedBy { it.statInfo.size }
+            OrderBy.Descending -> items.sortedByDescending { it.statInfo.size }
+        }
+        IndexerQueryResultSortBy.PublishedOn -> when (orderBy) {
+            OrderBy.Ascending -> items.sortedBy { it.statInfo.publishedOn }
+            OrderBy.Descending -> items.sortedByDescending { it.statInfo.publishedOn }
+        }
     }
 
 }

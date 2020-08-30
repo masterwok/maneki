@@ -28,7 +28,7 @@
     <string name="component_sort_query_results_name">Name</string>
     <string name="component_sort_query_results_published_on">Published On</string>
     <string name="component_sort_query_results_size">Size</string>
-    <string name="component_sort_query_results_leechers">Leechers</string>
+    <string name="component_sort_query_results_seeders">Seeders</string>
     <string name="component_sort_query_results_peers">Peers</string>
     <string name="component_sort_query_results_header_order">Order By</string>
     <string name="order_by_asecnding">Ascending</string>
