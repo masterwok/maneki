@@ -74,7 +74,13 @@ class QueryViewModel @Inject constructor(
 
             results.add(indexerQueryResult)
 
-            _liveDataIndexerQueryResults.value = results
+            val sortValue = checkNotNull(_liveDataSortQueryResults.value)
+
+            _liveDataIndexerQueryResults.value = sortIndexers(
+                results,
+                sortValue.first,
+                sortValue.second
+            ).toMutableList()
         }
     }
 
@@ -128,6 +134,29 @@ class QueryViewModel @Inject constructor(
             sortValue.first,
             sortValue.second
         )
+    }
+
+    private fun sortIndexers(
+        results: List<IndexerQueryResult>,
+        sortBy: QueryResultSortBy,
+        orderBy: OrderBy
+    ): List<IndexerQueryResult> = when (sortBy) {
+        QueryResultSortBy.Name -> when (orderBy) {
+            OrderBy.Ascending -> results.sortedBy { it.indexer.displayName }
+            OrderBy.Descending -> results.sortedByDescending { it.indexer.displayName }
+        }
+        QueryResultSortBy.MagnetCount -> when (orderBy) {
+            OrderBy.Ascending -> results.sortedBy { it.magnetCount }
+            OrderBy.Descending -> results.sortedByDescending { it.magnetCount }
+        }
+        QueryResultSortBy.LinkCount -> when (orderBy) {
+            OrderBy.Ascending -> results.sortedBy { it.linkCount }
+            OrderBy.Descending -> results.sortedByDescending { it.linkCount }
+        }
+        QueryResultSortBy.AggregateCount -> when (orderBy) {
+            OrderBy.Ascending -> results.sortedBy { it.linkCount + it.magnetCount }
+            OrderBy.Descending -> results.sortedByDescending { it.linkCount + it.magnetCount }
+        }
     }
 
     private fun sortQueryResultItems(

@@ -171,14 +171,9 @@ class QueryFragment : Fragment() {
         }
 
         val aggregateIndexerQueryResult = createAggregateIndexerQueryResult(queryResults)
-        val sortedQueryResults = sortQueryResults(queryResults)
 
-        queryResultsAdapter.configure(listOf(aggregateIndexerQueryResult) + sortedQueryResults)
+        queryResultsAdapter.configure(listOf(aggregateIndexerQueryResult) + queryResults)
     }
-
-    private fun sortQueryResults(
-        queryResults: List<IndexerQueryResult>
-    ): List<IndexerQueryResult> = queryResults.sortedByDescending { it.magnetCount }
 
     private fun createAggregateIndexerQueryResult(
         results: Collection<IndexerQueryResult>
