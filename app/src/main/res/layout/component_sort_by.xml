@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:parentTag="com.masterwok.shrimplesearch.features.query.components.SortByComponent">
+    tools:parentTag="com.masterwok.shrimplesearch.features.query.components.SortComponent">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textView2"

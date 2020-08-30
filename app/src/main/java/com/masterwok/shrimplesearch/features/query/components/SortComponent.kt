@@ -16,7 +16,7 @@ import com.masterwok.shrimplesearch.common.contracts.Configurable
 import com.masterwok.shrimplesearch.common.extensions.dpToPx
 import kotlinx.android.synthetic.main.component_sort_by.view.*
 
-class SortByComponent : ConstraintLayout, Configurable<SortByComponent.Model> {
+class SortComponent : ConstraintLayout, Configurable<SortComponent.Model> {
 
     constructor(context: Context) : super(context) {
         inflate(null)

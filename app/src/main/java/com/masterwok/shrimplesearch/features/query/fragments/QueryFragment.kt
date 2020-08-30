@@ -17,14 +17,13 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.customview.customView
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.extensions.hideSoftKeyboard
+import com.masterwok.shrimplesearch.common.utils.DialogUtil
 import com.masterwok.shrimplesearch.common.utils.notNull
 import com.masterwok.shrimplesearch.di.AppInjector
 import com.masterwok.shrimplesearch.features.query.adapters.QueryResultsAdapter
-import com.masterwok.shrimplesearch.features.query.components.SortByComponent
+import com.masterwok.shrimplesearch.features.query.components.SortComponent
 import com.masterwok.shrimplesearch.features.query.enums.QueryState
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
 import com.masterwok.xamarininterface.enums.IndexerQueryState
@@ -195,45 +194,35 @@ class QueryFragment : Fragment() {
     )
 
     private fun presentSortDialog() = context.notNull { context ->
-        val sortPillLeechers = SortByComponent.Pill(R.string.component_sort_query_results_leechers)
+        DialogUtil.presentSortDialog(context, SORT_COMPONENT_MODEL)
+    }
 
-        val sortPills = listOf(
-            SortByComponent.Pill(R.string.component_sort_query_results_name),
-            SortByComponent.Pill(R.string.component_sort_query_results_peers),
-            sortPillLeechers,
-            SortByComponent.Pill(R.string.component_sort_query_results_size),
-            SortByComponent.Pill(R.string.component_sort_query_results_published_on)
+
+    companion object {
+
+        private val SORT_PILL_LEECHERS = SortComponent.Pill(
+            R.string.component_sort_query_results_leechers
         )
 
-        val orderPillDescending =
-            SortByComponent.Pill(R.string.component_sort_query_results_descending)
-
-        val orderPills = listOf(
-            SortByComponent.Pill(R.string.component_sort_query_results_ascending),
-            orderPillDescending
+        private val ORDER_PILL_DESCENDING = SortComponent.Pill(
+            R.string.component_sort_query_results_descending
         )
 
-        val sortComponent = SortByComponent(context).apply {
-            configure(
-                SortByComponent.Model(
-                    sortPills,
-                    orderPills,
-                    sortPillLeechers,
-                    orderPillDescending
-                )
-            )
-        }
-
-        MaterialDialog(context).show {
-            customView(view = sortComponent)
-            cornerRadius(16f)
-            positiveButton {
-                title(res = R.string.button_done)
-            }
-            negativeButton {
-                title(res = R.string.button_cancel)
-            }
-        }
+        private val SORT_COMPONENT_MODEL = SortComponent.Model(
+            listOf(
+                SortComponent.Pill(R.string.component_sort_query_results_name),
+                SortComponent.Pill(R.string.component_sort_query_results_peers),
+                SORT_PILL_LEECHERS,
+                SortComponent.Pill(R.string.component_sort_query_results_size),
+                SortComponent.Pill(R.string.component_sort_query_results_published_on)
+            ),
+            listOf(
+                SortComponent.Pill(R.string.component_sort_query_results_ascending),
+                ORDER_PILL_DESCENDING
+            ),
+            SORT_PILL_LEECHERS,
+            ORDER_PILL_DESCENDING
+        )
     }
 
 }
