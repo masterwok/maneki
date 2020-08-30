@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -19,9 +20,13 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.masterwok.shrimplesearch.R
+import com.masterwok.shrimplesearch.common.utils.DialogUtil
 import com.masterwok.shrimplesearch.common.utils.notNull
 import com.masterwok.shrimplesearch.di.AppInjector
 import com.masterwok.shrimplesearch.features.query.adapters.IndexerQueryResultsAdapter
+import com.masterwok.shrimplesearch.features.query.components.SortComponent
+import com.masterwok.shrimplesearch.features.query.constants.IndexerQueryResultSortBy
+import com.masterwok.shrimplesearch.features.query.constants.OrderBy
 import com.masterwok.shrimplesearch.features.query.constants.QueryState
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
 import com.masterwok.xamarininterface.models.QueryResultItem
@@ -75,9 +80,20 @@ class IndexerQueryResultsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initToolbar()
         initNavigation()
         initRecyclerView()
         subscribeToLiveData()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_item_sort) {
+            presentSortDialog()
+
+            return true
+        }
+
+        return false
     }
 
     private fun initNavigation() {
@@ -85,6 +101,13 @@ class IndexerQueryResultsFragment : Fragment() {
         val appBarConfiguration = AppBarConfiguration(navController.graph)
 
         toolbar.setupWithNavController(navController, appBarConfiguration)
+    }
+
+    private fun initToolbar() {
+        toolbar.apply {
+            inflateMenu(R.menu.menu_fragment_query)
+            setOnMenuItemClickListener(this@IndexerQueryResultsFragment::onOptionsItemSelected)
+        }
     }
 
     private fun initRecyclerView() {
@@ -116,5 +139,30 @@ class IndexerQueryResultsFragment : Fragment() {
 
         queryResultsAdapter.configure(queryResultItems)
     }
+
+    private fun presentSortDialog() = context.notNull { context ->
+        val sortBy = checkNotNull(viewModel.liveDataSortIndexerQueryResults.value).first
+        val orderBy = checkNotNull(viewModel.liveDataSortIndexerQueryResults.value).second
+
+        DialogUtil.presentSortDialog(
+            context,
+            SortComponent.Model(
+                IndexerQueryResultSortBy
+                    .values()
+                    .map { SortComponent.Pill(it.id, it::getDisplayValue) },
+                OrderBy
+                    .values()
+                    .map { SortComponent.Pill(it.id, it::getDisplayValue) },
+                SortComponent.Pill(sortBy.id, sortBy::getDisplayValue),
+                SortComponent.Pill(orderBy.id, orderBy::getDisplayValue)
+            )
+        ) { sortModel ->
+            viewModel.setSortQueryResultItems(
+                IndexerQueryResultSortBy.getByValue(sortModel.selectedSortPill.id),
+                OrderBy.getByValue(sortModel.selectedOrderPill.id)
+            )
+        }
+    }
+
 
 }

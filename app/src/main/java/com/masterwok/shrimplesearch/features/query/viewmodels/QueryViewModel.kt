@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettService
 import com.masterwok.shrimplesearch.features.query.constants.IndexerQueryResultSortBy
 import com.masterwok.shrimplesearch.features.query.constants.OrderBy
+import com.masterwok.shrimplesearch.features.query.constants.QueryResultSortBy
 import com.masterwok.shrimplesearch.features.query.constants.QueryState
 import com.masterwok.xamarininterface.models.Indexer
 import com.masterwok.xamarininterface.models.IndexerQueryResult
@@ -25,11 +26,20 @@ class QueryViewModel @Inject constructor(
     private val _liveDataQueryCompleted = MutableLiveData<Unit>()
     private val _liveDataSelectedIndexer = MutableLiveData<Indexer>()
 
-    private val _liveDataSort = MutableLiveData<Pair<IndexerQueryResultSortBy, OrderBy>>(
-        IndexerQueryResultSortBy.Seeders to OrderBy.Descending
+    private val _liveDataSortQueryResults = MutableLiveData<Pair<QueryResultSortBy, OrderBy>>(
+        QueryResultSortBy.MagnetCount to OrderBy.Descending
     )
 
-    val liveDataSort: LiveData<Pair<IndexerQueryResultSortBy, OrderBy>> = _liveDataSort
+    private val _liveDataSortIndexerQueryResults =
+        MutableLiveData<Pair<IndexerQueryResultSortBy, OrderBy>>(
+            IndexerQueryResultSortBy.Seeders to OrderBy.Descending
+        )
+
+    val liveDataSortQueryResults: LiveData<Pair<QueryResultSortBy, OrderBy>> =
+        _liveDataSortQueryResults
+
+    val liveDataSortIndexerQueryResults: LiveData<Pair<IndexerQueryResultSortBy, OrderBy>> =
+        _liveDataSortIndexerQueryResults
 
     val liveDataIndexerQueryResults: LiveData<List<IndexerQueryResult>> =
         _liveDataIndexerQueryResults.map { it.toList() }
@@ -39,7 +49,7 @@ class QueryViewModel @Inject constructor(
     val liveDataQueryState = _liveDataQueryState
 
     val liveDataSelectedIndexerQueryResultItem = MediatorLiveData<List<QueryResultItem>>().apply {
-        addSource(_liveDataSort) { value = getSelectedIndexerQueryResults() }
+        addSource(_liveDataSortIndexerQueryResults) { value = getSelectedIndexerQueryResults() }
         addSource(_liveDataIndexerQueryResults) { value = getSelectedIndexerQueryResults() }
         addSource(_liveDataSelectedIndexer) { value = getSelectedIndexerQueryResults() }
     }
@@ -82,10 +92,15 @@ class QueryViewModel @Inject constructor(
         jackettService.query(query)
     }
 
-    fun setSort(
+    fun setSortQueryResults(
+        sort: QueryResultSortBy,
+        orderBy: OrderBy
+    ) = _liveDataSortQueryResults.postValue(sort to orderBy)
+
+    fun setSortQueryResultItems(
         sort: IndexerQueryResultSortBy,
         orderBy: OrderBy
-    ) = _liveDataSort.postValue(sort to orderBy)
+    ) = _liveDataSortIndexerQueryResults.postValue(sort to orderBy)
 
     fun setSelectedIndexer(indexer: Indexer) {
         _liveDataSelectedIndexer.postValue(indexer)
@@ -106,7 +121,7 @@ class QueryViewModel @Inject constructor(
             ?.items
             ?: (indexerQueryResult?.items ?: queryResults.flatMap { it.items })
 
-        val sortValue = checkNotNull(_liveDataSort.value)
+        val sortValue = checkNotNull(_liveDataSortIndexerQueryResults.value)
 
         return sortQueryResultItems(
             items,

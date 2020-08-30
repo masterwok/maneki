@@ -24,8 +24,8 @@ import com.masterwok.shrimplesearch.common.utils.notNull
 import com.masterwok.shrimplesearch.di.AppInjector
 import com.masterwok.shrimplesearch.features.query.adapters.QueryResultsAdapter
 import com.masterwok.shrimplesearch.features.query.components.SortComponent
-import com.masterwok.shrimplesearch.features.query.constants.IndexerQueryResultSortBy
 import com.masterwok.shrimplesearch.features.query.constants.OrderBy
+import com.masterwok.shrimplesearch.features.query.constants.QueryResultSortBy
 import com.masterwok.shrimplesearch.features.query.constants.QueryState
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
 import com.masterwok.xamarininterface.enums.IndexerQueryState
@@ -197,13 +197,13 @@ class QueryFragment : Fragment() {
     )
 
     private fun presentSortDialog() = context.notNull { context ->
-        val sortBy = checkNotNull(viewModel.liveDataSort.value).first
-        val orderBy = checkNotNull(viewModel.liveDataSort.value).second
+        val sortBy = checkNotNull(viewModel.liveDataSortQueryResults.value).first
+        val orderBy = checkNotNull(viewModel.liveDataSortQueryResults.value).second
 
         DialogUtil.presentSortDialog(
             context,
             SortComponent.Model(
-                IndexerQueryResultSortBy
+                QueryResultSortBy
                     .values()
                     .map { SortComponent.Pill(it.id, it::getDisplayValue) },
                 OrderBy
@@ -213,8 +213,8 @@ class QueryFragment : Fragment() {
                 SortComponent.Pill(orderBy.id, orderBy::getDisplayValue)
             )
         ) { sortModel ->
-            viewModel.setSort(
-                IndexerQueryResultSortBy.getByValue(sortModel.selectedSortPill.id),
+            viewModel.setSortQueryResults(
+                QueryResultSortBy.getByValue(sortModel.selectedSortPill.id),
                 OrderBy.getByValue(sortModel.selectedOrderPill.id)
             )
         }

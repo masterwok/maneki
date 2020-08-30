@@ -35,5 +35,9 @@
     <string name="order_by_descending">Descending</string>
     <string name="button_done">Done</string>
     <string name="button_cancel">Cancel</string>
+    <string name="query_result_sort_by_name">Indexer Name</string>
+    <string name="query_result_sort_by_magnet_count">Magnet Count</string>
+    <string name="query_result_sort_by_link_count">Link Count</string>
+    <string name="query_result_sort_by_aggregate_count">Aggregate Count</string>
 
 </resources>
