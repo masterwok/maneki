@@ -49,6 +49,8 @@
         <item name="dimen_query_auto_complete_popup_inset_top">0dp</item>
 
         <item name="textAppearanceLargePopupMenu">@style/AppTheme.TextAppearance.Popup</item>
+
+        <item name="md_font_button">@font/eina_03_semi_bold</item>
     </style>
 
     <style name="AppTheme.TextAppearance.Popup" parent="TextAppearance.MaterialComponents.Caption">

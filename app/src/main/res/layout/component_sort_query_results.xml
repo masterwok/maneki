@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:parentTag="com.masterwok.shrimplesearch.features.query.components.SortQueryResultsComponent">
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -121,7 +121,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_pill_sort_unselected"
+            android:background="@drawable/background_pill_sort_selected"
             android:fontFamily="@font/eina_03_regular"
             android:padding="8dp"
             android:text="@string/component_sort_query_results_descending"

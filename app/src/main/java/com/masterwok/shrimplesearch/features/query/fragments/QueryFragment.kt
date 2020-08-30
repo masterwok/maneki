@@ -197,6 +197,7 @@ class QueryFragment : Fragment() {
     private fun presentSortDialog() = context.notNull { context ->
         MaterialDialog(context).show {
             customView(view = SortQueryResultsComponent(context))
+            cornerRadius(16f)
             positiveButton {
                 title(res = R.string.button_done)
             }
