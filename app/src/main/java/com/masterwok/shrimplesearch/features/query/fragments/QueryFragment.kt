@@ -194,7 +194,9 @@ class QueryFragment : Fragment() {
     )
 
     private fun presentSortDialog() = context.notNull { context ->
-        DialogUtil.presentSortDialog(context, SORT_COMPONENT_MODEL)
+        DialogUtil.presentSortDialog(context, SORT_COMPONENT_MODEL) { sortModel ->
+            val x = 1
+        }
     }
 
 

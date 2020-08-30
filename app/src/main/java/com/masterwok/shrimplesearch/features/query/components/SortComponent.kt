@@ -13,10 +13,13 @@ import androidx.core.view.setPadding
 import com.google.android.flexbox.FlexboxLayout
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.contracts.Configurable
+import com.masterwok.shrimplesearch.common.contracts.ViewComponent
 import com.masterwok.shrimplesearch.common.extensions.dpToPx
 import kotlinx.android.synthetic.main.component_sort_by.view.*
 
-class SortComponent : ConstraintLayout, Configurable<SortComponent.Model> {
+class SortComponent : ConstraintLayout, ViewComponent<SortComponent.Model> {
+
+    private lateinit var configuredModel: Model
 
     constructor(context: Context) : super(context) {
         inflate(null)
@@ -47,9 +50,23 @@ class SortComponent : ConstraintLayout, Configurable<SortComponent.Model> {
     }
 
     override fun configure(model: Model) {
+        configuredModel = model
         configureFlexBoxPills(flexboxLayoutSort, model.sortPills, model.selectedSortPill)
         configureFlexBoxPills(flexboxLayoutOrder, model.orderPills, model.selectedOrderPill)
     }
+
+    override fun getModel(): Model = Model(
+        configuredModel.sortPills,
+        configuredModel.orderPills,
+        Pill(getSelectedCompoundButtonTag(flexboxLayoutSort)),
+        Pill(getSelectedCompoundButtonTag(flexboxLayoutOrder))
+    )
+
+    private fun getSelectedCompoundButtonTag(flexBoxLayout: FlexboxLayout): Int = flexBoxLayout
+        .children
+        .filterIsInstance<CompoundButton>()
+        .first { it.isChecked }
+        .tag as Int
 
     private fun configureFlexBoxPills(
         flexBoxLayout: FlexboxLayout,
@@ -110,5 +127,6 @@ class SortComponent : ConstraintLayout, Configurable<SortComponent.Model> {
     )
 
     data class Pill(@StringRes val title: Int)
+
 
 }

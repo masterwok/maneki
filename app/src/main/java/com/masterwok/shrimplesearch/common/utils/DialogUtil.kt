@@ -10,7 +10,8 @@ object DialogUtil {
 
     fun presentSortDialog(
         context: Context,
-        sortComponentModel: SortComponent.Model
+        sortComponentModel: SortComponent.Model,
+        onDialogDismiss: (SortComponent.Model) -> Unit
     ) {
         val sortComponent = SortComponent(context).apply {
             configure(sortComponentModel)
@@ -21,6 +22,7 @@ object DialogUtil {
             cornerRadius(16f)
             positiveButton {
                 title(res = R.string.button_done)
+                onDialogDismiss(sortComponent.getModel())
             }
             negativeButton {
                 title(res = R.string.button_cancel)
