@@ -26,7 +26,7 @@
 
     <string name="component_sort_query_results_header_sort_by">Sort By</string>
     <string name="component_sort_query_results_name">Name</string>
-    <string name="component_sort_query_results_uploaded_on">Uploaded On</string>
+    <string name="component_sort_query_results_published_on">Published On</string>
     <string name="component_sort_query_results_size">Size</string>
     <string name="component_sort_query_results_leechers">Leechers</string>
     <string name="component_sort_query_results_peers">Peers</string>

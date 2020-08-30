@@ -202,16 +202,24 @@ class QueryFragment : Fragment() {
             SortByComponent.Pill(R.string.component_sort_query_results_peers),
             sortPillLeechers,
             SortByComponent.Pill(R.string.component_sort_query_results_size),
-            SortByComponent.Pill(R.string.component_sort_query_results_uploaded_on)
+            SortByComponent.Pill(R.string.component_sort_query_results_published_on)
+        )
+
+        val orderPillDescending =
+            SortByComponent.Pill(R.string.component_sort_query_results_descending)
+
+        val orderPills = listOf(
+            SortByComponent.Pill(R.string.component_sort_query_results_ascending),
+            orderPillDescending
         )
 
         val sortComponent = SortByComponent(context).apply {
             configure(
                 SortByComponent.Model(
                     sortPills,
-                    emptyList(),
+                    orderPills,
                     sortPillLeechers,
-                    sortPillLeechers
+                    orderPillDescending
                 )
             )
         }
