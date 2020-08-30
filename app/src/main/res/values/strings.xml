@@ -24,15 +24,16 @@
     <string name="search_placeholder_text">Use the toolbar above to search for magnets&#8230;</string>
     <string name="menu_fragment_query_sort">Sort</string>
 
-    <string name="menu_item_sort_name_asc">Name Asc.</string>
-    <string name="menu_item_sort_name_desc">Name Desc.</string>
-    <string name="menu_item_sort_size_asc">Size Asc.</string>
-    <string name="menu_item_sort_size_desc">Size Desc.</string>
-    <string name="menu_item_sort_seeders_asc">Seeders Asc.</string>
-    <string name="menu_item_sort_seeders_desc">Seeders Desc.</string>
-    <string name="menu_item_sort_leechers_asc">Leechers Asc.</string>
-    <string name="menu_item_sort_leechers_desc">Leechers Desc.</string>
-    <string name="men_item_sort_upload_date_asc">Upload Date Asc.</string>
-    <string name="men_item_sort_upload_date_desc">Upload Date Desc.</string>
+    <string name="component_sort_query_results_header_sort_by">Sort By</string>
+    <string name="component_sort_query_results_name">Name</string>
+    <string name="component_sort_query_results_uploaded_on">Uploaded On</string>
+    <string name="component_sort_query_results_size">Size</string>
+    <string name="component_sort_query_results_leechers">Leechers</string>
+    <string name="component_sort_query_results_peers">Peers</string>
+    <string name="component_sort_query_results_header_order">Order By</string>
+    <string name="component_sort_query_results_ascending">Ascending</string>
+    <string name="component_sort_query_results_descending">Descending</string>
+    <string name="button_done">Done</string>
+    <string name="button_cancel">Cancel</string>
 
 </resources>

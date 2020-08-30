@@ -17,10 +17,14 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.extensions.hideSoftKeyboard
+import com.masterwok.shrimplesearch.common.utils.notNull
 import com.masterwok.shrimplesearch.di.AppInjector
 import com.masterwok.shrimplesearch.features.query.adapters.QueryResultsAdapter
+import com.masterwok.shrimplesearch.features.query.components.SortQueryResultsComponent
 import com.masterwok.shrimplesearch.features.query.enums.QueryState
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
 import com.masterwok.xamarininterface.enums.IndexerQueryState
@@ -61,9 +65,7 @@ class QueryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = inflater.inflate(
-        R.layout.fragment_query
-        , container
-        , false
+        R.layout.fragment_query, container, false
     )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -76,6 +78,14 @@ class QueryFragment : Fragment() {
         subscribeToLiveData()
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        AppInjector
+            .queryComponent
+            .inject(this)
+    }
+
     private fun initToolbar() {
         toolbar.apply {
             inflateMenu(R.menu.menu_fragment_query)
@@ -84,11 +94,13 @@ class QueryFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId != R.id.menu_item_sort) {
-            return false
+        if (item.itemId == R.id.menu_item_sort) {
+            presentSortDialog()
+
+            return true
         }
 
-        return true
+        return false
     }
 
     private fun initNavigation() {
@@ -170,24 +182,28 @@ class QueryFragment : Fragment() {
         results: Collection<IndexerQueryResult>
     ): IndexerQueryResult = IndexerQueryResult(
         Indexer(
-            id = aggregateIndexerId
-            , type = IndexerType.Aggregate
-            , displayName = getString(R.string.indexer_aggregate_display_name)
-            , displayDescription = null
-        )
-        , results.flatMap { it.items }
-        , queryState = IndexerQueryState.Success
-        , failureReason = null
-        , magnetCount = results.sumBy { it.magnetCount }
-        , linkCount = results.sumBy { it.linkCount }
+            id = aggregateIndexerId,
+            type = IndexerType.Aggregate,
+            displayName = getString(R.string.indexer_aggregate_display_name),
+            displayDescription = null
+        ),
+        results.flatMap { it.items },
+        queryState = IndexerQueryState.Success,
+        failureReason = null,
+        magnetCount = results.sumBy { it.magnetCount },
+        linkCount = results.sumBy { it.linkCount }
     )
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        AppInjector
-            .queryComponent
-            .inject(this)
+    private fun presentSortDialog() = context.notNull { context ->
+        MaterialDialog(context).show {
+            customView(view = SortQueryResultsComponent(context))
+            positiveButton {
+                title(res = R.string.button_done)
+            }
+            negativeButton {
+                title(res = R.string.button_cancel)
+            }
+        }
     }
 
 }

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:parentTag="com.masterwok.shrimplesearch.features.query.components.SortQueryResultsComponent">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/eina_03_semi_bold"
+        android:text="@string/component_sort_query_results_header_sort_by"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/flexboxLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:alignContent="flex_start"
+        app:alignItems="flex_start"
+        app:dividerDrawable="@drawable/divider_flexbox"
+        app:flexWrap="wrap"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:showDivider="beginning|middle"
+        app:showDividerHorizontal="middle">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_pill_sort_unselected"
+            android:fontFamily="@font/eina_03_regular"
+            android:padding="8dp"
+            android:text="@string/component_sort_query_results_name"
+            android:textColor="@android:color/black" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_pill_sort_unselected"
+            android:fontFamily="@font/eina_03_regular"
+            android:padding="8dp"
+            android:text="@string/component_sort_query_results_peers"
+            android:textColor="@android:color/black" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_pill_sort_selected"
+            android:fontFamily="@font/eina_03_regular"
+            android:padding="8dp"
+            android:text="@string/component_sort_query_results_leechers"
+            android:textColor="@android:color/black" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_pill_sort_unselected"
+            android:fontFamily="@font/eina_03_regular"
+            android:padding="8dp"
+            android:text="@string/component_sort_query_results_size"
+            android:textColor="@android:color/black" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_pill_sort_unselected"
+            android:fontFamily="@font/eina_03_regular"
+            android:padding="8dp"
+            android:text="@string/component_sort_query_results_uploaded_on"
+            android:textColor="@android:color/black" />
+
+    </com.google.android.flexbox.FlexboxLayout>
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewOrderHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/eina_03_semi_bold"
+        android:text="@string/component_sort_query_results_header_order"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flexboxLayout" />
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/flexboxLayoutOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:alignContent="flex_start"
+        app:alignItems="flex_start"
+        app:dividerDrawable="@drawable/divider_flexbox"
+        app:flexWrap="wrap"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewOrderHeader"
+        app:showDivider="beginning|middle"
+        app:showDividerHorizontal="middle">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_pill_sort_unselected"
+            android:fontFamily="@font/eina_03_regular"
+            android:padding="8dp"
+            android:text="@string/component_sort_query_results_ascending"
+            android:textColor="@android:color/black" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_pill_sort_unselected"
+            android:fontFamily="@font/eina_03_regular"
+            android:padding="8dp"
+            android:text="@string/component_sort_query_results_descending"
+            android:textColor="@android:color/black" />
+
+    </com.google.android.flexbox.FlexboxLayout>
+
+</merge>

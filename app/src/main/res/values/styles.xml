@@ -2,7 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">?color_background</item>
+        <item name="colorPrimary">@android:color/black</item>
         <item name="colorPrimaryDark">?color_background</item>
         <item name="colorAccent">@android:color/black</item>
         <item name="android:statusBarColor" tools:targetApi="23">#FFFFFF</item>
@@ -16,7 +16,7 @@
         <item name="color_toolbar_icon_tint">#000000</item>
         <item name="color_auto_complete_clear_tint">#000000</item>
         <item name="color_edit_text_border">@android:color/transparent</item>
-        <item name="color_edit_text_background">#F4F4F4</item>
+        <item name="color_edit_text_background">#f4f4f4</item>
 
         <item name="color_query_text">#676767</item>
         <item name="color_query_text_hint">#676767</item>
