@@ -45,7 +45,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="18dp"
             android:layout_height="18dp"
-            android:tint="@android:color/white"
+            android:tint="@android:color/black"
             app:srcCompat="@drawable/ic_magnet_black" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="@font/eina_03_regular"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:textSize="12sp"
             tools:text="36" />
 
@@ -77,7 +77,7 @@
             android:id="@+id/imageView3"
             android:layout_width="18dp"
             android:layout_height="18dp"
-            android:tint="@android:color/white"
+            android:tint="@android:color/black"
             app:srcCompat="@drawable/ic_link_black_24dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="@font/eina_03_regular"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:textSize="12sp"
             tools:text="8" />
 
