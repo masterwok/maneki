@@ -2,11 +2,9 @@ package com.masterwok.shrimplesearch.features.query.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.EditorInfo
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -58,10 +56,14 @@ class QueryFragment : Fragment() {
         findNavController().navigate(R.id.action_queryFragment_to_indexerQueryResultsFragment)
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_sort, menu)
     }
 
     override fun onCreateView(
@@ -74,8 +76,6 @@ class QueryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initToolbar()
-        initNavigation()
         initRecyclerView()
         subscribeToViewComponents()
         subscribeToLiveData()
@@ -89,13 +89,6 @@ class QueryFragment : Fragment() {
             .inject(this)
     }
 
-    private fun initToolbar() {
-        toolbar.apply {
-            inflateMenu(R.menu.menu_fragment_query)
-            setOnMenuItemClickListener(this@QueryFragment::onOptionsItemSelected)
-        }
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_item_sort) {
             presentSortDialog()
@@ -104,13 +97,6 @@ class QueryFragment : Fragment() {
         }
 
         return false
-    }
-
-    private fun initNavigation() {
-        val navController = findNavController()
-        val appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
-
-        toolbar.setupWithNavController(navController, appBarConfiguration)
     }
 
     private fun initRecyclerView() {

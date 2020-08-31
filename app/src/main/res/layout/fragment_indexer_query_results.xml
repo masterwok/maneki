@@ -33,16 +33,6 @@
 
     </LinearLayout>
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:elevation="0dp">
-
-        <include layout="@layout/include_toolbar_maneki" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
     <LinearLayout
         android:id="@+id/linearLayoutNoResultsHint"
         android:layout_width="match_parent"

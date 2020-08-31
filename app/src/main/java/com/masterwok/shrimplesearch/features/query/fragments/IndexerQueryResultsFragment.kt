@@ -4,11 +4,8 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -68,6 +65,11 @@ class IndexerQueryResultsFragment : Fragment() {
             .inject(this)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -78,10 +80,12 @@ class IndexerQueryResultsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initToolbar()
-        initNavigation()
         initRecyclerView()
         subscribeToLiveData()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_sort, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -92,20 +96,6 @@ class IndexerQueryResultsFragment : Fragment() {
         }
 
         return false
-    }
-
-    private fun initNavigation() {
-        val navController = findNavController()
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-
-        toolbar.setupWithNavController(navController, appBarConfiguration)
-    }
-
-    private fun initToolbar() {
-        toolbar.apply {
-            inflateMenu(R.menu.menu_fragment_query)
-            setOnMenuItemClickListener(this@IndexerQueryResultsFragment::onOptionsItemSelected)
-        }
     }
 
     private fun initRecyclerView() {

@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
+    android:id="@+id/n"
     app:startDestination="@id/queryFragment">
 
     <fragment
@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_query">
         <action
             android:id="@+id/action_queryFragment_to_indexerQueryResultsFragment"
-            app:destination="@id/indexerQueryResultsFragment"/>
+            app:destination="@id/indexerQueryResultsFragment" />
     </fragment>
     <fragment
         android:id="@+id/indexerQueryResultsFragment"
@@ -22,5 +22,6 @@
     <fragment
         android:id="@+id/aboutFragment"
         android:name="com.masterwok.shrimplesearch.features.about.fragments.AboutFragment"
-        tools:layout="@layout/fragment_about"/>
+        android:label=""
+        tools:layout="@layout/fragment_about" />
 </navigation>
