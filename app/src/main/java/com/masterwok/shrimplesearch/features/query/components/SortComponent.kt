@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.widget.CompoundButton
 import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.children
 import androidx.core.view.setPadding
@@ -95,6 +96,12 @@ class SortComponent : ConstraintLayout, ViewComponent<SortComponent.Model> {
         tag = pill.id
         typeface = ResourcesCompat.getFont(context, R.font.eina_03_regular)
         text = pill.getTitle(context)
+        setTextColor(
+            ContextCompat.getColor(
+                context,
+                if (isChecked) android.R.color.white else android.R.color.black
+            )
+        )
         gravity = Gravity.CENTER
         buttonDrawable = null
         minimumHeight = 0

@@ -19,7 +19,6 @@ object DialogUtil {
 
         MaterialDialog(context).show {
             customView(view = sortComponent)
-            cornerRadius(16f)
             positiveButton {
                 title(res = R.string.button_done)
                 onDialogDismiss(sortComponent.getModel())
