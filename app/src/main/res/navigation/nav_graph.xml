@@ -19,4 +19,8 @@
         android:name="com.masterwok.shrimplesearch.features.query.fragments.IndexerQueryResultsFragment"
         android:label=""
         tools:layout="@layout/fragment_indexer_query_results" />
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.masterwok.shrimplesearch.features.about.fragments.AboutFragment"
+        tools:layout="@layout/fragment_about"/>
 </navigation>

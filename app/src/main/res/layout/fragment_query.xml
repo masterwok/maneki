@@ -9,7 +9,6 @@
     android:fitsSystemWindows="true"
     tools:context=".main.MainActivity">
 
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinator_layout_search"
         android:layout_width="match_parent"

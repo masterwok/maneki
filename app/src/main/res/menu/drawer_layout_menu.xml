@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/supportFragment"
-        android:title="@string/drawer_layout_menu_item_support" />
-    <item
         android:id="@+id/settingsFragment"
         android:title="@string/drawer_layout_menu_item_settings" />
     <item
-        android:id="@+id/favoritesFragment"
-        android:title="@string/drawer_layout_menu_item_favorites" />
-    <item
-        android:id="@+id/clientFragment"
-        android:title="@string/drawer_layout_menu_item_client" />
+        android:id="@+id/aboutFragment"
+        android:title="@string/drawer_layout_menu_item_about" />
 </menu>
