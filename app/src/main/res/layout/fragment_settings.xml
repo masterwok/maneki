@@ -13,7 +13,7 @@
         android:layout_marginTop="24dp"
         android:letterSpacing=".1"
         android:fontFamily="@font/eina_03_semi_bold"
-        android:text="@string/aboutHeader"
+        android:text="@string/settingsHeader"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="16sp"
@@ -29,47 +29,39 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/eina_03_regular"
-        android:text="@string/aboutTextDescription"
-        android:textAlignment="center"
         android:letterSpacing=".05"
+        android:text="@string/settingsDescription"
         android:textColor="@android:color/black"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewAboutVersion"
+    <Switch
+        android:id="@+id/switchOnlyShowMagnetResults"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:fontFamily="@font/eina_03_semi_bold"
-        android:textAlignment="center"
-        android:letterSpacing=".1"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"
+        android:checked="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSettingsDescription"
-        tools:text="Version: 1.0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewSettingsDescription" />
 
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonViewOnGitHub"
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/background_button"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
         android:fontFamily="@font/eina_03_regular"
         android:letterSpacing=".1"
-        android:text="@string/aboutViewOnGithub"
+        android:text="Only show magnet results"
+        android:textAlignment="textStart"
         android:textColor="@android:color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/switchOnlyShowMagnetResults"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAboutVersion" />
+        app:layout_constraintStart_toEndOf="@+id/switchOnlyShowMagnetResults"
+        app:layout_constraintTop_toTopOf="@+id/switchOnlyShowMagnetResults" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

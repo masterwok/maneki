@@ -47,5 +47,7 @@
     <string name="aboutViewOnGithub">View on Github</string>
     <string name="version">Version: %s</string>
     <string name="gitHubUrl">https://github.com/masterwok/maneki</string>
+    <string name="settingsHeader">Settings:</string>
+    <string name="settingsDescription">There\'s not much to see here right now, but the following settings can be used to configure the application:</string>
 
 </resources>
