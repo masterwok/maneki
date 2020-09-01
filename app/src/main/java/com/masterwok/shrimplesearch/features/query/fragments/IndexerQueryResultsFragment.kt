@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.masterwok.shrimplesearch.R
+import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
+import com.masterwok.shrimplesearch.common.data.services.contracts.AnalyticService
 import com.masterwok.shrimplesearch.common.utils.DialogUtil
 import com.masterwok.shrimplesearch.common.utils.notNull
 import com.masterwok.shrimplesearch.di.AppInjector
@@ -37,6 +39,9 @@ class IndexerQueryResultsFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    @Inject
+    lateinit var analyticService: AnalyticService
+
     private val viewModel: QueryViewModel by viewModels(this::requireActivity) { viewModelFactory }
 
     private val queryResultsAdapter = IndexerQueryResultsAdapter { queryResultItem ->
@@ -54,6 +59,7 @@ class IndexerQueryResultsFragment : Fragment() {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             })
         } catch (exception: ActivityNotFoundException) {
+            analyticService.logEvent(AnalyticEvent.NoTorrentAppFound)
         }
     }
 
@@ -90,6 +96,7 @@ class IndexerQueryResultsFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_item_sort) {
+            analyticService.logEvent(AnalyticEvent.MenuItemSortTapped)
             presentSortDialog()
 
             return true

@@ -3,6 +3,7 @@ package com.masterwok.shrimplesearch.di
 import android.app.Application
 import com.masterwok.shrimplesearch.di.components.AppComponent
 import com.masterwok.shrimplesearch.di.components.DaggerAppComponent
+import com.masterwok.shrimplesearch.main.MainActivity
 
 class AppInjector {
 
@@ -23,6 +24,12 @@ class AppInjector {
         val splashComponent by lazy {
             appComponent.splashComponent().create()
         }
+
+        val aboutComponent by lazy {
+            appComponent.aboutComponent().create()
+        }
+
+        fun inject(mainActivity: MainActivity) = appComponent.inject(mainActivity)
 
         fun init(application: Application) {
             this.application = application

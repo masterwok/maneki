@@ -1,6 +1,7 @@
 package com.masterwok.shrimplesearch.features.about.fragments
 
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -10,10 +11,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.masterwok.shrimplesearch.BuildConfig
 import com.masterwok.shrimplesearch.R
+import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
+import com.masterwok.shrimplesearch.common.data.services.contracts.AnalyticService
 import com.masterwok.shrimplesearch.common.utils.notNull
+import com.masterwok.shrimplesearch.di.AppInjector
 import kotlinx.android.synthetic.main.fragment_about.*
+import javax.inject.Inject
 
 class AboutFragment : Fragment() {
+
+    @Inject
+    lateinit var analyticService: AnalyticService
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +38,14 @@ class AboutFragment : Fragment() {
         subscribeToViewComponents()
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        AppInjector
+            .aboutComponent
+            .inject(this)
+    }
+
     private fun subscribeToViewComponents() {
         buttonViewOnGitHub.setOnClickListener { openGitHubProjectUri() }
     }
@@ -42,6 +58,7 @@ class AboutFragment : Fragment() {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             })
         } catch (exception: ActivityNotFoundException) {
+            analyticService.logEvent(AnalyticEvent.NoActionViewActivity)
         }
     }
 
