@@ -39,5 +39,13 @@
     <string name="query_result_sort_by_aggregate_count">Aggregate Count</string>
     <string name="hint_no_search_results">No search results</string>
     <string name="hint_no_search_results_description">No matching results found…</string>
+    <string name="aboutTextDescription">
+        Maneki is an open-source native Android application powered by Jackett.\n\n
+        The source code is available on GitHub. Contributions are welcome.
+    </string>
+    <string name="aboutHeader">About:</string>
+    <string name="aboutViewOnGithub">View on Github</string>
+    <string name="version">Version: %s</string>
+    <string name="gitHubUrl">https://github.com/masterwok/maneki</string>
 
 </resources>
