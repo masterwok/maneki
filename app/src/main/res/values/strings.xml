@@ -47,5 +47,9 @@
     <string name="aboutViewOnGithub">View on Github</string>
     <string name="version">Version: %s</string>
     <string name="gitHubUrl">https://github.com/masterwok/maneki</string>
+    <string name="dialog_no_torrent_client_found">Unable to find torrent client. Please ensure that you have a torrent client installed on your device.</string>
+    <string name="button_ok">Ok</string>
+    <string name="dialog_header_whoops">Houston, we have a problem…</string>
+    <string name="dialog_unable_to_open_github_uri">Unable to open GitHub. Please ensure that you have a web browser installed on your device.</string>
 
 </resources>

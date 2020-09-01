@@ -10,11 +10,9 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.afollestad.materialdialogs.MaterialDialog
 
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
@@ -30,7 +28,6 @@ import com.masterwok.shrimplesearch.features.query.constants.QueryState
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
 import com.masterwok.xamarininterface.models.QueryResultItem
 import kotlinx.android.synthetic.main.fragment_indexer_query_results.*
-import kotlinx.android.synthetic.main.include_toolbar_maneki.*
 import javax.inject.Inject
 
 
@@ -60,6 +57,17 @@ class IndexerQueryResultsFragment : Fragment() {
             })
         } catch (exception: ActivityNotFoundException) {
             analyticService.logException(exception, "No activity found to open query result item.")
+            presentNoTorrentClientFoundDialog()
+        }
+    }
+
+    private fun presentNoTorrentClientFoundDialog() = context.notNull { context ->
+        MaterialDialog(context).show {
+            title(res = R.string.dialog_header_whoops)
+            message(res = R.string.dialog_no_torrent_client_found)
+            positiveButton {
+                title(res = R.string.button_ok)
+            }
         }
     }
 

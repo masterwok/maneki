@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.afollestad.materialdialogs.MaterialDialog
 import com.masterwok.shrimplesearch.BuildConfig
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
@@ -59,6 +60,17 @@ class AboutFragment : Fragment() {
             })
         } catch (exception: ActivityNotFoundException) {
             analyticService.logException(exception, "No activity found to handle open GitHub Uri")
+            presentUnableToOpenGitHubDialog()
+        }
+    }
+
+    private fun presentUnableToOpenGitHubDialog() = context.notNull { context ->
+        MaterialDialog(context).show {
+            title(res = R.string.dialog_header_whoops)
+            message(res = R.string.dialog_unable_to_open_github_uri)
+            positiveButton {
+                title(res = R.string.button_ok)
+            }
         }
     }
 
