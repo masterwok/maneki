@@ -58,7 +58,7 @@ class AboutFragment : Fragment() {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             })
         } catch (exception: ActivityNotFoundException) {
-            analyticService.logEvent(AnalyticEvent.NoActionViewActivity)
+            analyticService.logException(exception, "No activity found to handle open GitHub Uri")
         }
     }
 

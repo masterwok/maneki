@@ -59,7 +59,7 @@ class IndexerQueryResultsFragment : Fragment() {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             })
         } catch (exception: ActivityNotFoundException) {
-            analyticService.logEvent(AnalyticEvent.NoTorrentAppFound)
+            analyticService.logException(exception, "No activity found to open query result item.")
         }
     }
 

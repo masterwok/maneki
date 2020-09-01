@@ -13,6 +13,7 @@ import com.masterwok.shrimplesearch.common.data.services.contracts.AnalyticServi
 import com.masterwok.shrimplesearch.di.AppInjector
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_toolbar_maneki.*
+import java.lang.Exception
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
