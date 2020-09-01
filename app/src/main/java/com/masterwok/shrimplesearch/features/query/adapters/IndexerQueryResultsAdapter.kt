@@ -16,30 +16,25 @@ import java.text.DateFormat
 
 class IndexerQueryResultsAdapter(
     private val onQueryResultItemClicked: (QueryResultItem) -> Unit
-) : RecyclerView.Adapter<IndexerQueryResultsAdapter.ViewHolder>()
-    , Configurable<List<QueryResultItem>> {
+) : RecyclerView.Adapter<IndexerQueryResultsAdapter.ViewHolder>(),
+    Configurable<List<QueryResultItem>> {
 
     private var configuredModel: List<QueryResultItem> = emptyList()
 
     override fun onCreateViewHolder(
-        parent: ViewGroup
-        , viewType: Int
+        parent: ViewGroup, viewType: Int
     ): ViewHolder = ViewHolder(
         LayoutInflater
             .from(parent.context)
             .inflate(
-                R.layout.view_indexer_query_result_item
-                , parent
-                , false
-            )
-        , onQueryResultItemClicked
+                R.layout.view_indexer_query_result_item, parent, false
+            ), onQueryResultItemClicked
     )
 
     override fun getItemCount(): Int = configuredModel.count()
 
     override fun onBindViewHolder(
-        holder: ViewHolder
-        , position: Int
+        holder: ViewHolder, position: Int
     ) = holder.configure(configuredModel[position])
 
     override fun configure(model: List<QueryResultItem>) {
@@ -49,10 +44,8 @@ class IndexerQueryResultsAdapter(
     }
 
     class ViewHolder(
-        itemView: View
-        , private val onQueryResultItemClicked: (QueryResultItem) -> Unit
-    ) : RecyclerView.ViewHolder(itemView)
-        , Configurable<QueryResultItem> {
+        itemView: View, private val onQueryResultItemClicked: (QueryResultItem) -> Unit
+    ) : RecyclerView.ViewHolder(itemView), Configurable<QueryResultItem> {
 
         override fun configure(model: QueryResultItem) {
             val context = itemView.context
@@ -60,19 +53,25 @@ class IndexerQueryResultsAdapter(
             val stringNotAvailable = context.getString(R.string.stat_info_not_available)
             val numberFormat = context.getLocaleNumberFormat()
             val dateFormat = DateFormat.getDateInstance(
-                DateFormat.SHORT
-                , context.getCurrentLocale()
+                DateFormat.SHORT, context.getCurrentLocale()
             )
 
             itemView.textViewTitle.text = model.title
 
-            itemView.textViewSeeders.text = statInfo
-                .seeders
+            val seeders = statInfo.seeders
+            val peers = statInfo.peers
+
+            val leechers = if (seeders != null && peers != null) {
+                peers - seeders
+            } else {
+                null
+            }
+
+            itemView.textViewSeeders.text = seeders
                 ?.let(numberFormat::format)
                 ?: stringNotAvailable
 
-            itemView.textViewLeechers.text = statInfo
-                .peers
+            itemView.textViewLeechers.text = leechers
                 ?.let(numberFormat::format)
                 ?: stringNotAvailable
 
