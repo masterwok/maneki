@@ -12,10 +12,12 @@ import kotlinx.coroutines.withContext
 import java.lang.ref.WeakReference
 
 class JackettServiceImpl constructor(
-    private val jackettHarness: IJackettHarness
+    private val jackettHarness: IJackettHarness,
+    indexerIdBlockList: List<String>
 ) : JackettService {
 
-    private val jackettHarnessListener: IJackettHarnessListener = JackettHarnessListener(this)
+    private val jackettHarnessListener: IJackettHarnessListener =
+        JackettHarnessListener(this, indexerIdBlockList)
 
     private val listeners = mutableListOf<JackettService.Listener>()
 
@@ -50,7 +52,8 @@ class JackettServiceImpl constructor(
     }
 
     private class JackettHarnessListener(
-        jackettService: JackettServiceImpl
+        jackettService: JackettServiceImpl,
+        private val indexerIdBlockList: List<String>
     ) : IJackettHarnessListener {
 
         private val weakJackettService = WeakReference(jackettService)
@@ -66,7 +69,10 @@ class JackettServiceImpl constructor(
         override fun onIndexerQueryResult(
             indexerQueryResult: IndexerQueryResult
         ) = weakJackettService.get().notNull { jackettService ->
-            jackettService.listeners.forEach { it.onIndexerQueryResult(indexerQueryResult) }
+            // Don't notify subscribers of blocked indexer results.
+            if (!indexerIdBlockList.contains(indexerQueryResult.indexer.id)) {
+                jackettService.listeners.forEach { it.onIndexerQueryResult(indexerQueryResult) }
+            }
         }
 
         override fun onQueryCompleted() = weakJackettService.get().notNull { jackettService ->

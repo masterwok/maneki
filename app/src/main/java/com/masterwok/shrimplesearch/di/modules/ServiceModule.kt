@@ -1,5 +1,6 @@
 package com.masterwok.shrimplesearch.di.modules
 
+import com.masterwok.shrimplesearch.common.INDEXER_BLOCK_LIST
 import com.masterwok.shrimplesearch.common.data.repositories.JackettServiceImpl
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettService
 import com.masterwok.shrimplesearch.common.data.services.FirebaseAnalyticsService
@@ -29,7 +30,6 @@ class ServiceModule {
         ): AnalyticService
     }
 
-
     @Suppress("unused")
     @Singleton
     @Provides
@@ -37,9 +37,8 @@ class ServiceModule {
         jackettHarnessFactory: JackettHarnessFactory,
         cardigannDefinitionRepository: ICardigannDefinitionRepository
     ): JackettService = JackettServiceImpl(
-        jackettHarnessFactory.createInstance(
-            cardigannDefinitionRepository
-        )
+        jackettHarnessFactory.createInstance(cardigannDefinitionRepository),
+        INDEXER_BLOCK_LIST
     )
 
 }

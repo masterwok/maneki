@@ -26,14 +26,11 @@ class QueryViewModel @Inject constructor(
     private val _liveDataQueryCompleted = MutableLiveData<Unit>()
     private val _liveDataSelectedIndexer = MutableLiveData<Indexer>()
 
-    private val _liveDataSortQueryResults = MutableLiveData<Pair<QueryResultSortBy, OrderBy>>(
-        QueryResultSortBy.MagnetCount to OrderBy.Descending
-    )
+    private val _liveDataSortQueryResults =
+        MutableLiveData(QueryResultSortBy.MagnetCount to OrderBy.Descending)
 
     private val _liveDataSortIndexerQueryResults =
-        MutableLiveData<Pair<IndexerQueryResultSortBy, OrderBy>>(
-            IndexerQueryResultSortBy.Seeders to OrderBy.Descending
-        )
+        MutableLiveData(IndexerQueryResultSortBy.Seeders to OrderBy.Descending)
 
     val liveDataSortQueryResults: LiveData<Pair<QueryResultSortBy, OrderBy>> =
         _liveDataSortQueryResults
@@ -108,10 +105,9 @@ class QueryViewModel @Inject constructor(
         _liveDataSelectedIndexer.postValue(indexer)
     }
 
-
     private fun getIndexerQueryResults(): List<IndexerQueryResult> {
         val queryResults = _liveDataIndexerQueryResults.value
-            ?: emptyList<IndexerQueryResult>()
+            ?: emptyList()
 
         val sortValue = checkNotNull(_liveDataSortQueryResults.value)
 
@@ -124,7 +120,7 @@ class QueryViewModel @Inject constructor(
 
     private fun getSelectedIndexerQueryResults(): List<QueryResultItem> {
         val queryResults = _liveDataIndexerQueryResults.value
-            ?: emptyList<IndexerQueryResult>()
+            ?: emptyList()
 
         val selectedIndexer = _liveDataSelectedIndexer.value
             ?: return emptyList()
