@@ -14,6 +14,7 @@ import com.masterwok.shrimplesearch.BuildConfig
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
 import com.masterwok.shrimplesearch.common.data.services.contracts.AnalyticService
+import com.masterwok.shrimplesearch.common.extensions.startPlayStoreActivity
 import com.masterwok.shrimplesearch.common.utils.notNull
 import com.masterwok.shrimplesearch.di.AppInjector
 import kotlinx.android.synthetic.main.fragment_about.*
@@ -49,6 +50,7 @@ class AboutFragment : Fragment() {
 
     private fun subscribeToViewComponents() {
         buttonViewOnGitHub.setOnClickListener { openGitHubProjectUri() }
+        buttonViewReview.setOnClickListener { openReviewPlayStore() }
     }
 
     private fun openGitHubProjectUri() = context.notNull { context ->
@@ -61,6 +63,25 @@ class AboutFragment : Fragment() {
         } catch (exception: ActivityNotFoundException) {
             analyticService.logException(exception, "No activity found to handle open GitHub Uri")
             presentUnableToOpenGitHubDialog()
+        }
+    }
+
+    private fun openReviewPlayStore() = context.notNull { context ->
+        try {
+            context.startPlayStoreActivity()
+        } catch (exception: ActivityNotFoundException) {
+            analyticService.logException(exception, "No activity found to handle open GitHub Uri")
+            presentUnableToOpenPlayStoreDialog()
+        }
+    }
+
+    private fun presentUnableToOpenPlayStoreDialog() = context.notNull { context ->
+        MaterialDialog(context).show {
+            title(res = R.string.dialog_header_whoops)
+            message(res = R.string.dialog_unable_to_open_play_store)
+            positiveButton {
+                title(res = R.string.button_ok)
+            }
         }
     }
 
