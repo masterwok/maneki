@@ -65,17 +65,17 @@
         <item name="color_header_title">#FFFFFF</item>
         <item name="color_toolbar_icon_tint">#FFFFFF</item>
         <item name="color_auto_complete_clear_tint">#FFFFFF</item>
-        <item name="color_edit_text_border">@android:color/transparent</item>
+        <item name="color_edit_text_border">#FFFFFF</item>
         <item name="color_edit_text_background">#000000</item>
         <item name="color_query_text">#FFFFFF</item>
         <item name="color_query_text_hint">#FFFFFF</item>
         <item name="color_progress_bar_foreground">#FFFFFF</item>
         <item name="color_progress_bar_background">#000000</item>
 
-        <item name="dimen_query_border_width">0dp</item>
+        <item name="dimen_query_border_width">1dp</item>
         <item name="dimen_query_auto_complete_popup_top_radius">0dp</item>
         <item name="dimen_query_auto_complete_popup_bottom_radius">3dp</item>
-        <item name="dimen_query_auto_complete_popup_inset_top">0dp</item>
+        <item name="dimen_query_auto_complete_popup_inset_top">-4dp</item>
 
         <item name="textAppearanceLargePopupMenu">@style/AppTheme.TextAppearance.Popup</item>
 
