@@ -2,6 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:textColor">?color_text</item>
         <item name="colorPrimary">@android:color/black</item>
         <item name="colorPrimaryDark">?color_background</item>
         <item name="colorAccent">@android:color/black</item>
@@ -10,6 +11,7 @@
         <item name="android:textColorSecondary">@android:color/black</item>
         <item name="style_toolbar">@style/AppTheme.Toolbar</item>
         <item name="color_text">#000000</item>
+        <item name="color_cursor">#000000</item>
         <item name="color_background">#FFFFFF</item>
         <item name="color_header_title">#000000</item>
         <item name="color_toolbar_icon_tint">#000000</item>
@@ -56,6 +58,7 @@
     </style>
 
     <style name="AppTheme.Oled" parent="AppTheme">
+        <item name="android:textColor">?color_text</item>
         <item name="colorPrimary">?color_background</item>
         <item name="colorPrimaryDark">?color_background</item>
         <item name="colorAccent">@android:color/black</item>
@@ -74,6 +77,7 @@
         <item name="color_progress_bar_background">#000000</item>
 
         <item name="color_text">#FFFFFF</item>
+        <item name="color_cursor">#FFFFFF</item>
 
         <item name="dimen_query_border_width">1dp</item>
         <item name="dimen_query_auto_complete_popup_top_radius">0dp</item>
@@ -87,10 +91,10 @@
 
     <style name="AppTheme.Oled.Toolbar" parent="AppTheme.Toolbar">
         <item name="colorAccent">@android:color/black</item>
-        <item name="colorControlNormal">@android:color/black</item>
+        <item name="colorControlNormal">#FFFFFF</item>
         <item name="android:colorControlActivated">@android:color/black</item>
         <item name="android:colorBackground">@android:color/white</item>
-        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColor">#FFFFFF</item>
         <item name="android:fontFamily">@font/eina_03_semi_bold</item>
     </style>
 
