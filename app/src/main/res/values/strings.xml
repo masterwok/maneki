@@ -58,5 +58,6 @@
     <string name="dialog_unable_to_open_github_uri">Unable to open GitHub. Please ensure that you have a web browser installed on your device.</string>
     <string name="about_button_leave_review">Review Maneki</string>
     <string name="dialog_unable_to_open_play_store">Unable to open the Google Play Store.</string>
+    <string name="about_header_review">Review:</string>
 
 </resources>
