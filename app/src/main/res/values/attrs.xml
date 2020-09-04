@@ -9,6 +9,7 @@
 
     <!-- Common Colors -->
     <attr name="color_background" format="reference|color" />
+
     <attr name="color_header_title" format="reference|color" />
     <attr name="color_edit_text_border" format="reference|color" />
     <attr name="color_edit_text_background" format="reference|color" />
@@ -16,6 +17,8 @@
     <attr name="color_auto_complete_clear_tint" format="reference|color" />
     <attr name="color_progress_bar_foreground" format="reference|color" />
     <attr name="color_progress_bar_background" format="reference|color" />
+
+    <attr name="color_text" format="reference|color" />
 
     <!-- Search Activity Colors -->
     <attr name="color_query_text_hint" format="reference|color" />
