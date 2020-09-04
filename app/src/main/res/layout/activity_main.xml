@@ -34,7 +34,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="?color_background"
         android:fitsSystemWindows="true"
+        app:itemTextColor="?color_text"
         app:menu="@menu/drawer_layout_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

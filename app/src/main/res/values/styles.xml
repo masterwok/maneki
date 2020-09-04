@@ -53,12 +53,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.Splash" parent="AppTheme.NoActionBar">
-        <item name="android:windowBackground">@android:color/white</item>
-    </style>
-
     <style name="AppTheme.Oled" parent="AppTheme">
         <item name="android:textColor">?color_text</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
         <item name="colorPrimary">?color_background</item>
         <item name="colorPrimaryDark">?color_background</item>
         <item name="colorAccent">@android:color/black</item>
