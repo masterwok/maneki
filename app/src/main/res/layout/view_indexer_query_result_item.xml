@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="?color_background">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewTitle"
@@ -14,7 +15,6 @@
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/eina_03_semi_bold"
         android:maxLines="2"
-        android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +28,6 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/eina_03_semi_bold"
         android:text="@string/indexer_query_result_item_published_on"
-        android:textColor="@android:color/black"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/textViewTitle"
         app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
@@ -40,7 +39,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:fontFamily="@font/eina_03_regular"
-        android:textColor="@android:color/black"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/materialTextView"
         app:layout_constraintStart_toEndOf="@+id/materialTextView"
@@ -53,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/background_indexer_query_result_rounded"
+        android:background="@drawable/background_stat"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="8dp"
@@ -64,7 +62,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="18dp"
             android:layout_height="18dp"
-            android:tint="@android:color/black"
+            android:tint="?color_icon_tint"
             app:srcCompat="@drawable/ic_arrow_upward_black_24dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -73,7 +71,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="@font/eina_03_regular"
-            android:textColor="@android:color/black"
             android:textSize="12sp"
             tools:text="128,468" />
 
@@ -84,7 +81,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:background="@drawable/background_indexer_query_result_rounded"
+        android:background="@drawable/background_stat"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="8dp"
@@ -94,7 +91,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="18dp"
             android:layout_height="18dp"
-            android:tint="@android:color/black"
+            android:tint="?color_icon_tint"
             app:srcCompat="@drawable/ic_arrow_downward_black_24dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -103,7 +100,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="@font/eina_03_regular"
-            android:textColor="@android:color/black"
             android:textSize="12sp"
             tools:text="128,468" />
 
@@ -115,7 +111,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:background="@drawable/background_indexer_query_result_rounded"
+        android:background="@drawable/background_stat"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="8dp"
@@ -126,7 +122,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="18dp"
             android:layout_height="18dp"
-            android:tint="@android:color/black"
+            android:tint="?color_icon_tint"
             app:srcCompat="@drawable/ic_insert_drive_file_black_24dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -135,7 +131,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="@font/eina_03_regular"
-            android:textColor="@android:color/black"
             android:textSize="12sp"
             tools:text="1,000" />
 
@@ -146,11 +141,10 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="4dp"
-        android:background="@drawable/background_indexer_query_result_rounded"
+        android:background="@drawable/background_stat"
         android:fontFamily="@font/eina_03_regular"
         android:gravity="center"
         android:padding="8dp"
-        android:textColor="@android:color/black"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout4"
         app:layout_constraintStart_toEndOf="@+id/linearLayout4"
@@ -162,6 +156,7 @@
         android:layout_width="18dp"
         android:layout_height="18dp"
         android:layout_marginStart="8dp"
+        android:tint="?color_icon_tint"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout5"
         app:layout_constraintStart_toEndOf="@+id/linearLayout5"
         app:layout_constraintTop_toTopOf="@+id/linearLayout5"

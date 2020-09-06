@@ -4,19 +4,17 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.EditorInfo
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.masterwok.shrimplesearch.R
+import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
+import com.masterwok.shrimplesearch.common.data.services.contracts.AnalyticService
 import com.masterwok.shrimplesearch.common.extensions.hideSoftKeyboard
 import com.masterwok.shrimplesearch.common.utils.DialogUtil
 import com.masterwok.shrimplesearch.common.utils.notNull
@@ -33,7 +31,6 @@ import com.masterwok.xamarininterface.models.Indexer
 import com.masterwok.xamarininterface.models.IndexerQueryResult
 import com.masterwok.xamarininterface.models.Query
 import kotlinx.android.synthetic.main.fragment_query.*
-import kotlinx.android.synthetic.main.include_toolbar_maneki.*
 import kotlinx.android.synthetic.main.include_toolbar_query.*
 import javax.inject.Inject
 import javax.inject.Named
@@ -47,6 +44,9 @@ class QueryFragment : Fragment() {
     @Inject
     @Named("aggregate_indexer_id")
     lateinit var aggregateIndexerId: String
+
+    @Inject
+    lateinit var analyticService: AnalyticService
 
     private val viewModel: QueryViewModel by viewModels(this::requireActivity) { viewModelFactory }
 
@@ -91,6 +91,7 @@ class QueryFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_item_sort) {
+            analyticService.logEvent(AnalyticEvent.MenuItemSortTapped)
             presentSortDialog()
 
             return true

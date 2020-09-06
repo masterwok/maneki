@@ -5,18 +5,19 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.afollestad.materialdialogs.MaterialDialog
 
 import com.masterwok.shrimplesearch.R
+import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
+import com.masterwok.shrimplesearch.common.data.services.contracts.AnalyticService
 import com.masterwok.shrimplesearch.common.utils.DialogUtil
 import com.masterwok.shrimplesearch.common.utils.notNull
 import com.masterwok.shrimplesearch.di.AppInjector
@@ -28,7 +29,6 @@ import com.masterwok.shrimplesearch.features.query.constants.QueryState
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
 import com.masterwok.xamarininterface.models.QueryResultItem
 import kotlinx.android.synthetic.main.fragment_indexer_query_results.*
-import kotlinx.android.synthetic.main.include_toolbar_maneki.*
 import javax.inject.Inject
 
 
@@ -36,6 +36,9 @@ class IndexerQueryResultsFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var analyticService: AnalyticService
 
     private val viewModel: QueryViewModel by viewModels(this::requireActivity) { viewModelFactory }
 
@@ -54,6 +57,18 @@ class IndexerQueryResultsFragment : Fragment() {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             })
         } catch (exception: ActivityNotFoundException) {
+            analyticService.logException(exception, "No activity found to open query result item.")
+            presentNoTorrentClientFoundDialog()
+        }
+    }
+
+    private fun presentNoTorrentClientFoundDialog() = context.notNull { context ->
+        MaterialDialog(context).show {
+            title(res = R.string.dialog_header_whoops)
+            message(res = R.string.dialog_no_torrent_client_found)
+            positiveButton {
+                title(res = R.string.button_ok)
+            }
         }
     }
 
@@ -90,6 +105,7 @@ class IndexerQueryResultsFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_item_sort) {
+            analyticService.logEvent(AnalyticEvent.MenuItemSortTapped)
             presentSortDialog()
 
             return true

@@ -48,7 +48,7 @@
             android:layout_gravity="center_horizontal"
             android:contentDescription="@string/hint_no_search_results"
             android:src="@mipmap/ic_no_search_results"
-            android:tint="@android:color/black" />
+            android:tint="?color_icon_tint" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textView"
@@ -58,8 +58,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/eina_03_regular"
             android:text="@string/hint_no_search_results_description"
-            android:textAlignment="center"
-            android:textColor="@android:color/black" />
+            android:textAlignment="center"/>
     </LinearLayout>
 
 

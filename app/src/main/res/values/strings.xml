@@ -43,11 +43,23 @@
         Maneki is an open-source native Android application powered by Jackett.\n\n
         The source code is available on GitHub. Contributions are welcome.
     </string>
+    <string name="aboutReviewDescription">
+        If you have a moment, please consider taking some time to leave a review.\n\n
+
+        Your feedback is appreciated!
+    </string>
     <string name="aboutHeader">About:</string>
     <string name="aboutViewOnGithub">View on Github</string>
     <string name="version">Version: %s</string>
     <string name="gitHubUrl">https://github.com/masterwok/maneki</string>
     <string name="settingsHeader">Settings:</string>
     <string name="settingsDescription">There\'s not much to see here right now, but the following settings can be used to configure the application:</string>
+    <string name="dialog_no_torrent_client_found">Unable to find torrent client. Please ensure that you have a torrent client installed on your device.</string>
+    <string name="button_ok">Ok</string>
+    <string name="dialog_header_whoops">Houston, we have a problem…</string>
+    <string name="dialog_unable_to_open_github_uri">Unable to open GitHub. Please ensure that you have a web browser installed on your device.</string>
+    <string name="about_button_leave_review">Review Maneki</string>
+    <string name="dialog_unable_to_open_play_store">Unable to open the Google Play Store.</string>
+    <string name="about_header_review">Review:</string>
 
 </resources>
