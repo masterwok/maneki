@@ -29,6 +29,9 @@
     <attr name="color_button_border_selected" format="reference|color" />
     <attr name="color_button_border_unselected" format="reference|color" />
 
+    <attr name="color_stat_background" format="reference|color" />
+    <attr name="color_stat_border" format="reference|color" />
+
     <attr name="color_pill_background_unselected" format="reference|color" />
     <attr name="color_pill_background_selected" format="reference|color" />
     <attr name="color_pill_border_unselected" format="reference|color" />

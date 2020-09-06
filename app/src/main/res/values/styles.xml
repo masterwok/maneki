@@ -15,10 +15,13 @@
         <item name="color_cursor">#000000</item>
         <item name="color_icon_tint">#000000</item>
 
+        <item name="color_stat_background">#FFFFFF</item>
+        <item name="color_stat_border">#000000</item>
+
         <item name="color_pill_background_unselected">#FFFFFF</item>
         <item name="color_pill_background_selected">#f4f4f4</item>
         <item name="color_pill_border_unselected">#c4c4c4</item>
-        <item name="color_pill_border_selected">#c4c4c4</item>
+        <item name="color_pill_border_selected">#000000</item>
         <item name="color_pill_text_unselected">#000000</item>
         <item name="color_pill_text_selected">#000000</item>
         <item name="color_pill_icon">#000000</item>
@@ -51,7 +54,7 @@
         <item name="md_font_button">@font/eina_03_semi_bold</item>
 
         <item name="android:listDivider">@drawable/divider_recycler_view</item>
-        <item name="color_divider_recycler_view">#000000</item>
+        <item name="color_divider_recycler_view">#c4c4c4</item>
     </style>
 
     <style name="AppTheme.TextAppearance.Popup" parent="TextAppearance.MaterialComponents.Caption">
@@ -100,6 +103,9 @@
         <item name="color_text">#FFFFFF</item>
         <item name="color_cursor">#FFFFFF</item>
         <item name="color_icon_tint">#FFFFFF</item>
+
+        <item name="color_stat_background">#000000</item>
+        <item name="color_stat_border">#FFFFFF</item>
 
         <item name="color_pill_background_unselected">#000000</item>
         <item name="color_pill_border_unselected">#FFFFFF</item>
