@@ -20,6 +20,25 @@
 
     <attr name="color_text" format="reference|color" />
     <attr name="color_cursor" format="reference|color" />
+    <attr name="color_icon_tint" format="reference|color" />
+
+    <attr name="color_button_text_unselected" format="reference|color" />
+    <attr name="color_button_text_selected" format="reference|color" />
+    <attr name="color_button_background_unselected" format="reference|color" />
+    <attr name="color_button_background_selected" format="reference|color" />
+    <attr name="color_button_border_selected" format="reference|color" />
+    <attr name="color_button_border_unselected" format="reference|color" />
+
+    <attr name="color_pill_background_unselected" format="reference|color" />
+    <attr name="color_pill_background_selected" format="reference|color" />
+    <attr name="color_pill_border_unselected" format="reference|color" />
+    <attr name="color_pill_border_selected" format="reference|color" />
+
+    <attr name="color_pill_text_unselected" format="reference|color" />
+    <attr name="color_pill_text_selected" format="reference|color" />
+    <attr name="color_pill_icon" format="reference|color" />
+
+    <attr name="color_divider_recycler_view" format="reference|color" />
 
     <!-- Search Activity Colors -->
     <attr name="color_query_text_hint" format="reference|color" />

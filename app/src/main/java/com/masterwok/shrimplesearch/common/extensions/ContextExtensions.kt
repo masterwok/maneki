@@ -4,6 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.TypedValue
+import androidx.annotation.AttrRes
+import androidx.core.content.ContextCompat
 import androidx.core.os.ConfigurationCompat
 import java.text.NumberFormat
 import java.util.*
@@ -38,3 +41,12 @@ fun Context.startPlayStoreActivity() {
 
     startActivity(intent)
 }
+
+
+fun Context.getColorByAttribute(@AttrRes attributeResourceId: Int): Int = TypedValue().apply {
+    theme.resolveAttribute(
+        attributeResourceId,
+        this,
+        true
+    )
+}.data

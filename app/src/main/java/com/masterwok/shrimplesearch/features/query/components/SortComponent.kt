@@ -14,6 +14,7 @@ import com.google.android.flexbox.FlexboxLayout
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.contracts.ViewComponent
 import com.masterwok.shrimplesearch.common.extensions.dpToPx
+import com.masterwok.shrimplesearch.common.extensions.getColorByAttribute
 import kotlinx.android.synthetic.main.component_sort_by.view.*
 
 class SortComponent : ConstraintLayout, ViewComponent<SortComponent.Model> {
@@ -44,6 +45,8 @@ class SortComponent : ConstraintLayout, ViewComponent<SortComponent.Model> {
 
     override fun onFinishInflate() {
         super.onFinishInflate()
+
+        setBackgroundColor(context.getColorByAttribute(R.attr.color_background))
 
         setOnTouchListener(null)
     }
@@ -96,6 +99,7 @@ class SortComponent : ConstraintLayout, ViewComponent<SortComponent.Model> {
         tag = pill.id
         typeface = ResourcesCompat.getFont(context, R.font.eina_03_regular)
         text = pill.getTitle(context)
+        setTextColor(ContextCompat.getColorStateList(context, R.color.pill_text_color))
         gravity = Gravity.CENTER
         buttonDrawable = null
         minimumHeight = 0

@@ -10,8 +10,29 @@
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
         <item name="android:textColorSecondary">@android:color/black</item>
         <item name="style_toolbar">@style/AppTheme.Toolbar</item>
+
         <item name="color_text">#000000</item>
         <item name="color_cursor">#000000</item>
+        <item name="color_icon_tint">#000000</item>
+
+        <item name="color_pill_background_unselected">#FFFFFF</item>
+        <item name="color_pill_background_selected">#f4f4f4</item>
+        <item name="color_pill_border_unselected">#c4c4c4</item>
+        <item name="color_pill_border_selected">#c4c4c4</item>
+        <item name="color_pill_text_unselected">#000000</item>
+        <item name="color_pill_text_selected">#000000</item>
+        <item name="color_pill_icon">#000000</item>
+
+        <item name="color_button_text_unselected">#000000</item>
+        <item name="color_button_text_selected">#c4c4c4</item>
+        <item name="color_button_background_unselected">#FFFFFF</item>
+        <item name="color_button_background_selected">#FFFFFF</item>
+        <item name="color_button_border_unselected">#000000</item>
+        <item name="color_button_border_selected">#c4c4c4</item>
+
+        <item name="colorBackgroundFloating">?color_background</item>
+        <item name="md_color_button_text">?color_text</item>
+
         <item name="color_background">#FFFFFF</item>
         <item name="color_header_title">#000000</item>
         <item name="color_toolbar_icon_tint">#000000</item>
@@ -28,6 +49,9 @@
         <item name="dimen_query_auto_complete_popup_inset_top">0dp</item>
         <item name="textAppearanceLargePopupMenu">@style/AppTheme.TextAppearance.Popup</item>
         <item name="md_font_button">@font/eina_03_semi_bold</item>
+
+        <item name="android:listDivider">@drawable/divider_recycler_view</item>
+        <item name="color_divider_recycler_view">#000000</item>
     </style>
 
     <style name="AppTheme.TextAppearance.Popup" parent="TextAppearance.MaterialComponents.Caption">
@@ -75,6 +99,21 @@
 
         <item name="color_text">#FFFFFF</item>
         <item name="color_cursor">#FFFFFF</item>
+        <item name="color_icon_tint">#FFFFFF</item>
+
+        <item name="color_pill_background_unselected">#000000</item>
+        <item name="color_pill_border_unselected">#FFFFFF</item>
+        <item name="color_pill_border_selected">#FFFFFF</item>
+        <item name="color_pill_text_unselected">#FFFFFF</item>
+        <item name="color_pill_text_selected">#000000</item>
+        <item name="color_pill_icon">#FFFFFF</item>
+
+        <item name="color_button_text_unselected">#FFFFFF</item>
+        <item name="color_button_text_selected">#c4c4c4</item>
+        <item name="color_button_background_unselected">#000000</item>
+        <item name="color_button_background_selected">#000000</item>
+        <item name="color_button_border_selected">#c4c4c4</item>
+        <item name="color_button_border_unselected">#FFFFFF</item>
 
         <item name="dimen_query_border_width">1dp</item>
         <item name="dimen_query_auto_complete_popup_top_radius">0dp</item>
@@ -84,6 +123,11 @@
         <item name="textAppearanceLargePopupMenu">@style/AppTheme.TextAppearance.Popup</item>
 
         <item name="md_font_button">@font/eina_03_semi_bold</item>
+        <item name="md_color_button_text">?color_text</item>
+        <item name="colorBackgroundFloating">?color_background</item>
+
+        <item name="android:listDivider">@drawable/divider_recycler_view</item>
+        <item name="color_divider_recycler_view">#FFFFFF</item>
     </style>
 
     <style name="AppTheme.Oled.Toolbar" parent="AppTheme.Toolbar">

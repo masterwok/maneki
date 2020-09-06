@@ -52,7 +52,7 @@
             android:layout_gravity="center_horizontal"
             android:contentDescription="@string/searchIcon"
             android:src="@mipmap/ic_search"
-            android:tint="@android:color/black" />
+            android:tint="?color_icon_tint" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textView"
@@ -62,8 +62,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/eina_03_regular"
             android:text="@string/search_placeholder_text"
-            android:textAlignment="center"
-            android:textColor="@android:color/black" />
+            android:textAlignment="center" />
     </LinearLayout>
 
     <com.google.android.material.appbar.AppBarLayout

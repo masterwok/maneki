@@ -13,7 +13,6 @@
         android:layout_marginStart="8dp"
         android:fontFamily="@font/eina_03_semi_bold"
         android:text="@string/component_sort_query_results_header_sort_by"
-        android:textColor="@android:color/black"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,7 +40,6 @@
         android:layout_marginTop="16dp"
         android:fontFamily="@font/eina_03_semi_bold"
         android:text="@string/component_sort_query_results_header_order"
-        android:textColor="@android:color/black"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/flexboxLayoutSort" />

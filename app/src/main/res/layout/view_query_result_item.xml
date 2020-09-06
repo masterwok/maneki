@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="?color_background">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewIndexerName"
@@ -12,7 +13,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/eina_03_semi_bold"
-        android:textColor="?color_text"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,6 +26,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textViewIndexerName"
+        android:tint="?color_icon_tint"
         app:srcCompat="@drawable/ic_chevron_right_black_24dp" />
 
     <LinearLayout
@@ -34,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/background_indexer_query_result_rounded"
+        android:background="@drawable/background_pill"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="8dp"
@@ -45,7 +46,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="18dp"
             android:layout_height="18dp"
-            android:tint="@android:color/black"
+            android:tint="?color_icon_tint"
             app:srcCompat="@drawable/ic_magnet_black" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -54,7 +55,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="@font/eina_03_regular"
-            android:textColor="@android:color/black"
             android:textSize="12sp"
             tools:text="36" />
 
@@ -66,7 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/background_indexer_query_result_rounded"
+        android:background="@drawable/background_pill"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="8dp"
@@ -77,7 +77,7 @@
             android:id="@+id/imageView3"
             android:layout_width="18dp"
             android:layout_height="18dp"
-            android:tint="@android:color/black"
+            android:tint="?color_icon_tint"
             app:srcCompat="@drawable/ic_link_black_24dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -86,7 +86,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="@font/eina_03_regular"
-            android:textColor="@android:color/black"
             android:textSize="12sp"
             tools:text="8" />
 
