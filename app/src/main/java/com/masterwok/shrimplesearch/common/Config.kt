@@ -1,5 +1,9 @@
 package com.masterwok.shrimplesearch.common
 
+/**
+ * The name of the application shared preferences.
+ */
+const val SHARED_PREFERENCES_NAME = "maenki.shared_preferences"
 
 /**
  * The unique identifier for the aggregate indexer.

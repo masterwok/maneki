@@ -26,6 +26,6 @@
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.masterwok.shrimplesearch.features.settings.SettingsFragment"
+        android:name="com.masterwok.shrimplesearch.features.settings.fragments.SettingsFragment"
         tools:layout="@layout/fragment_settings"/>
 </navigation>

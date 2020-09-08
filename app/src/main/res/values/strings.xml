@@ -61,5 +61,8 @@
     <string name="about_button_leave_review">Review Maneki</string>
     <string name="dialog_unable_to_open_play_store">Unable to open the Google Play Store.</string>
     <string name="about_header_review">Review:</string>
+    <string name="headerTheme">Theme:</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_oled">OLED</string>
 
 </resources>

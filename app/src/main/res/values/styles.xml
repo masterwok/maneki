@@ -134,6 +134,13 @@
 
         <item name="android:listDivider">@drawable/divider_recycler_view</item>
         <item name="color_divider_recycler_view">#FFFFFF</item>
+
+        <!-- Active thumb color & Active track color(30% transparency) -->
+        <item name="colorControlActivated">#FFFFFF</item>
+        <!-- Inactive thumb color -->
+        <item name="colorSwitchThumbNormal">#8D8D8D</item>
+        <!-- Inactive track color(30% transparency) -->
+        <item name="android:colorForeground">#8D8D8D</item>
     </style>
 
     <style name="AppTheme.Oled.Toolbar" parent="AppTheme.Toolbar">
