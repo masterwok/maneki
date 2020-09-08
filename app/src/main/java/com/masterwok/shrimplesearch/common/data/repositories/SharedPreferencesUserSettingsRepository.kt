@@ -36,13 +36,14 @@ class SharedPreferencesUserSettingsRepository @Inject constructor(
             .apply()
     }
 
-    override fun getThemeId(): Int {
-        val selectedTheme = read().theme
+    override fun getThemeId(): Int = when (read().theme) {
+        Theme.Light -> R.style.AppTheme
+        Theme.Oled -> R.style.AppTheme_Oled
+    }
 
-        return when (selectedTheme) {
-            Theme.Light -> R.style.AppTheme
-            Theme.Oled -> R.style.AppTheme_Oled
-        }
+    override fun getSplashThemeId() = when (read().theme) {
+        Theme.Light -> R.style.AppTheme_Splash
+        Theme.Oled -> R.style.AppTheme_Splash_Oled
     }
 
     companion object {

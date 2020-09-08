@@ -2,7 +2,11 @@ package com.masterwok.shrimplesearch.features.splash.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -17,7 +21,7 @@ import javax.inject.Inject
 import kotlin.math.ceil
 
 
-class SplashActivity : FragmentActivity() {
+class SplashActivity : AppCompatActivity() {
 
     @Inject
     lateinit var userSettingsRepository: UserSettingsRepository
@@ -32,7 +36,7 @@ class SplashActivity : FragmentActivity() {
             .splashComponent
             .inject(this)
 
-        setTheme(userSettingsRepository.getThemeId())
+        setTheme(userSettingsRepository.getSplashThemeId())
 
         super.onCreate(savedInstanceState)
 

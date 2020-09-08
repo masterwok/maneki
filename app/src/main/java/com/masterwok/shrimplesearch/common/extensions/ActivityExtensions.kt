@@ -4,6 +4,7 @@ import android.app.Activity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 
+
 /**
  * Because hiding the keyboard on Android is a tedious process,
  * this is an extension which does that for us.

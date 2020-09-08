@@ -10,4 +10,6 @@ interface UserSettingsRepository {
 
     fun getThemeId(): Int
 
+    fun getSplashThemeId(): Int
+
 }
