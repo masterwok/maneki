@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.masterwok.shrimplesearch.R
+import com.masterwok.shrimplesearch.common.data.repositories.contracts.UserSettingsRepository
 import com.masterwok.shrimplesearch.di.AppInjector
 import com.masterwok.shrimplesearch.features.splash.models.BootstrapInfo
 import com.masterwok.shrimplesearch.features.splash.viewmodels.SplashViewModel
@@ -19,6 +20,9 @@ import kotlin.math.ceil
 class SplashActivity : FragmentActivity() {
 
     @Inject
+    lateinit var userSettingsRepository: UserSettingsRepository
+
+    @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel: SplashViewModel by viewModels { viewModelFactory }
@@ -27,6 +31,8 @@ class SplashActivity : FragmentActivity() {
         AppInjector
             .splashComponent
             .inject(this)
+
+        setTheme(userSettingsRepository.getThemeId())
 
         super.onCreate(savedInstanceState)
 
@@ -51,8 +57,8 @@ class SplashActivity : FragmentActivity() {
         }
 
         textViewIndexerProgressCount.text = getString(
-            R.string.splash_progress
-            , ceil((bootstrapInfo.initializedCount.toDouble() / bootstrapInfo.totalIndexerCount) * 100)
+            R.string.splash_progress,
+            ceil((bootstrapInfo.initializedCount.toDouble() / bootstrapInfo.totalIndexerCount) * 100)
         )
     }
 

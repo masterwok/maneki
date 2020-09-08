@@ -8,4 +8,6 @@ interface UserSettingsRepository {
 
     fun update(userSettings: UserSettings)
 
+    fun getThemeId(): Int
+
 }

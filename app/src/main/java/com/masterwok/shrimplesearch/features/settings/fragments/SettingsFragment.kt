@@ -34,9 +34,9 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        subscribeToViewComponents()
-
         configure(viewModel.readUserSettings())
+
+        subscribeToViewComponents()
     }
 
     override fun onAttach(context: Context) {
@@ -59,17 +59,28 @@ class SettingsFragment : Fragment() {
     }
 
     private fun subscribeToThemeRadioGroup() = radioGroupTheme.setOnCheckedChangeListener { _, _ ->
+        val selectedThemeId: Int
+
         val userSettings = viewModel
             .readUserSettings()
             .copy(
                 theme = when (radioGroupTheme.checkedRadioButtonId) {
-                    R.id.radioButtonThemeLight -> Theme.Light
-                    R.id.radioButtonThemeOled -> Theme.Oled
+                    R.id.radioButtonThemeLight -> {
+                        selectedThemeId = R.style.AppTheme
+                        Theme.Light
+                    }
+                    R.id.radioButtonThemeOled -> {
+                        selectedThemeId = R.style.AppTheme_Oled
+                        Theme.Oled
+                    }
                     else -> error("Theme not registered on settings.")
                 }
             )
 
         viewModel.updateUserSettings(userSettings.copy())
+
+        activity?.setTheme(selectedThemeId)
+        activity?.recreate()
     }
 
 }
