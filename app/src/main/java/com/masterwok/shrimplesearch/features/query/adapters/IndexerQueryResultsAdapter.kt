@@ -4,12 +4,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.contracts.Configurable
 import com.masterwok.shrimplesearch.common.extensions.getCurrentLocale
 import com.masterwok.shrimplesearch.common.extensions.getLocaleNumberFormat
 import com.masterwok.shrimplesearch.common.extensions.toHumanReadableByteCount
+import com.masterwok.xamarininterface.models.IndexerQueryResult
 import com.masterwok.xamarininterface.models.QueryResultItem
 import kotlinx.android.synthetic.main.view_indexer_query_result_item.view.*
 import java.text.DateFormat
@@ -38,9 +40,13 @@ class IndexerQueryResultsAdapter(
     ) = holder.configure(configuredModel[position])
 
     override fun configure(model: List<QueryResultItem>) {
+        val diffCallback = QueryResultItemsDiffCallback(configuredModel, model)
+
         configuredModel = model
 
-        notifyDataSetChanged()
+        DiffUtil.calculateDiff(diffCallback).also {
+            it.dispatchUpdatesTo(this)
+        }
     }
 
     class ViewHolder(
@@ -95,4 +101,25 @@ class IndexerQueryResultsAdapter(
             itemView.setOnClickListener { onQueryResultItemClicked(model) }
         }
     }
+}
+
+private class QueryResultItemsDiffCallback(
+    val old: List<QueryResultItem>,
+    val new: List<QueryResultItem>
+) : DiffUtil.Callback() {
+
+    override fun getOldListSize(): Int = old.count()
+
+    override fun getNewListSize(): Int = new.count()
+
+    override fun areItemsTheSame(
+        oldItemPosition: Int,
+        newItemPosition: Int
+    ): Boolean = old[oldItemPosition] == new[newItemPosition]
+
+    override fun areContentsTheSame(
+        oldItemPosition: Int,
+        newItemPosition: Int
+    ): Boolean = old[oldItemPosition] == new[newItemPosition]
+
 }

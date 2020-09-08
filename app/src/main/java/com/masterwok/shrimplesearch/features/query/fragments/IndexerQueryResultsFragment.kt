@@ -138,8 +138,6 @@ class IndexerQueryResultsFragment : Fragment() {
     }
 
     private fun configure(queryResultItems: List<QueryResultItem>) {
-        recyclerView.scrollToPosition(0)
-
         queryResultsAdapter.configure(queryResultItems)
 
         linearLayoutNoResultsHint.isVisible = queryResultItems.count() == 0
