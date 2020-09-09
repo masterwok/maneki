@@ -66,5 +66,8 @@
     <string name="theme_oled">OLED</string>
     <string name="snack_new_query_results">New query results</string>
     <string name="snack_scroll_to_top">SCROLL TO TOP</string>
+    <string name="share_magnet">Share Magnet</string>
+    <string name="open_magnet">Open Magnet</string>
+    <string name="copy_magnet">Copy Magnet</string>
 
 </resources>

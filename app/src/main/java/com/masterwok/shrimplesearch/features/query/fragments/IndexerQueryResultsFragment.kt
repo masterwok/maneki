@@ -12,7 +12,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.bottomsheets.BottomSheet
+import com.afollestad.materialdialogs.list.customListAdapter
 import com.google.android.material.snackbar.Snackbar
 
 import com.masterwok.shrimplesearch.R
@@ -24,6 +27,7 @@ import com.masterwok.shrimplesearch.common.utils.DialogUtil
 import com.masterwok.shrimplesearch.common.utils.notNull
 import com.masterwok.shrimplesearch.di.AppInjector
 import com.masterwok.shrimplesearch.features.query.adapters.IndexerQueryResultsAdapter
+import com.masterwok.shrimplesearch.features.query.adapters.MaterialDialogIconListItemAdapter
 import com.masterwok.shrimplesearch.features.query.components.SortComponent
 import com.masterwok.shrimplesearch.features.query.constants.IndexerQueryResultSortBy
 import com.masterwok.shrimplesearch.features.query.constants.OrderBy
@@ -33,7 +37,6 @@ import com.masterwok.xamarininterface.models.QueryResultItem
 import kotlinx.android.synthetic.main.fragment_indexer_query_results.*
 import kotlinx.android.synthetic.main.fragment_indexer_query_results.progressBar
 import kotlinx.android.synthetic.main.fragment_indexer_query_results.recyclerView
-import kotlinx.android.synthetic.main.fragment_query.*
 import javax.inject.Inject
 
 
@@ -50,7 +53,7 @@ class IndexerQueryResultsFragment : Fragment() {
     private val viewModel: QueryViewModel by viewModels(this::requireActivity) { viewModelFactory }
 
     private val queryResultsAdapter = IndexerQueryResultsAdapter { queryResultItem ->
-        openQueryResultItem(queryResultItem)
+        presentBottomSheet(queryResultItem)
     }
 
     private var snackbarNewResults: Snackbar? = null
@@ -201,6 +204,29 @@ class IndexerQueryResultsFragment : Fragment() {
                         snackbarNewResults = null
                     }
                 }
+            })
+        }
+    }
+
+    private fun presentBottomSheet(queryResultItem: QueryResultItem) = context.notNull { context ->
+        MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
+            customListAdapter(MaterialDialogIconListItemAdapter().apply {
+                configure(
+                    listOf(
+                        MaterialDialogIconListItemAdapter.Item(
+                            R.drawable.ic_baseline_share_24,
+                            R.string.share_magnet
+                        ) {},
+                        MaterialDialogIconListItemAdapter.Item(
+                            R.drawable.ic_content_copy_black_24dp,
+                            R.string.copy_magnet
+                        ) {},
+                        MaterialDialogIconListItemAdapter.Item(
+                            R.drawable.ic_baseline_open_in_new_24,
+                            R.string.open_magnet
+                        ) {}
+                    )
+                )
             })
         }
     }
