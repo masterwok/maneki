@@ -15,7 +15,7 @@ android {
         applicationId "com.masterwok.shrimplesearch"
         minSdkVersion project.minSdkVersion
         targetSdkVersion project.targetSdkVersion
-        versionCode 500044
+        versionCode 500045
         versionName "2.1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
