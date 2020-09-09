@@ -81,8 +81,8 @@
     </style>
 
     <style name="AppTheme.Splash.Oled" parent="AppTheme.NoActionBar">
-        <item name="android:windowDisablePreview">false</item>
         <item name="android:windowBackground">#000000</item>
+        <item name="android:windowDisablePreview">false</item>
         <item name="android:textColor">?color_text</item>
         <item name="color_background">#000000</item>
         <item name="color_progress_bar_foreground">#FFFFFF</item>
@@ -92,6 +92,8 @@
     </style>
 
     <style name="AppTheme.NoActionBar">
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges
+        </item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowFullscreen">true</item>
         <item name="windowActionBar">false</item>
