@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -14,10 +13,13 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
+import com.google.android.material.snackbar.Snackbar
 
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
 import com.masterwok.shrimplesearch.common.data.services.contracts.AnalyticService
+import com.masterwok.shrimplesearch.common.extensions.getColorByAttribute
+import com.masterwok.shrimplesearch.common.extensions.showSnackbar
 import com.masterwok.shrimplesearch.common.utils.DialogUtil
 import com.masterwok.shrimplesearch.common.utils.notNull
 import com.masterwok.shrimplesearch.di.AppInjector
@@ -29,6 +31,9 @@ import com.masterwok.shrimplesearch.features.query.constants.QueryState
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
 import com.masterwok.xamarininterface.models.QueryResultItem
 import kotlinx.android.synthetic.main.fragment_indexer_query_results.*
+import kotlinx.android.synthetic.main.fragment_indexer_query_results.progressBar
+import kotlinx.android.synthetic.main.fragment_indexer_query_results.recyclerView
+import kotlinx.android.synthetic.main.fragment_query.*
 import javax.inject.Inject
 
 
@@ -40,11 +45,15 @@ class IndexerQueryResultsFragment : Fragment() {
     @Inject
     lateinit var analyticService: AnalyticService
 
+    private lateinit var linearLayoutManager: LinearLayoutManager
+
     private val viewModel: QueryViewModel by viewModels(this::requireActivity) { viewModelFactory }
 
     private val queryResultsAdapter = IndexerQueryResultsAdapter { queryResultItem ->
         openQueryResultItem(queryResultItem)
     }
+
+    private var snackbarNewResults: Snackbar? = null
 
     private fun openQueryResultItem(
         queryResultItem: QueryResultItem
@@ -115,8 +124,10 @@ class IndexerQueryResultsFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
+        linearLayoutManager = LinearLayoutManager(context)
+
         recyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = linearLayoutManager
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             adapter = queryResultsAdapter
         }
@@ -141,6 +152,13 @@ class IndexerQueryResultsFragment : Fragment() {
         queryResultsAdapter.configure(queryResultItems)
 
         linearLayoutNoResultsHint.isVisible = queryResultItems.count() == 0
+
+        if (
+            snackbarNewResults == null
+            && linearLayoutManager.findFirstCompletelyVisibleItemPosition() > 0
+        ) {
+            presentNewResultsSnack()
+        }
     }
 
     private fun presentSortDialog() = context.notNull { context ->
@@ -164,6 +182,26 @@ class IndexerQueryResultsFragment : Fragment() {
                 IndexerQueryResultSortBy.getByValue(sortModel.selectedSortPill.id),
                 OrderBy.getByValue(sortModel.selectedOrderPill.id)
             )
+        }
+    }
+
+    private fun presentNewResultsSnack() = context.notNull { context ->
+        snackbarNewResults = coordinatorLayoutIndexerQuery.showSnackbar(
+            message = context.getString(R.string.snack_new_query_results),
+            length = Snackbar.LENGTH_INDEFINITE,
+            actionMessage = context.getString(R.string.snack_scroll_to_top),
+            backgroundColor = context.getColorByAttribute(R.attr.color_snack_background),
+            textColor = context.getColorByAttribute(R.attr.color_snack_text)
+        ) {
+            recyclerView.smoothScrollToPosition(0)
+        }.apply {
+            addCallback(object : Snackbar.Callback() {
+                override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                    if (event == DISMISS_EVENT_ACTION) {
+                        snackbarNewResults = null
+                    }
+                }
+            })
         }
     }
 

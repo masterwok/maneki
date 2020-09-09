@@ -41,8 +41,6 @@ import javax.inject.Named
 
 class QueryFragment : Fragment() {
 
-    private var snackbarNewResults: Snackbar? = null
-
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -62,6 +60,9 @@ class QueryFragment : Fragment() {
 
         findNavController().navigate(R.id.action_queryFragment_to_indexerQueryResultsFragment)
     }
+
+    private var snackbarNewResults: Snackbar? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -175,11 +176,11 @@ class QueryFragment : Fragment() {
             snackbarNewResults == null
             && linearLayoutManager.findFirstCompletelyVisibleItemPosition() > 0
         ) {
-            showNewResultsSnack()
+            presentNewResultsSnack()
         }
     }
 
-    private fun showNewResultsSnack() = context.notNull { context ->
+    private fun presentNewResultsSnack() = context.notNull { context ->
         snackbarNewResults = coordinatorLayoutQuery.showSnackbar(
             message = context.getString(R.string.snack_new_query_results),
             length = Snackbar.LENGTH_INDEFINITE,
