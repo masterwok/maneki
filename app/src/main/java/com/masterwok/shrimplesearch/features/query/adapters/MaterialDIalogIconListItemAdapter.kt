@@ -48,24 +48,9 @@ class MaterialDialogIconListItemAdapter :
     class ViewHolder(
         itemView: View
     ) : RecyclerView.ViewHolder(itemView), Configurable<Item> {
-
         override fun configure(model: Item) = itemView.context.notNull { context ->
-            val iconDrawable = ContextCompat.getDrawable(itemView.context, model.drawable)?.apply {
-                val dimension = 24.dpToPx(itemView.context)
-
-                setBounds(0, 0, dimension, dimension)
-            }
-
-            (itemView as AppCompatButton).apply {
-                setCompoundDrawables(
-                    iconDrawable,
-                    null,
-                    null,
-                    null
-                )
-
-                text = context.getString(model.label)
-            }
+            itemView.imageView.setImageResource(model.drawable)
+            itemView.textView.text = context.getString(model.label)
         }
     }
 
