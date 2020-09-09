@@ -1,18 +1,13 @@
 package com.masterwok.shrimplesearch.features.query.adapters
 
-import android.content.Context
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.appcompat.widget.AppCompatButton
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.contracts.Configurable
-import com.masterwok.shrimplesearch.common.extensions.dpToPx
 import com.masterwok.shrimplesearch.common.utils.notNull
 import kotlinx.android.synthetic.main.view_material_dialog_icon_item.view.*
 
