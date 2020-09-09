@@ -64,5 +64,7 @@
     <string name="headerTheme">Theme:</string>
     <string name="theme_light">Light</string>
     <string name="theme_oled">OLED</string>
+    <string name="snack_new_query_results">New query results</string>
+    <string name="snack_scroll_to_top">SCROLL TO TOP</string>
 
 </resources>

@@ -12,10 +12,13 @@ import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
 import com.masterwok.shrimplesearch.common.data.services.contracts.AnalyticService
+import com.masterwok.shrimplesearch.common.extensions.getColorByAttribute
 import com.masterwok.shrimplesearch.common.extensions.hideSoftKeyboard
+import com.masterwok.shrimplesearch.common.extensions.showSnackbar
 import com.masterwok.shrimplesearch.common.utils.DialogUtil
 import com.masterwok.shrimplesearch.common.utils.notNull
 import com.masterwok.shrimplesearch.di.AppInjector
@@ -38,6 +41,8 @@ import javax.inject.Named
 
 class QueryFragment : Fragment() {
 
+    private var snackbarNewResults: Snackbar? = null
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -47,6 +52,8 @@ class QueryFragment : Fragment() {
 
     @Inject
     lateinit var analyticService: AnalyticService
+
+    private lateinit var linearLayoutManager: LinearLayoutManager
 
     private val viewModel: QueryViewModel by viewModels(this::requireActivity) { viewModelFactory }
 
@@ -101,8 +108,10 @@ class QueryFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
+        linearLayoutManager = LinearLayoutManager(context)
+
         recyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = linearLayoutManager
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             adapter = queryResultsAdapter
         }
@@ -161,6 +170,34 @@ class QueryFragment : Fragment() {
         val aggregateIndexerQueryResult = createAggregateIndexerQueryResult(queryResults)
 
         queryResultsAdapter.configure(listOf(aggregateIndexerQueryResult) + queryResults)
+
+        if (
+            snackbarNewResults == null
+            && linearLayoutManager.findFirstCompletelyVisibleItemPosition() > 0
+        ) {
+            showNewResultsSnack()
+        }
+    }
+
+    private fun showNewResultsSnack() = context.notNull { context ->
+        snackbarNewResults = coordinatorLayoutQuery.showSnackbar(
+            message = context.getString(R.string.snack_new_query_results),
+            length = Snackbar.LENGTH_INDEFINITE,
+            actionMessage = context.getString(R.string.snack_scroll_to_top),
+            backgroundColor = context.getColorByAttribute(R.attr.color_snack_background),
+            textColor = context.getColorByAttribute(R.attr.color_snack_text)
+        ) {
+            recyclerView.smoothScrollToPosition(0)
+            appBarLayoutQuery.setExpanded(true, true)
+        }.apply {
+            addCallback(object : Snackbar.Callback() {
+                override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                    if (event == DISMISS_EVENT_ACTION) {
+                        snackbarNewResults = null
+                    }
+                }
+            })
+        }
     }
 
     private fun createAggregateIndexerQueryResult(

@@ -47,8 +47,9 @@
         <item name="dimen_query_auto_complete_popup_inset_top">0dp</item>
         <item name="textAppearanceLargePopupMenu">@style/AppTheme.TextAppearance.Popup</item>
         <item name="md_font_button">@font/eina_03_semi_bold</item>
-
         <item name="android:listDivider">@drawable/divider_recycler_view</item>
+        <item name="color_snack_background">@android:color/holo_green_dark</item>
+        <item name="color_snack_text">#FFFFFF</item>
         <item name="color_divider_recycler_view">#c4c4c4</item>
     </style>
 
@@ -118,41 +119,35 @@
         <item name="color_query_text_hint">#FFFFFF</item>
         <item name="color_progress_bar_foreground">#FFFFFF</item>
         <item name="color_progress_bar_background">#000000</item>
-
         <item name="color_text">#FFFFFF</item>
         <item name="color_cursor">#FFFFFF</item>
         <item name="color_icon_tint">#FFFFFF</item>
-
         <item name="color_stat_background">#000000</item>
         <item name="color_stat_border">#FFFFFF</item>
-
         <item name="color_pill_background_unselected">#000000</item>
         <item name="color_pill_border_unselected">#FFFFFF</item>
         <item name="color_pill_border_selected">#FFFFFF</item>
         <item name="color_pill_text_unselected">#FFFFFF</item>
         <item name="color_pill_text_selected">#000000</item>
         <item name="color_pill_icon">#FFFFFF</item>
-
         <item name="color_button_text_unselected">#FFFFFF</item>
         <item name="color_button_text_selected">#c4c4c4</item>
         <item name="color_button_background_unselected">#000000</item>
         <item name="color_button_background_selected">#000000</item>
         <item name="color_button_border_selected">#c4c4c4</item>
         <item name="color_button_border_unselected">#FFFFFF</item>
-
         <item name="dimen_query_border_width">1dp</item>
         <item name="dimen_query_auto_complete_popup_top_radius">0dp</item>
         <item name="dimen_query_auto_complete_popup_bottom_radius">3dp</item>
         <item name="dimen_query_auto_complete_popup_inset_top">-4dp</item>
-
         <item name="textAppearanceLargePopupMenu">@style/AppTheme.TextAppearance.Popup</item>
-
         <item name="md_font_button">@font/eina_03_semi_bold</item>
         <item name="md_color_button_text">?color_text</item>
         <item name="colorBackgroundFloating">?color_background</item>
-
         <item name="android:listDivider">@drawable/divider_recycler_view</item>
         <item name="color_divider_recycler_view">#FFFFFF</item>
+        <item name="color_snack_background">#FFFFFF</item>
+        <item name="color_snack_text">#000000</item>
 
         <!-- Active thumb color & Active track color(30% transparency) -->
         <item name="colorControlActivated">#FFFFFF</item>
