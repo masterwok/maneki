@@ -69,5 +69,8 @@
     <string name="share_magnet">Share Magnet</string>
     <string name="open_magnet">Open Magnet</string>
     <string name="copy_magnet">Copy Magnet</string>
+    <string name="share_link">Share Link</string>
+    <string name="copy_torrent">Copy Link</string>
+    <string name="open_link">Open Link</string>
 
 </resources>

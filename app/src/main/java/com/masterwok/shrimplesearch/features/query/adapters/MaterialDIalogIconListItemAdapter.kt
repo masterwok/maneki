@@ -51,6 +51,7 @@ class MaterialDialogIconListItemAdapter :
         override fun configure(model: Item) = itemView.context.notNull { context ->
             itemView.imageView.setImageResource(model.drawable)
             itemView.textView.text = context.getString(model.label)
+            itemView.setOnClickListener { model.onItemTap() }
         }
     }
 

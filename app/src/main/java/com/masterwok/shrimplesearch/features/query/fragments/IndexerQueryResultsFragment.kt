@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -21,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
 import com.masterwok.shrimplesearch.common.data.services.contracts.AnalyticService
+import com.masterwok.shrimplesearch.common.extensions.copyToClipboard
 import com.masterwok.shrimplesearch.common.extensions.getColorByAttribute
 import com.masterwok.shrimplesearch.common.extensions.showSnackbar
 import com.masterwok.shrimplesearch.common.utils.DialogUtil
@@ -58,9 +60,7 @@ class IndexerQueryResultsFragment : Fragment() {
 
     private var snackbarNewResults: Snackbar? = null
 
-    private fun openQueryResultItem(
-        queryResultItem: QueryResultItem
-    ) = activity.notNull {
+    private fun openQueryResultItem(queryResultItem: QueryResultItem) = activity.notNull {
         val linkInfo = queryResultItem.linkInfo
         val uri = linkInfo.magnetUri ?: linkInfo.link ?: return
 
@@ -208,28 +208,65 @@ class IndexerQueryResultsFragment : Fragment() {
         }
     }
 
+    private fun shareQueryResultItem(queryResultItem: QueryResultItem) = activity.notNull {
+        val uri = (queryResultItem.linkInfo.magnetUri ?: queryResultItem.linkInfo.link)
+            ?: return@notNull
+
+        ShareCompat
+            .IntentBuilder
+            .from(it)
+            .setType("text/plain")
+            .setText(uri.toString())
+            .startChooser()
+
+    }
+
+    private fun copyQueryResultItem(queryResultItem: QueryResultItem) =
+        context?.notNull { context ->
+            val uri = (queryResultItem.linkInfo.magnetUri ?: queryResultItem.linkInfo.link)
+                ?: return@notNull
+
+            context.copyToClipboard(CLIPBOARD_LABEL, uri.toString())
+        }
+
     private fun presentBottomSheet(queryResultItem: QueryResultItem) = context.notNull { context ->
+        val hasMagnetUri = queryResultItem
+            .linkInfo
+            .magnetUri != null
+
         MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
             customListAdapter(MaterialDialogIconListItemAdapter().apply {
-                configure(
-                    listOf(
-                        MaterialDialogIconListItemAdapter.Item(
-                            R.drawable.ic_baseline_share_24,
-                            R.string.share_magnet
-                        ) {},
-                        MaterialDialogIconListItemAdapter.Item(
-                            R.drawable.ic_content_copy_black_24dp,
-                            R.string.copy_magnet
-                        ) {},
-                        MaterialDialogIconListItemAdapter.Item(
-                            R.drawable.ic_baseline_open_in_new_24,
-                            R.string.open_magnet
-                        ) {}
-                    )
+                val items = listOf(
+                    MaterialDialogIconListItemAdapter.Item(
+                        R.drawable.ic_baseline_share_24,
+                        if (hasMagnetUri) R.string.share_magnet else R.string.share_link
+                    ) {
+                        shareQueryResultItem(queryResultItem)
+                        dismiss()
+                    },
+                    MaterialDialogIconListItemAdapter.Item(
+                        R.drawable.ic_content_copy_black_24dp,
+                        if (hasMagnetUri) R.string.copy_magnet else R.string.copy_torrent
+                    ) {
+                        copyQueryResultItem(queryResultItem)
+                        dismiss()
+                    },
+                    MaterialDialogIconListItemAdapter.Item(
+                        R.drawable.ic_baseline_open_in_new_24,
+                        if (hasMagnetUri) R.string.open_magnet else R.string.open_link
+                    ) {
+                        openQueryResultItem(queryResultItem)
+                        dismiss()
+                    }
                 )
+
+                configure(items)
             })
         }
     }
 
+    companion object {
+        private const val CLIPBOARD_LABEL = "clipboard.uri"
+    }
 
 }

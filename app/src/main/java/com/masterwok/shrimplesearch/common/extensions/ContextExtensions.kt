@@ -1,6 +1,8 @@
 package com.masterwok.shrimplesearch.common.extensions
 
 import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -50,3 +52,10 @@ fun Context.getColorByAttribute(@AttrRes attributeResourceId: Int): Int = TypedV
         true
     )
 }.data
+
+
+fun Context.copyToClipboard(label: String, text: String) {
+    (getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).apply {
+        setPrimaryClip(ClipData(label, emptyArray(), ClipData.Item(text)))
+    }
+}
