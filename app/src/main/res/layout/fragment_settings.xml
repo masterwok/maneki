@@ -15,8 +15,6 @@
         android:fontFamily="@font/eina_03_semi_bold"
         android:letterSpacing=".1"
         android:text="@string/headerTheme"
-        android:textAlignment="center"
-        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,5 +45,46 @@
             android:textColor="?color_text" />
 
     </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/switchScrollToTop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radioGroupTheme">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/eina_03_semi_bold"
+            android:letterSpacing=".1"
+            android:text="@string/settings_header_present_scroll_to_top_notification"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/eina_03_regular"
+            android:lineSpacingExtra="2dp"
+            android:text="@string/settings_description_present_scroll_to_top_notification"
+            android:textColor="#7F7F7F"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+
+    <Switch
+        android:id="@+id/switchScrollToTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout6"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout6"
+        app:layout_goneMarginStart="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

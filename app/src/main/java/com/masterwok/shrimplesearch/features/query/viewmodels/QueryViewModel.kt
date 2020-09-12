@@ -1,7 +1,9 @@
 package com.masterwok.shrimplesearch.features.query.viewmodels
 
 import androidx.lifecycle.*
+import com.masterwok.shrimplesearch.common.data.models.UserSettings
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettService
+import com.masterwok.shrimplesearch.common.data.repositories.contracts.UserSettingsRepository
 import com.masterwok.shrimplesearch.features.query.constants.IndexerQueryResultSortBy
 import com.masterwok.shrimplesearch.features.query.constants.OrderBy
 import com.masterwok.shrimplesearch.features.query.constants.QueryResultSortBy
@@ -15,7 +17,8 @@ import javax.inject.Inject
 
 
 class QueryViewModel @Inject constructor(
-    private val jackettService: JackettService
+    private val jackettService: JackettService,
+    private val userSettingsRepository: UserSettingsRepository
 ) : ViewModel(), JackettService.Listener {
 
     private val _liveDataIndexerQueryResults = MutableLiveData<MutableList<IndexerQueryResult>>(
@@ -104,6 +107,8 @@ class QueryViewModel @Inject constructor(
     fun setSelectedIndexer(indexer: Indexer) {
         _liveDataSelectedIndexer.postValue(indexer)
     }
+
+    fun getUserSettings(): UserSettings = userSettingsRepository.read()
 
     private fun getIndexerQueryResults(): List<IndexerQueryResult> {
         val queryResults = _liveDataIndexerQueryResults.value

@@ -1,6 +1,8 @@
 package com.masterwok.shrimplesearch.di.modules
 
+import com.masterwok.shrimplesearch.common.DEFAULT_USER_SETTINGS
 import com.masterwok.shrimplesearch.common.SHARED_PREFERENCES_NAME
+import com.masterwok.shrimplesearch.common.data.models.UserSettings
 import com.masterwok.shrimplesearch.common.data.repositories.SharedPreferencesUserSettingsRepository
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.UserSettingsRepository
 import dagger.Binds
@@ -30,4 +32,7 @@ class RepositoryModule {
     @Named("shared_preferences_name")
     fun provideSharedPreferencesName(): String = SHARED_PREFERENCES_NAME
 
+    @Provides
+    @Named("default_user_settings")
+    fun provideDefaultUserSettings(): UserSettings = DEFAULT_USER_SETTINGS
 }

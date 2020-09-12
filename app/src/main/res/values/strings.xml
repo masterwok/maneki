@@ -72,5 +72,7 @@
     <string name="share_link">Share Link</string>
     <string name="copy_torrent">Copy Link</string>
     <string name="open_link">Open Link</string>
+    <string name="settings_header_present_scroll_to_top_notification">Present scroll to top notifications</string>
+    <string name="settings_description_present_scroll_to_top_notification">Enable or disable the scroll to top query results notification when new results are added.</string>
 
 </resources>

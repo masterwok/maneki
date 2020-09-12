@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
+import com.masterwok.shrimplesearch.common.data.models.UserSettings
 import com.masterwok.shrimplesearch.common.data.services.contracts.AnalyticService
 import com.masterwok.shrimplesearch.common.extensions.getColorByAttribute
 import com.masterwok.shrimplesearch.common.extensions.hideSoftKeyboard
@@ -61,8 +62,9 @@ class QueryFragment : Fragment() {
         findNavController().navigate(R.id.action_queryFragment_to_indexerQueryResultsFragment)
     }
 
-    private var snackbarNewResults: Snackbar? = null
+    private val userSettings: UserSettings get() = viewModel.getUserSettings()
 
+    private var snackbarNewResults: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -173,7 +175,8 @@ class QueryFragment : Fragment() {
         queryResultsAdapter.configure(listOf(aggregateIndexerQueryResult) + queryResults)
 
         if (
-            snackbarNewResults == null
+            userSettings.areScrollToTopNotificationsEnabled
+            && snackbarNewResults == null
             && linearLayoutManager.findFirstCompletelyVisibleItemPosition() > 0
         ) {
             presentNewResultsSnack()

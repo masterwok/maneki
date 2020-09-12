@@ -12,7 +12,6 @@ import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.constants.Theme
 import com.masterwok.shrimplesearch.common.data.models.UserSettings
 import com.masterwok.shrimplesearch.di.AppInjector
-import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
 import com.masterwok.shrimplesearch.features.settings.viewmodels.SettingsViewModel
 import kotlinx.android.synthetic.main.fragment_settings.*
 import javax.inject.Inject
@@ -47,6 +46,8 @@ class SettingsFragment : Fragment() {
 
     private fun configure(userSettings: UserSettings) {
         configureThemeSelection(userSettings.theme)
+
+        switchScrollToTop.isChecked = checkNotNull(userSettings.areScrollToTopNotificationsEnabled)
     }
 
     private fun configureThemeSelection(theme: Theme): Unit = when (theme) {
@@ -56,6 +57,17 @@ class SettingsFragment : Fragment() {
 
     private fun subscribeToViewComponents() {
         subscribeToThemeRadioGroup()
+        subscribeToScrollToTopNotificationsSwitch()
+    }
+
+    private fun subscribeToScrollToTopNotificationsSwitch() {
+        switchScrollToTop.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.updateUserSettings(
+                viewModel.readUserSettings().copy(
+                    areScrollToTopNotificationsEnabled = isChecked
+                )
+            )
+        }
     }
 
     private fun subscribeToThemeRadioGroup() = radioGroupTheme.setOnCheckedChangeListener { _, _ ->

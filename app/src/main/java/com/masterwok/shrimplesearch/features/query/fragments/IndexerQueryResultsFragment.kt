@@ -18,9 +18,9 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.google.android.material.snackbar.Snackbar
-
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
+import com.masterwok.shrimplesearch.common.data.models.UserSettings
 import com.masterwok.shrimplesearch.common.data.services.contracts.AnalyticService
 import com.masterwok.shrimplesearch.common.extensions.copyToClipboard
 import com.masterwok.shrimplesearch.common.extensions.getColorByAttribute
@@ -57,6 +57,8 @@ class IndexerQueryResultsFragment : Fragment() {
     private val queryResultsAdapter = IndexerQueryResultsAdapter { queryResultItem ->
         presentBottomSheet(queryResultItem)
     }
+
+    private val userSettings: UserSettings get() = viewModel.getUserSettings()
 
     private var snackbarNewResults: Snackbar? = null
 
@@ -157,7 +159,8 @@ class IndexerQueryResultsFragment : Fragment() {
         linearLayoutNoResultsHint.isVisible = queryResultItems.count() == 0
 
         if (
-            snackbarNewResults == null
+            userSettings.areScrollToTopNotificationsEnabled
+            && snackbarNewResults == null
             && linearLayoutManager.findFirstCompletelyVisibleItemPosition() > 0
         ) {
             presentNewResultsSnack()

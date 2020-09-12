@@ -41,6 +41,7 @@
         <item name="color_query_text_hint">#676767</item>
         <item name="color_progress_bar_foreground">#000000</item>
         <item name="color_progress_bar_background">#F4F4F4</item>
+        <item name="color_secondary_description">#7F7F7F</item>
         <item name="dimen_query_border_width">0dp</item>
         <item name="dimen_query_auto_complete_popup_top_radius">0dp</item>
         <item name="dimen_query_auto_complete_popup_bottom_radius">3dp</item>

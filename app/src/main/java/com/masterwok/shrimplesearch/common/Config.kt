@@ -1,5 +1,8 @@
 package com.masterwok.shrimplesearch.common
 
+import com.masterwok.shrimplesearch.common.constants.Theme
+import com.masterwok.shrimplesearch.common.data.models.UserSettings
+
 /**
  * The name of the application shared preferences.
  */
@@ -34,3 +37,13 @@ val INDEXER_BLOCK_LIST = listOf(
     "xxxtor",
     "xxxtorrents"
 )
+
+
+/**
+ * The default user settings configuration.
+ */
+val DEFAULT_USER_SETTINGS = UserSettings(
+    theme = Theme.Light,
+    areScrollToTopNotificationsEnabled = true
+)
+
