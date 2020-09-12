@@ -39,6 +39,8 @@ class JackettServiceImpl constructor(
         jackettHarness.query(query)
     }
 
+    override fun cancelQuery() = jackettHarness.cancelQuery()
+
     override suspend fun getIndexerCount(): Int = withContext(Dispatchers.IO) {
         jackettHarness.getIndexerCount()
     }

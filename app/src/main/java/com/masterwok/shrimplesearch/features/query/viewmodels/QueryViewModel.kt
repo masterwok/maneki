@@ -72,6 +72,10 @@ class QueryViewModel @Inject constructor(
 
     override fun onIndexerQueryResult(indexerQueryResult: IndexerQueryResult) {
         viewModelScope.launch {
+            if (_liveDataQueryState.value == QueryState.Aborted) {
+                return@launch
+            }
+
             val results = checkNotNull(_liveDataIndexerQueryResults.value)
 
             results.add(indexerQueryResult)
@@ -92,6 +96,11 @@ class QueryViewModel @Inject constructor(
         _liveDataSelectedIndexer.postValue(null)
         _liveDataQueryState.postValue(QueryState.Pending)
         jackettService.query(query)
+    }
+
+    fun cancelQuery() {
+        jackettService.cancelQuery()
+        _liveDataQueryState.value = QueryState.Aborted
     }
 
     fun setSortQueryResults(

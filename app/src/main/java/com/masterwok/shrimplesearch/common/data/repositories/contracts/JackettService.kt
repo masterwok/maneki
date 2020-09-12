@@ -12,6 +12,8 @@ interface JackettService {
 
     suspend fun query(query: Query)
 
+    fun cancelQuery()
+
     suspend fun getIndexerCount(): Int
 
     fun addListener(listener: Listener)

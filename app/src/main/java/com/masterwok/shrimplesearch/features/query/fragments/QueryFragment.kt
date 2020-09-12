@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.EditorInfo
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -120,7 +121,18 @@ class QueryFragment : Fragment() {
         }
     }
 
+    private fun presentQueryCancelledSnack() = context.notNull { context ->
+        coordinatorLayoutQuery.showSnackbar(
+            context.getString(R.string.snack_query_cancelled),
+            Snackbar.LENGTH_SHORT,
+            backgroundColor = ContextCompat.getColor(context, android.R.color.holo_red_dark),
+            textColor = ContextCompat.getColor(context, android.R.color.white)
+        )
+    }
+
     private fun subscribeToViewComponents() {
+        autoCompleteTextViewSearch.setOnTextClearedListener(viewModel::cancelQuery)
+
         autoCompleteTextViewSearch.setOnEditorActionListener { textView, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 viewModel.setQuery(Query(textView.text.toString()))
@@ -156,6 +168,10 @@ class QueryFragment : Fragment() {
 
         progressBar.isVisible = when (queryState) {
             QueryState.Pending -> true
+            QueryState.Aborted -> {
+                presentQueryCancelledSnack()
+                false
+            }
             else -> false
         }
     }
