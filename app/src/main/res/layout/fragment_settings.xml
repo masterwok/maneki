@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/eina_03_semi_bold"
             android:letterSpacing=".1"
-            android:text="@string/settings_header_present_scroll_to_top_notification"/>
+            android:text="@string/settings_header_present_scroll_to_top_notification" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -71,7 +71,7 @@
             android:fontFamily="@font/eina_03_regular"
             android:lineSpacingExtra="2dp"
             android:text="@string/settings_description_present_scroll_to_top_notification"
-            android:textColor="#7F7F7F"
+            android:textColor="?color_secondary_description"
             android:textSize="12sp" />
     </LinearLayout>
 

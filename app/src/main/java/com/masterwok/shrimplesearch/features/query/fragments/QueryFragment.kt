@@ -125,8 +125,12 @@ class QueryFragment : Fragment() {
         coordinatorLayoutQuery.showSnackbar(
             context.getString(R.string.snack_query_cancelled),
             Snackbar.LENGTH_SHORT,
-            backgroundColor = ContextCompat.getColor(context, android.R.color.holo_red_dark),
-            textColor = ContextCompat.getColor(context, android.R.color.white)
+            backgroundColor = context.getColorByAttribute(
+                R.attr.color_snack_query_cancelled_background
+            ),
+            textColor = context.getColorByAttribute(
+                R.attr.color_snack_query_cancelled_text
+            )
         )
     }
 

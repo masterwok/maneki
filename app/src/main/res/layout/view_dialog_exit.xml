@@ -26,6 +26,7 @@
         android:layout_marginTop="16dp"
         android:fontFamily="@font/eina_03_regular"
         android:text="@string/dialog_dont_ask_again"
+        android:textColor="?color_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appCompatTextView" />

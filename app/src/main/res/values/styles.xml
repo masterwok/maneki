@@ -51,6 +51,8 @@
         <item name="android:listDivider">@drawable/divider_recycler_view</item>
         <item name="color_snack_background">@android:color/holo_green_dark</item>
         <item name="color_snack_text">#FFFFFF</item>
+        <item name="color_snack_query_cancelled_background">@android:color/holo_red_dark</item>
+        <item name="color_snack_query_cancelled_text">#FFFFFF</item>
         <item name="color_divider_recycler_view">#c4c4c4</item>
     </style>
 
@@ -151,6 +153,8 @@
         <item name="color_divider_recycler_view">#FFFFFF</item>
         <item name="color_snack_background">#FFFFFF</item>
         <item name="color_snack_text">#000000</item>
+        <item name="color_snack_query_cancelled_background">#FFFFFF</item>
+        <item name="color_snack_query_cancelled_text">#000000</item>
         <item name="color_secondary_description">#FFFFFF</item>
 
         <!-- Active thumb color & Active track color(30% transparency) -->
