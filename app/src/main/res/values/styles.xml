@@ -151,6 +151,7 @@
         <item name="color_divider_recycler_view">#FFFFFF</item>
         <item name="color_snack_background">#FFFFFF</item>
         <item name="color_snack_text">#000000</item>
+        <item name="color_secondary_description">#FFFFFF</item>
 
         <!-- Active thumb color & Active track color(30% transparency) -->
         <item name="colorControlActivated">#FFFFFF</item>
