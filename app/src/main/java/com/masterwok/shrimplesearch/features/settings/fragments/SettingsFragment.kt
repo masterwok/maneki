@@ -47,7 +47,7 @@ class SettingsFragment : Fragment() {
     private fun configure(userSettings: UserSettings) {
         configureThemeSelection(userSettings.theme)
 
-        switchScrollToTop.isChecked = checkNotNull(userSettings.areScrollToTopNotificationsEnabled)
+        switchScrollToTop.isChecked = checkNotNull(userSettings.isScrollToTopNotificationsEnabled)
     }
 
     private fun configureThemeSelection(theme: Theme): Unit = when (theme) {
@@ -64,7 +64,7 @@ class SettingsFragment : Fragment() {
         switchScrollToTop.setOnCheckedChangeListener { _, isChecked ->
             viewModel.updateUserSettings(
                 viewModel.readUserSettings().copy(
-                    areScrollToTopNotificationsEnabled = isChecked
+                    isScrollToTopNotificationsEnabled = isChecked
                 )
             )
         }

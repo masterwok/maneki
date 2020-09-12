@@ -6,7 +6,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class UserSettings(
     val theme: Theme,
-    val areScrollToTopNotificationsEnabled: Boolean
+    val isScrollToTopNotificationsEnabled: Boolean,
+    val isExistDialogEnabled: Boolean
 ) {
     companion object
 }
@@ -16,6 +17,8 @@ fun UserSettings.Companion.from(
     defaultUserSettings: UserSettings
 ) = UserSettings(
     theme = persistedUserSettings.theme,
-    areScrollToTopNotificationsEnabled = persistedUserSettings.areScrollToTopNotificationsEnabled
-        ?: defaultUserSettings.areScrollToTopNotificationsEnabled
+    isScrollToTopNotificationsEnabled = persistedUserSettings.isScrollToTopNotificationsEnabled
+        ?: defaultUserSettings.isScrollToTopNotificationsEnabled,
+    isExistDialogEnabled = persistedUserSettings.isExistDialogEnabled
+        ?: defaultUserSettings.isExistDialogEnabled
 )

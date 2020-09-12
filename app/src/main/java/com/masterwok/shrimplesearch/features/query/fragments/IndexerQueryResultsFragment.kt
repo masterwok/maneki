@@ -159,7 +159,7 @@ class IndexerQueryResultsFragment : Fragment() {
         linearLayoutNoResultsHint.isVisible = queryResultItems.count() == 0
 
         if (
-            userSettings.areScrollToTopNotificationsEnabled
+            userSettings.isScrollToTopNotificationsEnabled
             && snackbarNewResults == null
             && linearLayoutManager.findFirstCompletelyVisibleItemPosition() > 0
         ) {

@@ -6,5 +6,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PersistedUserSettings(
     val theme: Theme,
-    val areScrollToTopNotificationsEnabled: Boolean? = false
+    val isScrollToTopNotificationsEnabled: Boolean? = false,
+    val isExistDialogEnabled: Boolean? = false
 )

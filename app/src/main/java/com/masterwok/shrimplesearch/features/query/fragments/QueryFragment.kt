@@ -175,7 +175,7 @@ class QueryFragment : Fragment() {
         queryResultsAdapter.configure(listOf(aggregateIndexerQueryResult) + queryResults)
 
         if (
-            userSettings.areScrollToTopNotificationsEnabled
+            userSettings.isScrollToTopNotificationsEnabled
             && snackbarNewResults == null
             && linearLayoutManager.findFirstCompletelyVisibleItemPosition() > 0
         ) {

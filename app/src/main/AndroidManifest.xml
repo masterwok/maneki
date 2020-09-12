@@ -15,7 +15,8 @@
 
         <activity
             android:name=".features.splash.activities.SplashActivity"
-            android:theme="@style/AppTheme.Splash.Oled">
+            android:theme="@style/AppTheme.Splash.Oled"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
