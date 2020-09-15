@@ -31,6 +31,7 @@ class QueryViewModel @Inject constructor(
     private val _liveDataQueryState = MutableLiveData<QueryState?>(null)
     private val _liveDataQueryCompleted = MutableLiveData<Unit>()
     private val _liveDataSelectedIndexer = MutableLiveData<Indexer>()
+    private val _liveDataLocalQuery = MutableLiveData<Query?>(null)
 
     private val _liveDataSortQueryResults =
         MutableLiveData(QueryResultSortBy.MagnetCount to OrderBy.Descending)
@@ -48,10 +49,11 @@ class QueryViewModel @Inject constructor(
 
     val liveDataQueryState = _liveDataQueryState
 
-    val liveDataSelectedIndexerQueryResultItem = MediatorLiveData<List<QueryResultItem>>().apply {
+    val liveDataSelectedIndexerQueryResultItems = MediatorLiveData<List<QueryResultItem>>().apply {
         addSource(_liveDataSortIndexerQueryResults) { value = getSelectedIndexerQueryResults() }
         addSource(_liveDataIndexerQueryResults) { value = getSelectedIndexerQueryResults() }
         addSource(_liveDataSelectedIndexer) { value = getSelectedIndexerQueryResults() }
+        addSource(_liveDataLocalQuery) { value = getSelectedIndexerQueryResults() }
     }
 
     val liveDataQueryResults = MediatorLiveData<List<IndexerQueryResult>>().apply {
@@ -95,11 +97,17 @@ class QueryViewModel @Inject constructor(
     }
 
     fun setQuery(query: Query) = viewModelScope.launch {
-        analyticService.logEvent(AnalyticEvent.Search)
+        analyticService.logEvent(AnalyticEvent.Query)
         _liveDataIndexerQueryResults.postValue(mutableListOf())
         _liveDataSelectedIndexer.postValue(null)
         _liveDataQueryState.postValue(QueryState.Pending)
+        _liveDataLocalQuery.postValue(null)
         jackettService.query(query)
+    }
+
+    fun setLocalQuery(localQuery: Query?) {
+        analyticService.logEvent(AnalyticEvent.QueryLocal)
+        _liveDataLocalQuery.postValue(localQuery)
     }
 
     fun cancelQuery() {
@@ -147,9 +155,19 @@ class QueryViewModel @Inject constructor(
             it.indexer.id == selectedIndexer.id
         }
 
-        val items = indexerQueryResult
+        var items = indexerQueryResult
             ?.items
             ?: (indexerQueryResult?.items ?: queryResults.flatMap { it.items })
+
+        val localQueryString = _liveDataLocalQuery
+            .value
+            ?.queryString
+
+        if (!localQueryString.isNullOrBlank()) {
+            val regex = createFuzzyRegexMatch(localQueryString)
+
+            items = items.filter { regex.matches(it.title) }
+        }
 
         val sortValue = checkNotNull(_liveDataSortIndexerQueryResults.value)
 
@@ -158,6 +176,16 @@ class QueryViewModel @Inject constructor(
             sortValue.first,
             sortValue.second
         )
+    }
+
+    private fun createFuzzyRegexMatch(query: String): Regex {
+        val regexStrings = query
+            .toList()
+            .joinToString(separator = "") {
+                ".*${Regex.escape(it.toString())}+"
+            }
+
+        return Regex(regexStrings, RegexOption.IGNORE_CASE)
     }
 
     private fun sortIndexers(

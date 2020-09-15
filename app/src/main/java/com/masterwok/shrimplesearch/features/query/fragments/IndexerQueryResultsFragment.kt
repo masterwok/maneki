@@ -8,6 +8,7 @@ import android.view.*
 import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -36,11 +37,12 @@ import com.masterwok.shrimplesearch.features.query.constants.IndexerQueryResultS
 import com.masterwok.shrimplesearch.features.query.constants.OrderBy
 import com.masterwok.shrimplesearch.features.query.constants.QueryState
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
+import com.masterwok.xamarininterface.models.Query
 import com.masterwok.xamarininterface.models.QueryResultItem
 import kotlinx.android.synthetic.main.fragment_indexer_query_results.*
 import kotlinx.android.synthetic.main.fragment_indexer_query_results.progressBar
 import kotlinx.android.synthetic.main.fragment_indexer_query_results.recyclerView
-import kotlinx.android.synthetic.main.fragment_query.*
+import kotlinx.android.synthetic.main.include_toolbar_local_filter.*
 import javax.inject.Inject
 
 
@@ -117,6 +119,14 @@ class IndexerQueryResultsFragment : Fragment() {
     }
 
     private fun subscribeToViewComponents() {
+        autoCompleteTextViewSearch.setOnTextClearedListener {
+            viewModel.setLocalQuery(null)
+        }
+
+        autoCompleteTextViewSearch.addTextChangedListener {
+            viewModel.setLocalQuery(if (it == null) null else Query(it.toString()))
+        }
+
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (linearLayoutManager.findFirstCompletelyVisibleItemPosition() == 0) {
@@ -155,7 +165,7 @@ class IndexerQueryResultsFragment : Fragment() {
     }
 
     private fun subscribeToLiveData() {
-        viewModel.liveDataSelectedIndexerQueryResultItem.observe(
+        viewModel.liveDataSelectedIndexerQueryResultItems.observe(
             viewLifecycleOwner, ::configure
         )
     }
