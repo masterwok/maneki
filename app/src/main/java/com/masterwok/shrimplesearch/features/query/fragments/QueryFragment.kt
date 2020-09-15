@@ -136,7 +136,13 @@ class QueryFragment : Fragment() {
     }
 
     private fun subscribeToViewComponents() {
-        autoCompleteTextViewSearch.setOnTextClearedListener(viewModel::cancelQuery)
+        autoCompleteTextViewSearch.setOnTextClearedListener {
+            viewModel.cancelQuery()
+
+            if (viewModel.liveDataQueryState.value == QueryState.Pending) {
+                presentQueryCancelledSnack()
+            }
+        }
 
         autoCompleteTextViewSearch.setOnEditorActionListener { textView, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -182,10 +188,6 @@ class QueryFragment : Fragment() {
 
         progressBar.isVisible = when (queryState) {
             QueryState.Pending -> true
-            QueryState.Aborted -> {
-                presentQueryCancelledSnack()
-                false
-            }
             else -> false
         }
     }
