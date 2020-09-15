@@ -59,9 +59,22 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/eina_03_regular"
             android:text="@string/hint_no_search_results_description"
-            android:textAlignment="center"/>
+            android:textAlignment="center" />
     </LinearLayout>
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayoutQuery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
+
+        <include
+            layout="@layout/include_toolbar_query"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways|snap" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
