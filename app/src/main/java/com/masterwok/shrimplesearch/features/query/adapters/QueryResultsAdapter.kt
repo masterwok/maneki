@@ -72,11 +72,11 @@ private class IndexerQueryResultsDiffCallback(
     override fun areItemsTheSame(
         oldItemPosition: Int,
         newItemPosition: Int
-    ): Boolean = old[oldItemPosition] == new[newItemPosition]
+    ): Boolean = old[oldItemPosition].indexer.id == new[newItemPosition].indexer.id
 
     override fun areContentsTheSame(
         oldItemPosition: Int,
         newItemPosition: Int
-    ): Boolean = old[oldItemPosition] == new[newItemPosition]
+    ): Boolean = old[oldItemPosition].items == new[newItemPosition].items
 
 }
