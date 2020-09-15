@@ -223,7 +223,7 @@ class QueryFragment : Fragment() {
             backgroundColor = context.getColorByAttribute(R.attr.color_snack_background),
             textColor = context.getColorByAttribute(R.attr.color_snack_text)
         ) {
-            recyclerView.smoothScrollToPosition(0)
+            recyclerView.scrollToPosition(0)
             appBarLayoutQuery.setExpanded(true, true)
         }.apply {
             addCallback(object : Snackbar.Callback() {
