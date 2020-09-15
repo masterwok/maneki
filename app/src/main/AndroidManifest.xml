@@ -13,10 +13,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
 
+        <meta-data
+            android:name="firebase_analytics_collection_deactivated"
+            android:value="@bool/is_firebase_analytics_enabled" />
+
         <activity
             android:name=".features.splash.activities.SplashActivity"
-            android:theme="@style/AppTheme.Splash.Oled"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:theme="@style/AppTheme.Splash.Oled">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

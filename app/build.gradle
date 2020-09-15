@@ -25,11 +25,13 @@ android {
         debug {
             minifyEnabled false
             debuggable true
+            resValue("bool", "is_firebase_analytics_enabled", "false")
         }
         release {
             minifyEnabled true
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue("bool", "is_firebase_analytics_enabled", "true")
         }
     }
 
