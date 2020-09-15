@@ -13,6 +13,7 @@ import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
@@ -149,6 +150,15 @@ class QueryFragment : Fragment() {
                 false
             }
         }
+
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (linearLayoutManager.findFirstCompletelyVisibleItemPosition() == 0) {
+                    snackbarNewResults?.dismiss()
+                    snackbarNewResults = null
+                }
+            }
+        })
     }
 
     private fun subscribeToLiveData() {

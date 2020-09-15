@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
@@ -39,6 +40,7 @@ import com.masterwok.xamarininterface.models.QueryResultItem
 import kotlinx.android.synthetic.main.fragment_indexer_query_results.*
 import kotlinx.android.synthetic.main.fragment_indexer_query_results.progressBar
 import kotlinx.android.synthetic.main.fragment_indexer_query_results.recyclerView
+import kotlinx.android.synthetic.main.fragment_query.*
 import javax.inject.Inject
 
 
@@ -110,7 +112,19 @@ class IndexerQueryResultsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initRecyclerView()
+        subscribeToViewComponents()
         subscribeToLiveData()
+    }
+
+    private fun subscribeToViewComponents() {
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (linearLayoutManager.findFirstCompletelyVisibleItemPosition() == 0) {
+                    snackbarNewResults?.dismiss()
+                    snackbarNewResults = null
+                }
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
