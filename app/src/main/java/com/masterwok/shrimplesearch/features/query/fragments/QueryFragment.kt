@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.EditorInfo
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,14 +13,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
 import com.masterwok.shrimplesearch.common.data.models.UserSettings
 import com.masterwok.shrimplesearch.common.data.services.contracts.AnalyticService
-import com.masterwok.shrimplesearch.common.extensions.getColorByAttribute
-import com.masterwok.shrimplesearch.common.extensions.hideSoftKeyboard
-import com.masterwok.shrimplesearch.common.extensions.showSnackbar
+import com.masterwok.shrimplesearch.common.extensions.*
 import com.masterwok.shrimplesearch.common.utils.DialogUtil
 import com.masterwok.shrimplesearch.common.utils.notNull
 import com.masterwok.shrimplesearch.di.AppInjector
@@ -66,6 +64,21 @@ class QueryFragment : Fragment() {
 
     private val userSettings: UserSettings get() = viewModel.getUserSettings()
 
+    private var isToolbarScrollEnabled: Boolean = false
+        set(value) {
+            field = value
+
+            if (value) {
+                appBarLayoutQuery.enableScroll(
+                    toolbarQuery, AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
+                            or AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
+                            or AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP
+                )
+            } else {
+                appBarLayoutQuery.disableScroll(toolbarQuery)
+            }
+        }
+
     private var snackbarNewResults: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -91,6 +104,8 @@ class QueryFragment : Fragment() {
         initRecyclerView()
         subscribeToViewComponents()
         subscribeToLiveData()
+
+        isToolbarScrollEnabled = false
     }
 
     override fun onAttach(context: Context) {
@@ -199,7 +214,13 @@ class QueryFragment : Fragment() {
     private fun onIndexerQueryResultsChange(queryResults: List<IndexerQueryResult>) {
         if (queryResults.count() == 0) {
             queryResultsAdapter.configure(queryResults)
+            isToolbarScrollEnabled = false
             return
+        }
+
+        // Don't set scroll if already enabled, doing so results in toolbar expanding.
+        if (!isToolbarScrollEnabled) {
+            isToolbarScrollEnabled = true
         }
 
         val aggregateIndexerQueryResult = createAggregateIndexerQueryResult(queryResults)
