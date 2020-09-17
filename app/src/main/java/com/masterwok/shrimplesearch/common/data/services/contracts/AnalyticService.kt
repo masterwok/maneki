@@ -6,4 +6,5 @@ import java.lang.Exception
 interface AnalyticService {
     fun logEvent(event: AnalyticEvent)
     fun logException(exception: Exception, message: String? = null)
+    fun logScreen(screenClass: Class<*>, screenName: String)
 }
