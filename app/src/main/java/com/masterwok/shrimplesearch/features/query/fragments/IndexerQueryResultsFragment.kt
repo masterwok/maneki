@@ -260,6 +260,7 @@ class IndexerQueryResultsFragment : Fragment() {
                         R.drawable.ic_baseline_share_24,
                         if (hasMagnetUri) R.string.share_magnet else R.string.share_link
                     ) {
+                        analyticService.logEvent(AnalyticEvent.ShareResult)
                         shareQueryResultItem(queryResultItem)
                         dismiss()
                     },
@@ -267,6 +268,7 @@ class IndexerQueryResultsFragment : Fragment() {
                         R.drawable.ic_content_copy_black_24dp,
                         if (hasMagnetUri) R.string.copy_magnet else R.string.copy_torrent
                     ) {
+                        analyticService.logEvent(AnalyticEvent.CopyResult)
                         copyQueryResultItem(queryResultItem)
                         dismiss()
                     },
@@ -274,6 +276,7 @@ class IndexerQueryResultsFragment : Fragment() {
                         R.drawable.ic_baseline_open_in_new_24,
                         if (hasMagnetUri) R.string.open_magnet else R.string.open_link
                     ) {
+                        analyticService.logEvent(AnalyticEvent.OpenResult)
                         openQueryResultItem(queryResultItem)
                         dismiss()
                     }
