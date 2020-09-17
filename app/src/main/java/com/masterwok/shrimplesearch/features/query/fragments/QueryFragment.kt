@@ -294,6 +294,8 @@ class QueryFragment : Fragment() {
                 QueryResultSortBy.getByValue(sortModel.selectedSortPill.id),
                 OrderBy.getByValue(sortModel.selectedOrderPill.id)
             )
+
+            recyclerView.scrollToPosition(0)
         }
     }
 
