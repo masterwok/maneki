@@ -31,7 +31,7 @@ class FirebaseAnalyticsService @Inject constructor() : AnalyticService {
         firebaseAnalytics.logEvent(
             FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {
                 putString(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
-                putString(FirebaseAnalytics.Param.SCREEN_CLASS, screenClass.name)
+                putString(FirebaseAnalytics.Param.SCREEN_CLASS, screenClass.simpleName)
             }
         )
     }

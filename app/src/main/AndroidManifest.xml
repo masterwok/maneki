@@ -18,6 +18,10 @@
             android:name="firebase_analytics_collection_deactivated"
             android:value="@bool/is_firebase_analytics_enabled" />
 
+        <meta-data
+            android:name="google_analytics_automatic_screen_reporting_enabled"
+            android:value="false" />
+
         <activity
             android:name=".features.splash.activities.SplashActivity"
             android:noHistory="true"
