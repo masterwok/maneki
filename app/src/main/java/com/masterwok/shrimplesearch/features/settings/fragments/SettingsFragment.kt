@@ -11,12 +11,16 @@ import androidx.lifecycle.ViewModelProvider
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.constants.Theme
 import com.masterwok.shrimplesearch.common.data.models.UserSettings
+import com.masterwok.shrimplesearch.common.data.services.contracts.AnalyticService
 import com.masterwok.shrimplesearch.di.AppInjector
 import com.masterwok.shrimplesearch.features.settings.viewmodels.SettingsViewModel
 import kotlinx.android.synthetic.main.fragment_settings.*
 import javax.inject.Inject
 
 class SettingsFragment : Fragment() {
+
+    @Inject
+    lateinit var analyticService: AnalyticService
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -36,6 +40,12 @@ class SettingsFragment : Fragment() {
         configure(viewModel.readUserSettings())
 
         subscribeToViewComponents()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        analyticService.logScreen(SettingsFragment::class.java)
     }
 
     override fun onAttach(context: Context) {

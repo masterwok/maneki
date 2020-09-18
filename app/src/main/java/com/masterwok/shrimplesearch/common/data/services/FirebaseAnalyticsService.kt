@@ -27,11 +27,10 @@ class FirebaseAnalyticsService @Inject constructor() : AnalyticService {
         crashlytics.recordException(exception)
     }
 
-    override fun logScreen(screenClass: Class<*>, screenName: String) {
+    override fun logScreen(screenClass: Class<*>) {
         firebaseAnalytics.logEvent(
             FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {
-                putString(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
-                putString(FirebaseAnalytics.Param.SCREEN_CLASS, screenClass.simpleName)
+                putString(FirebaseAnalytics.Param.SCREEN_NAME, screenClass.simpleName)
             }
         )
     }

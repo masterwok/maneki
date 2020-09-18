@@ -40,7 +40,6 @@ import com.masterwok.xamarininterface.models.QueryResultItem
 import kotlinx.android.synthetic.main.fragment_indexer_query_results.*
 import kotlinx.android.synthetic.main.fragment_indexer_query_results.progressBar
 import kotlinx.android.synthetic.main.fragment_indexer_query_results.recyclerView
-import kotlinx.android.synthetic.main.fragment_query.*
 import javax.inject.Inject
 
 
@@ -115,6 +114,13 @@ class IndexerQueryResultsFragment : Fragment() {
         subscribeToViewComponents()
         subscribeToLiveData()
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        analyticService.logScreen(IndexerQueryResultsFragment::class.java)
+    }
+
 
     private fun subscribeToViewComponents() {
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {

@@ -17,6 +17,7 @@ import com.masterwok.shrimplesearch.common.data.services.contracts.AnalyticServi
 import com.masterwok.shrimplesearch.common.extensions.startPlayStoreActivity
 import com.masterwok.shrimplesearch.common.utils.notNull
 import com.masterwok.shrimplesearch.di.AppInjector
+import com.masterwok.shrimplesearch.features.settings.fragments.SettingsFragment
 import kotlinx.android.synthetic.main.fragment_about.*
 import javax.inject.Inject
 
@@ -46,6 +47,13 @@ class AboutFragment : Fragment() {
         AppInjector
             .aboutComponent
             .inject(this)
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+
+        analyticService.logScreen(AboutFragment::class.java)
     }
 
     private fun subscribeToViewComponents() {

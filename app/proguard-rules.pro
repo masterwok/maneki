@@ -25,10 +25,13 @@
 
 -keepattributes *Annotation*, InnerClasses
 -dontnote kotlinx.serialization.SerializationKt
--keep,includedescriptorclasses class com.yourcompany.yourpackage.**$$serializer { *; } # <-- change package name to your app's
+-keep,includedescriptorclasses class com.masterwok.shrimplesearch.**$$serializer { *; }
 -keepclassmembers class com.masterwok.shrimplesearch.*.** {
     *** Companion;
 }
 -keepclasseswithmembers class com.masterwok.shrimplesearch.*.** {
     kotlinx.serialization.KSerializer serializer(...);
 }
+
+-keepnames class * extends androidx.fragment.app.Fragment
+-keepnames class * extends androidx.fragment.app.FragmentActivity

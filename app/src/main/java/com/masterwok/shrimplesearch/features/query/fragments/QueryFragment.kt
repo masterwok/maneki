@@ -137,6 +137,12 @@ class QueryFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        analyticService.logScreen(QueryFragment::class.java)
+    }
+
     private fun presentQueryCancelledSnack() = context.notNull { context ->
         coordinatorLayoutQuery.showSnackbar(
             context.getString(R.string.snack_query_cancelled),
