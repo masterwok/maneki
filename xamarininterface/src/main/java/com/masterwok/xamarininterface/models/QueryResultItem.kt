@@ -27,8 +27,8 @@ data class QueryResultItem(
 
     data class StatInfo(
         val publishedOn: Date?,
-        val seeders: Int?,
-        val peers: Int?,
+        val seeders: Long?,
+        val peers: Long?,
         val size: Long?,
         val files: Long?,
         val grabs: Long?,

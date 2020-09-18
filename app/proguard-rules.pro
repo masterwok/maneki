@@ -26,10 +26,10 @@
 -keepattributes *Annotation*, InnerClasses
 -dontnote kotlinx.serialization.SerializationKt
 -keep,includedescriptorclasses class com.masterwok.shrimplesearch.**$$serializer { *; }
--keepclassmembers class com.masterwok.shrimplesearch.*.** {
+-keepclassmembers class com.masterwok.shrimplesearch.common.data.models.*.** {
     *** Companion;
 }
--keepclasseswithmembers class com.masterwok.shrimplesearch.*.** {
+-keepclasseswithmembers class com.masterwok.shrimplesearch.common.data.models.*.** {
     kotlinx.serialization.KSerializer serializer(...);
 }
 
