@@ -15,7 +15,9 @@ import com.masterwok.xamarininterface.models.Indexer
 import com.masterwok.xamarininterface.models.IndexerQueryResult
 import com.masterwok.xamarininterface.models.Query
 import com.masterwok.xamarininterface.models.QueryResultItem
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 
@@ -62,10 +64,9 @@ class QueryViewModel @Inject constructor(
     }
 
     override fun onCleared() {
-        jackettService.apply {
-            removeListener(this@QueryViewModel)
-            cancelQuery()
-        }
+        jackettService.removeListener(this@QueryViewModel)
+
+        runBlocking { jackettService.cancelQuery() }
 
         super.onCleared()
     }

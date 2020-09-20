@@ -15,7 +15,7 @@ interface JackettService {
 
     suspend fun query(query: Query)
 
-    fun cancelQuery()
+    suspend fun cancelQuery()
 
     suspend fun getIndexerCount(): Int
 
