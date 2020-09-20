@@ -81,10 +81,14 @@ class MainActivity : AppCompatActivity() {
             if (isExitDialogEnabled) {
                 presentQuitAppDialog()
             } else {
-                finishAndRemoveTask()
+                exitApplication()
             }
         }
         else -> super.onBackPressed()
+    }
+
+    private fun exitApplication() {
+        finishAndRemoveTask()
     }
 
     private fun presentQuitAppDialog() {
@@ -95,7 +99,7 @@ class MainActivity : AppCompatActivity() {
                     disableExitDialog()
                 }
 
-                finishAndRemoveTask()
+                exitApplication()
             }
             negativeButton(res = R.string.dialog_cancel)
         }

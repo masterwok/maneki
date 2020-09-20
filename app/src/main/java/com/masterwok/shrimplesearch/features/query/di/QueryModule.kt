@@ -17,7 +17,6 @@ class QueryModule {
     @Suppress("RedundantModalityModifier", "unused")
     @Module
     interface Declarations {
-        @QueryScope
         @Binds
         @IntoMap
         @ViewModelKey(QueryViewModel::class)

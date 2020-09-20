@@ -27,7 +27,7 @@ import com.masterwok.shrimplesearch.features.query.adapters.QueryResultsAdapter
 import com.masterwok.shrimplesearch.features.query.components.SortComponent
 import com.masterwok.shrimplesearch.features.query.constants.OrderBy
 import com.masterwok.shrimplesearch.features.query.constants.QueryResultSortBy
-import com.masterwok.shrimplesearch.features.query.constants.QueryState
+import com.masterwok.xamarininterface.enums.QueryState
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
 import com.masterwok.xamarininterface.enums.IndexerQueryState
 import com.masterwok.xamarininterface.enums.IndexerType
@@ -158,9 +158,8 @@ class QueryFragment : Fragment() {
 
     private fun subscribeToViewComponents() {
         autoCompleteTextViewSearch.setOnTextClearedListener {
-            viewModel.cancelQuery()
-
             if (viewModel.liveDataQueryState.value == QueryState.Pending) {
+                viewModel.cancelQuery()
                 presentQueryCancelledSnack()
             }
         }
@@ -194,27 +193,27 @@ class QueryFragment : Fragment() {
             this::onIndexerQueryResultsChange
         )
 
-        viewModel.liveDataQueryCompleted.observe(viewLifecycleOwner) {
-            onQueryCompleted()
-        }
-
         viewModel.liveDataQueryState.observe(viewLifecycleOwner, ::onQueryStateChange)
     }
 
     private fun onQueryStateChange(queryState: QueryState?) {
+        val resultCount = viewModel
+            .liveDataQueryResults
+            .value
+            ?.count()
+            ?: 0
+
         linearLayoutQueryHint.isVisible = when (queryState) {
+            QueryState.Pending -> false
+            QueryState.Completed -> false
+            QueryState.Aborted -> resultCount == 0
             null -> true
-            else -> false
         }
 
         progressBar.isVisible = when (queryState) {
             QueryState.Pending -> true
             else -> false
         }
-    }
-
-    private fun onQueryCompleted() {
-        progressBar.isVisible = false
     }
 
     private fun onIndexerQueryResultsChange(queryResults: List<IndexerQueryResult>) {

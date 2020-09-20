@@ -9,7 +9,8 @@ import com.masterwok.shrimplesearch.common.data.services.contracts.AnalyticServi
 import com.masterwok.shrimplesearch.features.query.constants.IndexerQueryResultSortBy
 import com.masterwok.shrimplesearch.features.query.constants.OrderBy
 import com.masterwok.shrimplesearch.features.query.constants.QueryResultSortBy
-import com.masterwok.shrimplesearch.features.query.constants.QueryState
+import com.masterwok.xamarininterface.enums.IndexerQueryState
+import com.masterwok.xamarininterface.enums.QueryState
 import com.masterwok.xamarininterface.models.Indexer
 import com.masterwok.xamarininterface.models.IndexerQueryResult
 import com.masterwok.xamarininterface.models.Query
@@ -28,8 +29,7 @@ class QueryViewModel @Inject constructor(
         mutableListOf()
     )
 
-    private val _liveDataQueryState = MutableLiveData<QueryState?>(null)
-    private val _liveDataQueryCompleted = MutableLiveData<Unit>()
+    private val _liveDataQueryState = MutableLiveData(jackettService.queryState)
     private val _liveDataSelectedIndexer = MutableLiveData<Indexer>()
 
     private val _liveDataSortQueryResults =
@@ -43,8 +43,6 @@ class QueryViewModel @Inject constructor(
 
     val liveDataSortIndexerQueryResults: LiveData<Pair<IndexerQueryResultSortBy, OrderBy>> =
         _liveDataSortIndexerQueryResults
-
-    val liveDataQueryCompleted: LiveData<Unit> = _liveDataQueryCompleted
 
     val liveDataQueryState = _liveDataQueryState
 
@@ -64,7 +62,10 @@ class QueryViewModel @Inject constructor(
     }
 
     override fun onCleared() {
-        jackettService.removeListener(this)
+        jackettService.apply {
+            removeListener(this@QueryViewModel)
+            cancelQuery()
+        }
 
         super.onCleared()
     }
@@ -75,7 +76,12 @@ class QueryViewModel @Inject constructor(
 
     override fun onIndexerQueryResult(indexerQueryResult: IndexerQueryResult) {
         viewModelScope.launch {
-            if (_liveDataQueryState.value == QueryState.Aborted) {
+            // Don't emit aborted query results. It's possible for an aborted query result to come
+            // through if a new query created shortly after cancelling the previous.
+            if (
+                _liveDataQueryState.value == QueryState.Aborted
+                || indexerQueryResult.queryState == IndexerQueryState.Aborted
+            ) {
                 return@launch
             }
 
@@ -87,10 +93,9 @@ class QueryViewModel @Inject constructor(
         }
     }
 
-    override fun onQueryCompleted() {
+    override fun onQueryStateChange(queryState: QueryState) {
         viewModelScope.launch {
-            _liveDataQueryCompleted.value = Unit
-            _liveDataQueryState.value = QueryState.Completed
+            _liveDataQueryState.value = queryState
         }
     }
 
@@ -98,13 +103,11 @@ class QueryViewModel @Inject constructor(
         analyticService.logEvent(AnalyticEvent.Search)
         _liveDataIndexerQueryResults.postValue(mutableListOf())
         _liveDataSelectedIndexer.postValue(null)
-        _liveDataQueryState.postValue(QueryState.Pending)
         jackettService.query(query)
     }
 
-    fun cancelQuery() {
+    fun cancelQuery() = viewModelScope.launch {
         jackettService.cancelQuery()
-        _liveDataQueryState.value = QueryState.Aborted
     }
 
     fun setSortQueryResults(

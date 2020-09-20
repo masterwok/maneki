@@ -1,4 +1,4 @@
-package com.masterwok.shrimplesearch.features.query.constants
+package com.masterwok.xamarininterface.enums
 
 enum class QueryState {
     Pending,

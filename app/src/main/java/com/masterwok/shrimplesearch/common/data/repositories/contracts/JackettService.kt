@@ -1,5 +1,6 @@
 package com.masterwok.shrimplesearch.common.data.repositories.contracts
 
+import com.masterwok.xamarininterface.enums.QueryState
 import com.masterwok.xamarininterface.models.IndexerQueryResult
 import com.masterwok.xamarininterface.models.Query
 
@@ -7,6 +8,8 @@ import com.masterwok.xamarininterface.models.Query
 interface JackettService {
 
     val isInitialized: Boolean
+
+    val queryState: QueryState?
 
     suspend fun initialize()
 
@@ -28,7 +31,7 @@ interface JackettService {
 
         fun onIndexerQueryResult(indexerQueryResult: IndexerQueryResult)
 
-        fun onQueryCompleted()
+        fun onQueryStateChange(queryState: QueryState)
 
     }
 

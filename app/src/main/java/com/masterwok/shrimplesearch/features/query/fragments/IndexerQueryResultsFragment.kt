@@ -34,7 +34,7 @@ import com.masterwok.shrimplesearch.features.query.adapters.MaterialDialogIconLi
 import com.masterwok.shrimplesearch.features.query.components.SortComponent
 import com.masterwok.shrimplesearch.features.query.constants.IndexerQueryResultSortBy
 import com.masterwok.shrimplesearch.features.query.constants.OrderBy
-import com.masterwok.shrimplesearch.features.query.constants.QueryState
+import com.masterwok.xamarininterface.enums.QueryState
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
 import com.masterwok.xamarininterface.models.QueryResultItem
 import kotlinx.android.synthetic.main.fragment_indexer_query_results.*

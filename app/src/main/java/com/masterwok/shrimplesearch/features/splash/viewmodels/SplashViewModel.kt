@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettService
 import com.masterwok.shrimplesearch.features.splash.models.BootstrapInfo
+import com.masterwok.xamarininterface.enums.QueryState
 import com.masterwok.xamarininterface.models.IndexerQueryResult
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -61,6 +62,6 @@ class SplashViewModel @Inject constructor(
 
     override fun onIndexerQueryResult(indexerQueryResult: IndexerQueryResult) = Unit
 
-    override fun onQueryCompleted() = Unit
+    override fun onQueryStateChange(queryState: QueryState) = Unit
 
 }

@@ -2,6 +2,7 @@ package com.masterwok.shrimplesearch.common.data.repositories
 
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettService
 import com.masterwok.shrimplesearch.common.utils.notNull
+import com.masterwok.xamarininterface.enums.QueryState
 import com.masterwok.xamarininterface.contracts.IJackettHarness
 import com.masterwok.xamarininterface.contracts.IJackettHarnessListener
 import com.masterwok.xamarininterface.models.IndexerQueryResult
@@ -26,6 +27,7 @@ class JackettServiceImpl constructor(
     }
 
     override val isInitialized: Boolean get() = jackettHarness.isInitialized
+    override val queryState: QueryState? get() = jackettHarness.queryState
 
     @ExperimentalCoroutinesApi
     override suspend fun initialize() = withContext(Dispatchers.IO) {
@@ -77,9 +79,11 @@ class JackettServiceImpl constructor(
             }
         }
 
-        override fun onQueryCompleted() = weakJackettService.get().notNull { jackettService ->
-            jackettService.listeners.forEach { it.onQueryCompleted() }
-        }
+        override fun onQueryStateChange(queryState: QueryState) =
+            weakJackettService.get().notNull { jackettService ->
+                jackettService.listeners.forEach { it.onQueryStateChange(queryState) }
+            }
+
     }
 
 }
