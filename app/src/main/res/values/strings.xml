@@ -80,6 +80,7 @@
     <string name="dialog_cancel">Cancel</string>
     <string name="snack_query_cancelled">Query Cancelled</string>
     <string name="share_maneki">Share Maneki</string>
+    <string name="share_chooser_title">Share Maneki</string>
     <string name="share_text">Check out this torrent search engine for Android:\n\n%s</string>
 
 </resources>

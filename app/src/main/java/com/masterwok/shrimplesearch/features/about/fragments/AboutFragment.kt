@@ -67,17 +67,20 @@ class AboutFragment : Fragment() {
     private fun onShareButtonTapped() = activity.notNull { activity ->
         analyticService.logEvent(AnalyticEvent.ShareManeki)
 
-        ShareCompat
+        val chooserTitle = activity.getString(R.string.share_chooser_title)
+        val shareText = activity.getString(
+            R.string.share_text,
+            activity.getPlayStoreUri().toString()
+        )
+
+        val intent = ShareCompat
             .IntentBuilder
             .from(activity)
             .setType("text/plain")
-            .setText(
-                activity.getString(
-                    R.string.share_text,
-                    activity.getPlayStoreUri().toString()
-                )
-            )
-            .startChooser()
+            .setText(shareText)
+            .intent
+
+        activity.startActivity(Intent.createChooser(intent, chooserTitle))
     }
 
     private fun openGitHubProjectUri() = context.notNull { context ->
