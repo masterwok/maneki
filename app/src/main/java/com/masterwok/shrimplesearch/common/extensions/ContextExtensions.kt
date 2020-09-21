@@ -8,6 +8,7 @@ import android.content.Intent
 import android.net.Uri
 import android.util.TypedValue
 import androidx.annotation.AttrRes
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.os.ConfigurationCompat
 import java.text.NumberFormat
@@ -21,6 +22,9 @@ fun Context.getCurrentLocale(): Locale = ConfigurationCompat
 fun Context.getLocaleNumberFormat(): NumberFormat = NumberFormat
     .getNumberInstance(getCurrentLocale())
 
+@RequiresApi(api = android.os.Build.VERSION_CODES.LOLLIPOP)
+fun Context.getPlayStoreUri(): Uri = Uri
+    .parse("http://play.google.com/store/apps/details?id=$packageName")
 
 @SuppressLint("ObsoleteSdkInt")
 fun Context.startPlayStoreActivity() {
@@ -28,7 +32,7 @@ fun Context.startPlayStoreActivity() {
     val intent = if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
         Intent(
             Intent.ACTION_VIEW,
-            Uri.parse("http://play.google.com/store/apps/details?id=$packageName")
+            getPlayStoreUri()
         )
     } else {
         Intent(

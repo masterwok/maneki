@@ -8,12 +8,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.masterwok.shrimplesearch.BuildConfig
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
 import com.masterwok.shrimplesearch.common.data.services.contracts.AnalyticService
+import com.masterwok.shrimplesearch.common.extensions.getPlayStoreUri
 import com.masterwok.shrimplesearch.common.extensions.startPlayStoreActivity
 import com.masterwok.shrimplesearch.common.utils.notNull
 import com.masterwok.shrimplesearch.di.AppInjector
@@ -59,6 +61,21 @@ class AboutFragment : Fragment() {
     private fun subscribeToViewComponents() {
         buttonViewOnGitHub.setOnClickListener { openGitHubProjectUri() }
         buttonViewReview.setOnClickListener { openReviewPlayStore() }
+        buttonViewShare.setOnClickListener { onShareButtonTapped() }
+    }
+
+    private fun onShareButtonTapped() = activity.notNull { activity ->
+        ShareCompat
+            .IntentBuilder
+            .from(activity)
+            .setType("text/plain")
+            .setText(
+                activity.getString(
+                    R.string.share_text,
+                    activity.getPlayStoreUri().toString()
+                )
+            )
+            .startChooser()
     }
 
     private fun openGitHubProjectUri() = context.notNull { context ->
