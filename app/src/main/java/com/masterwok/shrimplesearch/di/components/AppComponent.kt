@@ -10,6 +10,7 @@ import com.masterwok.shrimplesearch.features.query.di.QuerySubcomponent
 import com.masterwok.shrimplesearch.features.settings.di.SettingsSubcomponent
 import com.masterwok.shrimplesearch.features.splash.di.SplashSubcomponent
 import com.masterwok.shrimplesearch.main.MainActivity
+import com.masterwok.shrimplesearch.main.di.MainSubcomponent
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -29,6 +30,8 @@ interface AppComponent {
         fun create(@BindsInstance context: Context): AppComponent
     }
 
+    fun mainComponent(): MainSubcomponent.Factory
+
     fun queryComponent(): QuerySubcomponent.Factory
 
     fun splashComponent(): SplashSubcomponent.Factory
@@ -37,5 +40,5 @@ interface AppComponent {
 
     fun settingsComponent(): SettingsSubcomponent.Factory
 
-    fun inject(mainActivity: MainActivity)
+
 }

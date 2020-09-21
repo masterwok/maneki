@@ -43,18 +43,18 @@ import javax.inject.Named
 class QueryFragment : Fragment() {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    @Inject
     @Named("aggregate_indexer_id")
     lateinit var aggregateIndexerId: String
 
     @Inject
     lateinit var analyticService: AnalyticService
 
-    private lateinit var linearLayoutManager: LinearLayoutManager
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel: QueryViewModel by viewModels(this::requireActivity) { viewModelFactory }
+
+    private lateinit var linearLayoutManager: LinearLayoutManager
 
     private val queryResultsAdapter = QueryResultsAdapter {
         viewModel.setSelectedIndexer(it.indexer)

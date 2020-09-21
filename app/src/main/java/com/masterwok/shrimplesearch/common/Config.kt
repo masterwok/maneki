@@ -47,6 +47,6 @@ val INDEXER_BLOCK_LIST = listOf(
 val DEFAULT_USER_SETTINGS = UserSettings(
     theme = Theme.Light,
     isScrollToTopNotificationsEnabled = true,
-    isExistDialogEnabled = true
+    isExitDialogEnabled = true
 )
 

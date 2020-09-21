@@ -3,7 +3,10 @@ package com.masterwok.shrimplesearch.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -15,6 +18,7 @@ import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.UserSettingsRepository
 import com.masterwok.shrimplesearch.common.data.services.contracts.AnalyticService
 import com.masterwok.shrimplesearch.di.AppInjector
+import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_toolbar_maneki.*
 import kotlinx.android.synthetic.main.view_dialog_exit.view.*
@@ -26,12 +30,16 @@ class MainActivity : AppCompatActivity() {
     lateinit var analyticService: AnalyticService
 
     @Inject
-    lateinit var userSettingsRepository: UserSettingsRepository
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel: MainActivityViewModel by viewModels { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AppInjector.inject(this)
+        AppInjector
+            .mainComponent
+            .inject(this)
 
-        setTheme(userSettingsRepository.getThemeId())
+        setTheme(viewModel.themeId)
 
         super.onCreate(savedInstanceState)
 
@@ -71,14 +79,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val isExitDialogEnabled
-        get() = userSettingsRepository
-            .read()
-            .isExistDialogEnabled
-
     override fun onBackPressed() = when (navController.graph.startDestination) {
         navController.currentDestination?.id -> {
-            if (isExitDialogEnabled) {
+            if (viewModel.isExitDialogEnabled) {
                 presentQuitAppDialog()
             } else {
                 exitApplication()
@@ -88,6 +91,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun exitApplication() {
+        viewModel.cancelQuery()
         finishAndRemoveTask()
     }
 
@@ -96,7 +100,7 @@ class MainActivity : AppCompatActivity() {
             customView(R.layout.view_dialog_exit)
             positiveButton(res = R.string.dialog_exit) {
                 if (getCustomView().checkBoxDontAskAgain.isChecked) {
-                    disableExitDialog()
+                    viewModel.disableExitDialog()
                 }
 
                 exitApplication()
@@ -104,12 +108,6 @@ class MainActivity : AppCompatActivity() {
             negativeButton(res = R.string.dialog_cancel)
         }
     }
-
-    private fun disableExitDialog() = userSettingsRepository.update(
-        userSettingsRepository
-            .read()
-            .copy(isExistDialogEnabled = false)
-    )
 
     companion object {
         fun createIntent(context: Context) = Intent(context, MainActivity::class.java)

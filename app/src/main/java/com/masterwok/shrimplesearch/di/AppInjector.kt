@@ -17,6 +17,10 @@ class AppInjector {
                 .create(application.applicationContext)
         }
 
+        val mainComponent by lazy {
+            appComponent.mainComponent().create()
+        }
+
         val queryComponent by lazy {
             appComponent.queryComponent().create()
         }
@@ -32,8 +36,6 @@ class AppInjector {
         val settingsComponent by lazy {
             appComponent.settingsComponent().create()
         }
-
-        fun inject(mainActivity: MainActivity) = appComponent.inject(mainActivity)
 
         fun init(application: Application) {
             this.application = application
