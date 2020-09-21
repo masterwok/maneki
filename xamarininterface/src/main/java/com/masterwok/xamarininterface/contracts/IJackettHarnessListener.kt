@@ -1,7 +1,6 @@
 package com.masterwok.xamarininterface.contracts
 
 import com.masterwok.xamarininterface.enums.QueryState
-import com.masterwok.xamarininterface.models.IndexerQueryResult
 
 interface IJackettHarnessListener {
 
@@ -9,7 +8,7 @@ interface IJackettHarnessListener {
 
     fun onIndexerInitialized()
 
-    fun onIndexerQueryResult(indexerQueryResult: IndexerQueryResult)
+    fun onResultsUpdated()
 
     fun onQueryStateChange(queryState: QueryState)
 

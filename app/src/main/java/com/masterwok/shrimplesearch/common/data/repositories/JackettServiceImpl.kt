@@ -13,12 +13,10 @@ import kotlinx.coroutines.withContext
 import java.lang.ref.WeakReference
 
 class JackettServiceImpl constructor(
-    private val jackettHarness: IJackettHarness,
-    indexerIdBlockList: List<String>
+    private val jackettHarness: IJackettHarness
 ) : JackettService {
 
-    private val jackettHarnessListener: IJackettHarnessListener =
-        JackettHarnessListener(this, indexerIdBlockList)
+    private val jackettHarnessListener: IJackettHarnessListener = JackettHarnessListener(this)
 
     private val listeners = mutableListOf<JackettService.Listener>()
 
@@ -28,6 +26,7 @@ class JackettServiceImpl constructor(
 
     override val isInitialized: Boolean get() = jackettHarness.isInitialized
     override val queryState: QueryState? get() = jackettHarness.queryState
+    override val queryResults: List<IndexerQueryResult> get() = jackettHarness.queryResults
 
     @ExperimentalCoroutinesApi
     override suspend fun initialize() = withContext(Dispatchers.IO) {
@@ -57,10 +56,8 @@ class JackettServiceImpl constructor(
         listeners.remove(listener)
     }
 
-    private class JackettHarnessListener(
-        jackettService: JackettServiceImpl,
-        private val indexerIdBlockList: List<String>
-    ) : IJackettHarnessListener {
+    private class JackettHarnessListener(jackettService: JackettServiceImpl) :
+        IJackettHarnessListener {
 
         private val weakJackettService = WeakReference(jackettService)
 
@@ -72,20 +69,14 @@ class JackettServiceImpl constructor(
             jackettService.listeners.forEach { it.onIndexerInitialized() }
         }
 
-        override fun onIndexerQueryResult(
-            indexerQueryResult: IndexerQueryResult
-        ) = weakJackettService.get().notNull { jackettService ->
-            // Don't notify subscribers of blocked indexer results.
-            if (!indexerIdBlockList.contains(indexerQueryResult.indexer.id)) {
-                jackettService.listeners.forEach { it.onIndexerQueryResult(indexerQueryResult) }
-            }
+        override fun onResultsUpdated() = weakJackettService.get().notNull { jackettService ->
+            jackettService.listeners.forEach { it.onResultsUpdated() }
         }
 
         override fun onQueryStateChange(queryState: QueryState) =
             weakJackettService.get().notNull { jackettService ->
                 jackettService.listeners.forEach { it.onQueryStateChange(queryState) }
             }
-
     }
 
 }

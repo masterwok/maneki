@@ -60,7 +60,7 @@ class SplashViewModel @Inject constructor(
         }
     }
 
-    override fun onIndexerQueryResult(indexerQueryResult: IndexerQueryResult) = Unit
+    override fun onResultsUpdated() = Unit
 
     override fun onQueryStateChange(queryState: QueryState) = Unit
 

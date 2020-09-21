@@ -11,6 +11,8 @@ interface JackettService {
 
     val queryState: QueryState?
 
+    val queryResults: List<IndexerQueryResult>
+
     suspend fun initialize()
 
     suspend fun query(query: Query)
@@ -29,7 +31,7 @@ interface JackettService {
 
         fun onIndexerInitialized()
 
-        fun onIndexerQueryResult(indexerQueryResult: IndexerQueryResult)
+        fun onResultsUpdated()
 
         fun onQueryStateChange(queryState: QueryState)
 

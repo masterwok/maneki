@@ -9,15 +9,12 @@ import com.masterwok.shrimplesearch.common.data.services.contracts.AnalyticServi
 import com.masterwok.shrimplesearch.features.query.constants.IndexerQueryResultSortBy
 import com.masterwok.shrimplesearch.features.query.constants.OrderBy
 import com.masterwok.shrimplesearch.features.query.constants.QueryResultSortBy
-import com.masterwok.xamarininterface.enums.IndexerQueryState
 import com.masterwok.xamarininterface.enums.QueryState
 import com.masterwok.xamarininterface.models.Indexer
 import com.masterwok.xamarininterface.models.IndexerQueryResult
 import com.masterwok.xamarininterface.models.Query
 import com.masterwok.xamarininterface.models.QueryResultItem
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 
@@ -27,8 +24,8 @@ class QueryViewModel @Inject constructor(
     private val analyticService: AnalyticService
 ) : ViewModel(), JackettService.Listener {
 
-    private val _liveDataIndexerQueryResults = MutableLiveData<MutableList<IndexerQueryResult>>(
-        mutableListOf()
+    private val _liveDataIndexerQueryResults = MutableLiveData(
+        jackettService.queryResults.toMutableList()
     )
 
     private val _liveDataQueryState = MutableLiveData(jackettService.queryState)
@@ -66,8 +63,6 @@ class QueryViewModel @Inject constructor(
     override fun onCleared() {
         jackettService.removeListener(this@QueryViewModel)
 
-        runBlocking { jackettService.cancelQuery() }
-
         super.onCleared()
     }
 
@@ -75,22 +70,11 @@ class QueryViewModel @Inject constructor(
 
     override fun onIndexerInitialized() = Unit
 
-    override fun onIndexerQueryResult(indexerQueryResult: IndexerQueryResult) {
+    override fun onResultsUpdated() {
         viewModelScope.launch {
-            // Don't emit aborted query results. It's possible for an aborted query result to come
-            // through if a new query created shortly after cancelling the previous.
-            if (
-                _liveDataQueryState.value == QueryState.Aborted
-                || indexerQueryResult.queryState == IndexerQueryState.Aborted
-            ) {
-                return@launch
-            }
-
-            val results = checkNotNull(_liveDataIndexerQueryResults.value)
-
-            results.add(indexerQueryResult)
-
-            _liveDataIndexerQueryResults.value = results
+            _liveDataIndexerQueryResults.value = jackettService
+                .queryResults
+                .toMutableList()
         }
     }
 
