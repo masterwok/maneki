@@ -70,7 +70,9 @@ class JackettServiceImpl constructor(
         }
 
         override fun onResultsUpdated() = weakJackettService.get().notNull { jackettService ->
-            jackettService.listeners.forEach { it.onResultsUpdated() }
+            if(jackettService.queryState != QueryState.Aborted) {
+                jackettService.listeners.forEach { it.onResultsUpdated() }
+            }
         }
 
         override fun onQueryStateChange(queryState: QueryState) =
