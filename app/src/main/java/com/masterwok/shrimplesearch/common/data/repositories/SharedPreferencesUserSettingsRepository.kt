@@ -10,6 +10,7 @@ import com.masterwok.shrimplesearch.common.data.repositories.contracts.UserSetti
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.nonstrict
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -31,7 +32,7 @@ class SharedPreferencesUserSettingsRepository @Inject constructor(
 
         return try {
             UserSettings.from(
-                Json.decodeFromString(serialized),
+                Json { ignoreUnknownKeys = true }.decodeFromString(serialized),
                 defaultUserSettings
             )
         } catch (ignored: Exception) {
