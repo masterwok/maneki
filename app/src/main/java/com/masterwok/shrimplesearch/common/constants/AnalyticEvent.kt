@@ -6,5 +6,6 @@ enum class AnalyticEvent(val eventName: String) {
     MenuItemAboutTapped("menu_item_about_tapped"),
     OpenResult("result_open"),
     CopyResult("result_copy"),
-    ShareResult("result_share")
+    ShareResult("result_share"),
+    ShareManeki("share_maneki")
 }

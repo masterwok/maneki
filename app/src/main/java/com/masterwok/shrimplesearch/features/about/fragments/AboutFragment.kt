@@ -65,6 +65,8 @@ class AboutFragment : Fragment() {
     }
 
     private fun onShareButtonTapped() = activity.notNull { activity ->
+        analyticService.logEvent(AnalyticEvent.ShareManeki)
+
         ShareCompat
             .IntentBuilder
             .from(activity)
