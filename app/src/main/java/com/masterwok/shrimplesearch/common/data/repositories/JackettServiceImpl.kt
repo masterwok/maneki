@@ -13,7 +13,8 @@ import kotlinx.coroutines.withContext
 import java.lang.ref.WeakReference
 
 class JackettServiceImpl constructor(
-    private val jackettHarness: IJackettHarness
+    private val jackettHarness: IJackettHarness,
+    private val indexerBlockList: List<String>
 ) : JackettService {
 
     private val jackettHarnessListener: IJackettHarnessListener = JackettHarnessListener(this)
@@ -25,8 +26,13 @@ class JackettServiceImpl constructor(
     }
 
     override val isInitialized: Boolean get() = jackettHarness.isInitialized
+
     override val queryState: QueryState? get() = jackettHarness.queryState
-    override val queryResults: List<IndexerQueryResult> get() = jackettHarness.queryResults
+
+    override val queryResults: List<IndexerQueryResult>
+        get() = jackettHarness
+            .queryResults
+            .filterNot { indexerBlockList.contains(it.indexer.id) }
 
     @ExperimentalCoroutinesApi
     override suspend fun initialize() = withContext(Dispatchers.IO) {
@@ -70,7 +76,7 @@ class JackettServiceImpl constructor(
         }
 
         override fun onResultsUpdated() = weakJackettService.get().notNull { jackettService ->
-            if(jackettService.queryState != QueryState.Aborted) {
+            if (jackettService.queryState != QueryState.Aborted) {
                 jackettService.listeners.forEach { it.onResultsUpdated() }
             }
         }

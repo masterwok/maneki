@@ -112,8 +112,8 @@ class QueryViewModel @Inject constructor(
     fun getUserSettings(): UserSettings = userSettingsRepository.read()
 
     private fun getIndexerQueryResults(): List<IndexerQueryResult> {
-        val queryResults = _liveDataIndexerQueryResults.value
-            ?: emptyList()
+        val queryResults = _liveDataIndexerQueryResults.value ?: emptyList()
+
 
         val sortValue = checkNotNull(_liveDataSortQueryResults.value)
 

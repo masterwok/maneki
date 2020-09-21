@@ -41,7 +41,6 @@ val INDEXER_BLOCK_LIST = listOf(
     "xxxtorrents"
 )
 
-
 /**
  * The default user settings configuration.
  */
