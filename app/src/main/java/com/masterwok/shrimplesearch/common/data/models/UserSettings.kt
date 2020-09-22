@@ -19,6 +19,6 @@ fun UserSettings.Companion.from(
     theme = persistedUserSettings.theme,
     isScrollToTopNotificationsEnabled = persistedUserSettings.isScrollToTopNotificationsEnabled
         ?: defaultUserSettings.isScrollToTopNotificationsEnabled,
-    isExitDialogEnabled = persistedUserSettings.isExistDialogEnabled
+    isExitDialogEnabled = persistedUserSettings.isExitDialogEnabled
         ?: defaultUserSettings.isExitDialogEnabled
 )
