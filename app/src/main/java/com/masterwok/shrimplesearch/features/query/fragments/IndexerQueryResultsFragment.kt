@@ -209,7 +209,7 @@ class IndexerQueryResultsFragment : Fragment() {
                 OrderBy.getByValue(sortModel.selectedOrderPill.id)
             )
 
-            recyclerView.scrollToPosition(0)
+            recyclerView?.scrollToPosition(0)
         }
     }
 
@@ -221,7 +221,7 @@ class IndexerQueryResultsFragment : Fragment() {
             backgroundColor = context.getColorByAttribute(R.attr.color_snack_background),
             textColor = context.getColorByAttribute(R.attr.color_snack_text)
         ) {
-            recyclerView.scrollToPosition(0)
+            recyclerView?.scrollToPosition(0)
         }.apply {
             addCallback(object : Snackbar.Callback() {
                 override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
