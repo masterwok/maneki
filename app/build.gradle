@@ -15,8 +15,8 @@ android {
         applicationId "com.masterwok.shrimplesearch"
         minSdkVersion project.minSdkVersion
         targetSdkVersion project.targetSdkVersion
-        versionCode 500051
-        versionName "2.1.4"
+        versionCode 500052
+        versionName "2.1.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -25,14 +25,13 @@ android {
         debug {
             minifyEnabled false
             debuggable true
-            resValue("bool", "is_firebase_analytics_enabled", "false")
+            resValue("bool", "is_firebase_analytics_enabled", "true")
         }
         release {
             minifyEnabled true
             debuggable false
-            resValue("bool", "is_firebase_analytics_enabled", "true")
+            resValue("bool", "is_firebase_analytics_enabled", "false")
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            resValue("bool", "is_firebase_analytics_enabled", "true")
         }
     }
 
