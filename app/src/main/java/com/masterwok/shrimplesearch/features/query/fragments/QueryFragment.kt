@@ -59,7 +59,12 @@ class QueryFragment : Fragment() {
     private val queryResultsAdapter = QueryResultsAdapter {
         viewModel.setSelectedIndexer(it.indexer)
 
-        findNavController().navigate(R.id.action_queryFragment_to_indexerQueryResultsFragment)
+        findNavController().apply {
+            // Guard against navigation crash: https://stackoverflow.com/a/53737537/563509
+            if (this.currentDestination?.id == R.id.queryFragment) {
+                navigate(R.id.action_queryFragment_to_indexerQueryResultsFragment)
+            }
+        }
     }
 
     private val userSettings: UserSettings get() = viewModel.getUserSettings()
