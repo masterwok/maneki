@@ -10,10 +10,14 @@ import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.contracts.Configurable
 import com.masterwok.shrimplesearch.common.extensions.getCurrentLocale
 import com.masterwok.shrimplesearch.common.extensions.getLocaleNumberFormat
+import com.masterwok.shrimplesearch.common.extensions.onClicked
 import com.masterwok.shrimplesearch.common.extensions.toHumanReadableByteCount
-import com.masterwok.xamarininterface.models.IndexerQueryResult
 import com.masterwok.xamarininterface.models.QueryResultItem
 import kotlinx.android.synthetic.main.view_indexer_query_result_item.view.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import java.text.DateFormat
 
 class IndexerQueryResultsAdapter(
@@ -53,6 +57,10 @@ class IndexerQueryResultsAdapter(
         itemView: View, private val onQueryResultItemClicked: (QueryResultItem) -> Unit
     ) : RecyclerView.ViewHolder(itemView), Configurable<QueryResultItem> {
 
+        private val scope = CoroutineScope(Job() + Dispatchers.Main)
+
+        @FlowPreview
+        @ExperimentalCoroutinesApi
         override fun configure(model: QueryResultItem) {
             val context = itemView.context
             val statInfo = model.statInfo
@@ -99,6 +107,16 @@ class IndexerQueryResultsAdapter(
             itemView.imageViewMagnet.isVisible = model.linkInfo.magnetUri != null
 
             itemView.setOnClickListener { onQueryResultItemClicked(model) }
+
+            itemView
+                .onClicked()
+                .debounce(BUTTON_DEBOUNCE_MS)
+                .onEach { onQueryResultItemClicked(model) }
+                .launchIn(scope)
+        }
+
+        private companion object {
+            private const val BUTTON_DEBOUNCE_MS = 250L
         }
     }
 }

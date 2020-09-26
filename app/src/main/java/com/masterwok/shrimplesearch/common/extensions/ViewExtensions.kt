@@ -2,6 +2,9 @@ package com.masterwok.shrimplesearch.common.extensions
 
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.callbackFlow
 
 internal fun View.showSnackbar(
     message: CharSequence,
@@ -21,4 +24,10 @@ internal fun View.showSnackbar(
     }
 
     show()
+}
+
+@ExperimentalCoroutinesApi
+fun View.onClicked() = callbackFlow {
+    setOnClickListener { offer(Unit) }
+    awaitClose { setOnClickListener(null) }
 }
