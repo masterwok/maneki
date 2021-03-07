@@ -24,6 +24,7 @@ val INDEXER_BLOCK_LIST = listOf(
     "gay-torrentsorg",
     "gaytorrentru",
     "leporno",
+    "lepornoinfo",
     "mypornclub",
     "mypornclub",
     "pornbay",

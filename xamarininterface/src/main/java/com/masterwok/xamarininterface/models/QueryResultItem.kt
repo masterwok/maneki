@@ -14,8 +14,8 @@ data class QueryResultItem(
         val magnetUri: Uri?,
         val infoHash: String?,
         val link: Uri?,
-        val comments: Uri?,
-        val bannerUri: Uri?
+        val details: Uri?,
+        val posterUri: Uri?
     )
 
     data class SocialInfo(
