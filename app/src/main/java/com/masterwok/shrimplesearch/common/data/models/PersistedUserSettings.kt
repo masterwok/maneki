@@ -7,5 +7,6 @@ import kotlinx.serialization.Serializable
 data class PersistedUserSettings(
     val theme: Theme,
     val isScrollToTopNotificationsEnabled: Boolean? = false,
+    val isOnlyMagnetQueryResultItemsEnabled: Boolean? = false,
     val isExitDialogEnabled: Boolean? = false
 )

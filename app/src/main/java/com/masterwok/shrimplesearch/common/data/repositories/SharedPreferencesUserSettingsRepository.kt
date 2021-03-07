@@ -3,14 +3,12 @@ package com.masterwok.shrimplesearch.common.data.repositories
 import android.content.Context
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.constants.Theme
-import com.masterwok.shrimplesearch.common.data.models.PersistedUserSettings
 import com.masterwok.shrimplesearch.common.data.models.UserSettings
 import com.masterwok.shrimplesearch.common.data.models.from
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.UserSettingsRepository
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.nonstrict
 import javax.inject.Inject
 import javax.inject.Named
 

@@ -58,6 +58,7 @@ class SettingsFragment : Fragment() {
         configureThemeSelection(userSettings.theme)
 
         switchScrollToTop.isChecked = checkNotNull(userSettings.isScrollToTopNotificationsEnabled)
+        switchMagnet.isChecked = checkNotNull(userSettings.isOnlyMagnetQueryResultItemsEnabled)
     }
 
     private fun configureThemeSelection(theme: Theme): Unit = when (theme) {
@@ -75,6 +76,13 @@ class SettingsFragment : Fragment() {
             viewModel.updateUserSettings(
                 viewModel.readUserSettings().copy(
                     isScrollToTopNotificationsEnabled = isChecked
+                )
+            )
+        }
+        switchMagnet.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.updateUserSettings(
+                viewModel.readUserSettings().copy(
+                    isOnlyMagnetQueryResultItemsEnabled = isChecked
                 )
             )
         }

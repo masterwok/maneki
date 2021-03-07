@@ -93,7 +93,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:orientation="vertical"
-        app:layout_constraintEnd_toStartOf="@+id/switchScrollToTop"
+        app:layout_constraintEnd_toStartOf="@+id/switchMagnet"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/linearLayout6">
 
