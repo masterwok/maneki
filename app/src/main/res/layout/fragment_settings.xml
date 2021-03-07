@@ -18,7 +18,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <RadioGroup
         android:id="@+id/radioGroupTheme"
         android:layout_width="match_parent"
@@ -75,7 +74,6 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-
     <Switch
         android:id="@+id/switchScrollToTop"
         android:layout_width="wrap_content"
@@ -86,5 +84,46 @@
         app:layout_constraintStart_toEndOf="@+id/linearLayout6"
         app:layout_constraintTop_toTopOf="@+id/linearLayout6"
         app:layout_goneMarginStart="16dp" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutMagnet"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/switchScrollToTop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout6">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/eina_03_semi_bold"
+            android:letterSpacing=".1"
+            android:text="@string/settings_header_only_show_magnets" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/eina_03_regular"
+            android:lineSpacingExtra="2dp"
+            android:text="@string/settings_description_header_only_show_magnets"
+            android:textColor="?color_secondary_description"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <Switch
+        android:id="@+id/switchMagnet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayoutMagnet"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/linearLayoutMagnet"
+        app:layout_constraintTop_toTopOf="@+id/linearLayoutMagnet"
+        app:layout_goneMarginStart="16dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
