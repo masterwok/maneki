@@ -1,6 +1,7 @@
 package com.masterwok.shrimplesearch.common.data.repositories
 
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettService
+import com.masterwok.shrimplesearch.common.data.repositories.contracts.UserSettingsRepository
 import com.masterwok.shrimplesearch.common.utils.notNull
 import com.masterwok.xamarininterface.enums.QueryState
 import com.masterwok.xamarininterface.contracts.IJackettHarness
@@ -14,12 +15,15 @@ import java.lang.ref.WeakReference
 
 class JackettServiceImpl constructor(
     private val jackettHarness: IJackettHarness,
+    private val userSettingsRepository: UserSettingsRepository,
     private val indexerBlockList: List<String>
 ) : JackettService {
 
     private val jackettHarnessListener: IJackettHarnessListener = JackettHarnessListener(this)
 
     private val listeners = mutableListOf<JackettService.Listener>()
+
+    private val userSettings get() = userSettingsRepository.read()
 
     init {
         jackettHarness.setListener(jackettHarnessListener)
@@ -33,6 +37,18 @@ class JackettServiceImpl constructor(
         get() = jackettHarness
             .queryResults
             .filterNot { indexerBlockList.contains(it.indexer.id) }
+            .map { indexerQueryResult ->
+                if (!userSettings.isOnlyMagnetQueryResultItemsEnabled) {
+                    indexerQueryResult
+                } else {
+                    indexerQueryResult.copy(
+                        items = indexerQueryResult
+                            .items
+                            .filterNot { it.linkInfo.magnetUri == null },
+                        linkCount = 0
+                    )
+                }
+            }
 
     @ExperimentalCoroutinesApi
     override suspend fun initialize() = withContext(Dispatchers.IO) {

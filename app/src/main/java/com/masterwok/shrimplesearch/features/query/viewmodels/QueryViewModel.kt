@@ -114,7 +114,6 @@ class QueryViewModel @Inject constructor(
     private fun getIndexerQueryResults(): List<IndexerQueryResult> {
         val queryResults = _liveDataIndexerQueryResults.value ?: emptyList()
 
-
         val sortValue = checkNotNull(_liveDataSortQueryResults.value)
 
         return sortIndexers(
