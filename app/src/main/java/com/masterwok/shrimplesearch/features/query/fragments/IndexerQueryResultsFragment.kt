@@ -6,10 +6,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.core.app.ShareCompat
-import androidx.fragment.app.Fragment
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,8 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.play.core.ktx.requestReview
+import com.google.android.play.core.review.ReviewManager
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
 import com.masterwok.shrimplesearch.common.data.models.UserSettings
@@ -34,12 +37,10 @@ import com.masterwok.shrimplesearch.features.query.adapters.MaterialDialogIconLi
 import com.masterwok.shrimplesearch.features.query.components.SortComponent
 import com.masterwok.shrimplesearch.features.query.constants.IndexerQueryResultSortBy
 import com.masterwok.shrimplesearch.features.query.constants.OrderBy
-import com.masterwok.xamarininterface.enums.QueryState
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
+import com.masterwok.xamarininterface.enums.QueryState
 import com.masterwok.xamarininterface.models.QueryResultItem
 import kotlinx.android.synthetic.main.fragment_indexer_query_results.*
-import kotlinx.android.synthetic.main.fragment_indexer_query_results.progressBar
-import kotlinx.android.synthetic.main.fragment_indexer_query_results.recyclerView
 import javax.inject.Inject
 
 
@@ -51,17 +52,30 @@ class IndexerQueryResultsFragment : Fragment() {
     @Inject
     lateinit var analyticService: AnalyticService
 
+    @Inject
+    lateinit var reviewManager: ReviewManager
+
     private lateinit var linearLayoutManager: LinearLayoutManager
 
     private val viewModel: QueryViewModel by viewModels(this::requireActivity) { viewModelFactory }
 
-    private val queryResultsAdapter = IndexerQueryResultsAdapter { queryResultItem ->
-        presentBottomSheet(queryResultItem)
-    }
+    private val queryResultsAdapter = IndexerQueryResultsAdapter(this::onQueryResultTapped)
 
     private val userSettings: UserSettings get() = viewModel.getUserSettings()
 
     private var snackbarNewResults: Snackbar? = null
+
+    private fun onQueryResultTapped(queryResultItem: QueryResultItem) {
+        lifecycleScope.launchWhenResumed {
+            with(reviewManager) {
+                val reviewInfo = requestReview()
+
+                reviewManager
+                    .launchReviewFlow(requireActivity(), reviewInfo)
+                    .addOnCompleteListener { presentBottomSheet(queryResultItem) }
+            }
+        }
+    }
 
     private fun openQueryResultItem(queryResultItem: QueryResultItem) = activity.notNull {
         val linkInfo = queryResultItem.linkInfo

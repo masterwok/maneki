@@ -1,6 +1,8 @@
 package com.masterwok.shrimplesearch.features.query.viewmodels
 
 import androidx.lifecycle.*
+import com.google.android.play.core.ktx.requestReview
+import com.google.android.play.core.review.ReviewManager
 import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
 import com.masterwok.shrimplesearch.common.data.models.UserSettings
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettService

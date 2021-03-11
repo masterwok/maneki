@@ -1,5 +1,8 @@
 package com.masterwok.shrimplesearch.di.modules
 
+import android.content.Context
+import com.google.android.play.core.review.ReviewManager
+import com.google.android.play.core.review.ReviewManagerFactory
 import com.masterwok.shrimplesearch.common.INDEXER_BLOCK_LIST
 import com.masterwok.shrimplesearch.common.data.repositories.JackettServiceImpl
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettService
@@ -44,4 +47,10 @@ class ServiceModule {
         INDEXER_BLOCK_LIST
     )
 
+    @Suppress("unused")
+    @Singleton
+    @Provides
+    fun provideReviewManager(
+        appContext: Context
+    ): ReviewManager = ReviewManagerFactory.create(appContext)
 }
