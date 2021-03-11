@@ -52,3 +52,8 @@ val DEFAULT_USER_SETTINGS = UserSettings(
     isExitDialogEnabled = true
 )
 
+/**
+ * The amount of times a user must tap a result item before being presented with an in-app review
+ * workflow.
+ */
+val IN_APP_REVIEW_RESULT_ITEM_TAP_COUNT = 5

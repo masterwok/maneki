@@ -21,11 +21,11 @@ class SharedPreferencesConfigurationRepository @Inject constructor(
 
         sharedPreferences
             .edit()
-            .putInt(NAME_RESULT_ITEM_TAP_COUNT, resultItemCount + 1)
+            .putLong(NAME_RESULT_ITEM_TAP_COUNT, resultItemCount + 1L)
             .apply()
     }
 
-    override suspend fun getResultItemTapCount(): Int = sharedPreferences.getInt(
+    override suspend fun getResultItemTapCount(): Long = sharedPreferences.getLong(
         NAME_RESULT_ITEM_TAP_COUNT,
         0
     )

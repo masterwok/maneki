@@ -9,6 +9,7 @@ import com.masterwok.shrimplesearch.common.data.repositories.contracts.Configura
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettService
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.UserSettingsRepository
 import com.masterwok.shrimplesearch.common.data.services.contracts.AnalyticService
+import com.masterwok.shrimplesearch.di.modules.RepositoryModule
 import com.masterwok.shrimplesearch.features.query.constants.IndexerQueryResultSortBy
 import com.masterwok.shrimplesearch.features.query.constants.OrderBy
 import com.masterwok.shrimplesearch.features.query.constants.QueryResultSortBy
@@ -19,13 +20,15 @@ import com.masterwok.xamarininterface.models.Query
 import com.masterwok.xamarininterface.models.QueryResultItem
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Named
 
 
 class QueryViewModel @Inject constructor(
     private val jackettService: JackettService,
     private val userSettingsRepository: UserSettingsRepository,
     private val analyticService: AnalyticService,
-    private val configurationRepository: ConfigurationRepository
+    private val configurationRepository: ConfigurationRepository,
+    @Named(RepositoryModule.NAMED_IN_APP_REVIEW_RESULT_ITEM_TAP_COUNT) private val inAppReviewResultItemTapCount: Int
 ) : ViewModel(), JackettService.Listener {
 
     private val _liveDataIndexerQueryResults = MutableLiveData(
@@ -63,7 +66,7 @@ class QueryViewModel @Inject constructor(
     suspend fun shouldAttemptToPresentInAppReview(): Boolean {
         val count = configurationRepository.getResultItemTapCount()
 
-        return if(count == 0) false else count % 5 == 0
+        return if (count == 0L) false else count % inAppReviewResultItemTapCount == 0L
     }
 
     suspend fun incrementResultItemTapCount() = configurationRepository.incrementResultTapCount()
