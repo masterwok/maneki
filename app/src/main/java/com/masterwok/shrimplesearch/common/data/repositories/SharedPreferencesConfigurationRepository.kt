@@ -2,12 +2,13 @@ package com.masterwok.shrimplesearch.common.data.repositories
 
 import android.content.Context
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.ConfigurationRepository
+import com.masterwok.shrimplesearch.di.modules.RepositoryModule
 import javax.inject.Inject
 import javax.inject.Named
 
 class SharedPreferencesConfigurationRepository @Inject constructor(
     appContext: Context,
-    @Named("shared_preferences_name") sharedPreferencesName: String
+    @Named(RepositoryModule.NAMED_SHARED_PREFERENCES_NAME) sharedPreferencesName: String
 ) : ConfigurationRepository {
 
     private val sharedPreferences = appContext.getSharedPreferences(

@@ -37,10 +37,15 @@ class RepositoryModule {
     }
 
     @Provides
-    @Named("shared_preferences_name")
+    @Named(NAMED_SHARED_PREFERENCES_NAME)
     fun provideSharedPreferencesName(): String = SHARED_PREFERENCES_NAME
 
     @Provides
-    @Named("default_user_settings")
+    @Named(NAMED_DEFAULT_USER_SETTINGS)
     fun provideDefaultUserSettings(): UserSettings = DEFAULT_USER_SETTINGS
+
+    companion object {
+        const val NAMED_SHARED_PREFERENCES_NAME = "shared_preferences_name"
+        const val NAMED_DEFAULT_USER_SETTINGS = "default_user_settings"
+    }
 }
