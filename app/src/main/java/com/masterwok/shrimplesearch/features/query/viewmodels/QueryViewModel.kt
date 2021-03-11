@@ -5,6 +5,7 @@ import com.google.android.play.core.ktx.requestReview
 import com.google.android.play.core.review.ReviewManager
 import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
 import com.masterwok.shrimplesearch.common.data.models.UserSettings
+import com.masterwok.shrimplesearch.common.data.repositories.contracts.ConfigurationRepository
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettService
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.UserSettingsRepository
 import com.masterwok.shrimplesearch.common.data.services.contracts.AnalyticService
@@ -23,7 +24,8 @@ import javax.inject.Inject
 class QueryViewModel @Inject constructor(
     private val jackettService: JackettService,
     private val userSettingsRepository: UserSettingsRepository,
-    private val analyticService: AnalyticService
+    private val analyticService: AnalyticService,
+    private val configurationRepository: ConfigurationRepository
 ) : ViewModel(), JackettService.Listener {
 
     private val _liveDataIndexerQueryResults = MutableLiveData(
@@ -57,6 +59,16 @@ class QueryViewModel @Inject constructor(
         addSource(_liveDataSortQueryResults) { value = getIndexerQueryResults() }
         addSource(_liveDataIndexerQueryResults) { value = getIndexerQueryResults() }
     }
+
+    suspend fun shouldAttemptToPresentInAppReview(): Boolean {
+        val count = configurationRepository.getResultItemTapCount()
+
+        val x = 1
+
+        return if(count == 0) false else count % 5 == 0
+    }
+
+    suspend fun incrementResultItemTapCount() = configurationRepository.incrementResultTapCount()
 
     init {
         jackettService.addListener(this)

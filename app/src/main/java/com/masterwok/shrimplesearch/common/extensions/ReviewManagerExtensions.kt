@@ -13,6 +13,5 @@ fun ReviewManager.attemptToPresentInAppReview(
     activity.lifecycleScope.launchWhenResumed {
         val reviewInfo = requestReview()
 
-        launchReviewFlow(activity, reviewInfo).addOnCompleteListener { onCompletionAction() }
     }
 }

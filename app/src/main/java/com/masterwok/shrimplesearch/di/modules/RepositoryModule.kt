@@ -3,7 +3,9 @@ package com.masterwok.shrimplesearch.di.modules
 import com.masterwok.shrimplesearch.common.DEFAULT_USER_SETTINGS
 import com.masterwok.shrimplesearch.common.SHARED_PREFERENCES_NAME
 import com.masterwok.shrimplesearch.common.data.models.UserSettings
+import com.masterwok.shrimplesearch.common.data.repositories.SharedPreferencesConfigurationRepository
 import com.masterwok.shrimplesearch.common.data.repositories.SharedPreferencesUserSettingsRepository
+import com.masterwok.shrimplesearch.common.data.repositories.contracts.ConfigurationRepository
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.UserSettingsRepository
 import dagger.Binds
 import dagger.Module
@@ -26,6 +28,12 @@ class RepositoryModule {
         abstract fun bindSharedPreferencesUserSettingsRepository(
             sharedPreferencesUserSettingsRepository: SharedPreferencesUserSettingsRepository
         ): UserSettingsRepository
+
+        @Singleton
+        @Binds
+        abstract fun bindConfigurationRepository(
+            sharedPreferencesUserConfigurationRepository: SharedPreferencesConfigurationRepository
+        ): ConfigurationRepository
     }
 
     @Provides

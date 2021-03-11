@@ -10,6 +10,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,8 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.play.core.ktx.requestReview
+import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
@@ -54,15 +57,24 @@ class IndexerQueryResultsFragment : Fragment() {
     @Inject
     lateinit var reviewManager: ReviewManager
 
-    private lateinit var linearLayoutManager: LinearLayoutManager
-
     private val viewModel: QueryViewModel by viewModels(this::requireActivity) { viewModelFactory }
 
     private val queryResultsAdapter = IndexerQueryResultsAdapter { presentBottomSheet(it) }
 
     private val userSettings: UserSettings get() = viewModel.getUserSettings()
 
+    private lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var reviewInfo: ReviewInfo
+
     private var snackbarNewResults: Snackbar? = null
+
+    init {
+        lifecycleScope.launchWhenResumed {
+            reviewInfo = reviewManager.requestReview()
+
+            analyticService.logScreen(IndexerQueryResultsFragment::class.java)
+        }
+    }
 
     private fun openQueryResultItem(queryResultItem: QueryResultItem) = activity.notNull {
         val linkInfo = queryResultItem.linkInfo
@@ -116,13 +128,6 @@ class IndexerQueryResultsFragment : Fragment() {
         subscribeToLiveData()
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        analyticService.logScreen(IndexerQueryResultsFragment::class.java)
-    }
-
-
     private fun subscribeToViewComponents() {
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -158,12 +163,13 @@ class IndexerQueryResultsFragment : Fragment() {
             adapter = queryResultsAdapter
         }
 
-        viewModel.liveDataQueryState.observe(viewLifecycleOwner, ::onQueryStateChange)
+        viewModel.liveDataQueryState.observe(owner = viewLifecycleOwner, ::onQueryStateChange)
     }
 
     private fun subscribeToLiveData() {
         viewModel.liveDataSelectedIndexerQueryResultItem.observe(
-            viewLifecycleOwner, ::configure
+            owner = viewLifecycleOwner,
+            ::configure
         )
     }
 
@@ -244,7 +250,6 @@ class IndexerQueryResultsFragment : Fragment() {
             .setType("text/plain")
             .setText(uri.toString())
             .startChooser()
-
     }
 
     private fun copyQueryResultItem(queryResultItem: QueryResultItem) =
@@ -256,7 +261,19 @@ class IndexerQueryResultsFragment : Fragment() {
         }
 
     private fun attemptToPresentInAppReview(deferredAction: () -> Unit) {
-        reviewManager.attemptToPresentInAppReview(requireActivity(), deferredAction)
+        val isReviewInfoInitialized = this::reviewInfo.isInitialized
+
+        lifecycleScope.launchWhenResumed {
+            if (isReviewInfoInitialized && viewModel.shouldAttemptToPresentInAppReview()) {
+                reviewManager
+                    .launchReviewFlow(requireActivity(), reviewInfo)
+                    .addOnCompleteListener { deferredAction() }
+            } else {
+                deferredAction()
+            }
+
+            viewModel.incrementResultItemTapCount()
+        }
     }
 
     private fun presentBottomSheet(queryResultItem: QueryResultItem) = context.notNull { context ->
@@ -271,31 +288,28 @@ class IndexerQueryResultsFragment : Fragment() {
                         R.drawable.ic_baseline_share_24,
                         if (hasMagnetUri) R.string.share_magnet else R.string.share_link
                     ) {
-                        attemptToPresentInAppReview {
-                            analyticService.logEvent(AnalyticEvent.ShareResult)
-                            shareQueryResultItem(queryResultItem)
-                            dismiss()
-                        }
+                        attemptToPresentInAppReview { shareQueryResultItem(queryResultItem) }
+                        dismiss()
+
+                        analyticService.logEvent(AnalyticEvent.ShareResult)
                     },
                     MaterialDialogIconListItemAdapter.Item(
                         R.drawable.ic_content_copy_black_24dp,
                         if (hasMagnetUri) R.string.copy_magnet else R.string.copy_torrent
                     ) {
-                        attemptToPresentInAppReview {
-                            analyticService.logEvent(AnalyticEvent.CopyResult)
-                            copyQueryResultItem(queryResultItem)
-                            dismiss()
-                        }
+                        attemptToPresentInAppReview { copyQueryResultItem(queryResultItem) }
+                        dismiss()
+
+                        analyticService.logEvent(AnalyticEvent.CopyResult)
                     },
                     MaterialDialogIconListItemAdapter.Item(
                         R.drawable.ic_baseline_open_in_new_24,
                         if (hasMagnetUri) R.string.open_magnet else R.string.open_link
                     ) {
-                        attemptToPresentInAppReview {
-                            analyticService.logEvent(AnalyticEvent.OpenResult)
-                            openQueryResultItem(queryResultItem)
-                            dismiss()
-                        }
+                        dismiss()
+                        attemptToPresentInAppReview { openQueryResultItem(queryResultItem) }
+
+                        analyticService.logEvent(AnalyticEvent.OpenResult)
                     }
                 )
 
