@@ -63,8 +63,6 @@ class QueryViewModel @Inject constructor(
     suspend fun shouldAttemptToPresentInAppReview(): Boolean {
         val count = configurationRepository.getResultItemTapCount()
 
-        val x = 1
-
         return if(count == 0) false else count % 5 == 0
     }
 
