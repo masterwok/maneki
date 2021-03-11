@@ -10,7 +10,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,12 +19,12 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.play.core.ktx.requestReview
 import com.google.android.play.core.review.ReviewManager
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
 import com.masterwok.shrimplesearch.common.data.models.UserSettings
 import com.masterwok.shrimplesearch.common.data.services.contracts.AnalyticService
+import com.masterwok.shrimplesearch.common.extensions.attemptToPresentInAppReview
 import com.masterwok.shrimplesearch.common.extensions.copyToClipboard
 import com.masterwok.shrimplesearch.common.extensions.getColorByAttribute
 import com.masterwok.shrimplesearch.common.extensions.showSnackbar
@@ -59,23 +58,11 @@ class IndexerQueryResultsFragment : Fragment() {
 
     private val viewModel: QueryViewModel by viewModels(this::requireActivity) { viewModelFactory }
 
-    private val queryResultsAdapter = IndexerQueryResultsAdapter(this::onQueryResultTapped)
+    private val queryResultsAdapter = IndexerQueryResultsAdapter { presentBottomSheet(it) }
 
     private val userSettings: UserSettings get() = viewModel.getUserSettings()
 
     private var snackbarNewResults: Snackbar? = null
-
-    private fun onQueryResultTapped(queryResultItem: QueryResultItem) {
-        lifecycleScope.launchWhenResumed {
-            with(reviewManager) {
-                val reviewInfo = requestReview()
-
-                reviewManager
-                    .launchReviewFlow(requireActivity(), reviewInfo)
-                    .addOnCompleteListener { presentBottomSheet(queryResultItem) }
-            }
-        }
-    }
 
     private fun openQueryResultItem(queryResultItem: QueryResultItem) = activity.notNull {
         val linkInfo = queryResultItem.linkInfo
@@ -268,6 +255,10 @@ class IndexerQueryResultsFragment : Fragment() {
             context.copyToClipboard(CLIPBOARD_LABEL, uri.toString())
         }
 
+    private fun attemptToPresentInAppReview(deferredAction: () -> Unit) {
+        reviewManager.attemptToPresentInAppReview(requireActivity(), deferredAction)
+    }
+
     private fun presentBottomSheet(queryResultItem: QueryResultItem) = context.notNull { context ->
         val hasMagnetUri = queryResultItem
             .linkInfo
@@ -280,25 +271,31 @@ class IndexerQueryResultsFragment : Fragment() {
                         R.drawable.ic_baseline_share_24,
                         if (hasMagnetUri) R.string.share_magnet else R.string.share_link
                     ) {
-                        analyticService.logEvent(AnalyticEvent.ShareResult)
-                        shareQueryResultItem(queryResultItem)
-                        dismiss()
+                        attemptToPresentInAppReview {
+                            analyticService.logEvent(AnalyticEvent.ShareResult)
+                            shareQueryResultItem(queryResultItem)
+                            dismiss()
+                        }
                     },
                     MaterialDialogIconListItemAdapter.Item(
                         R.drawable.ic_content_copy_black_24dp,
                         if (hasMagnetUri) R.string.copy_magnet else R.string.copy_torrent
                     ) {
-                        analyticService.logEvent(AnalyticEvent.CopyResult)
-                        copyQueryResultItem(queryResultItem)
-                        dismiss()
+                        attemptToPresentInAppReview {
+                            analyticService.logEvent(AnalyticEvent.CopyResult)
+                            copyQueryResultItem(queryResultItem)
+                            dismiss()
+                        }
                     },
                     MaterialDialogIconListItemAdapter.Item(
                         R.drawable.ic_baseline_open_in_new_24,
                         if (hasMagnetUri) R.string.open_magnet else R.string.open_link
                     ) {
-                        analyticService.logEvent(AnalyticEvent.OpenResult)
-                        openQueryResultItem(queryResultItem)
-                        dismiss()
+                        attemptToPresentInAppReview {
+                            analyticService.logEvent(AnalyticEvent.OpenResult)
+                            openQueryResultItem(queryResultItem)
+                            dismiss()
+                        }
                     }
                 )
 
