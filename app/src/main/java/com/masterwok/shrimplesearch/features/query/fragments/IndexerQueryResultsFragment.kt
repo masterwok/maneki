@@ -27,7 +27,6 @@ import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
 import com.masterwok.shrimplesearch.common.data.models.UserSettings
 import com.masterwok.shrimplesearch.common.data.services.contracts.AnalyticService
-import com.masterwok.shrimplesearch.common.extensions.attemptToPresentInAppReview
 import com.masterwok.shrimplesearch.common.extensions.copyToClipboard
 import com.masterwok.shrimplesearch.common.extensions.getColorByAttribute
 import com.masterwok.shrimplesearch.common.extensions.showSnackbar
