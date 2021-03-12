@@ -3,6 +3,7 @@ package com.masterwok.shrimplesearch.common.data.repositories
 import android.content.Context
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.ConfigurationRepository
 import com.masterwok.shrimplesearch.di.modules.RepositoryModule
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import javax.inject.Named
 

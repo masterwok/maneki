@@ -1,17 +1,24 @@
 package com.masterwok.shrimplesearch.common.data.repositories
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.constants.Theme
 import com.masterwok.shrimplesearch.common.data.models.UserSettings
 import com.masterwok.shrimplesearch.common.data.models.from
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.UserSettingsRepository
 import com.masterwok.shrimplesearch.di.modules.RepositoryModule
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.channels.sendBlocking
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 import javax.inject.Named
+import kotlin.system.measureTimeMillis
 
 class SharedPreferencesUserSettingsRepository @Inject constructor(
     appContext: Context,
@@ -23,6 +30,21 @@ class SharedPreferencesUserSettingsRepository @Inject constructor(
         sharedPreferencesName,
         Context.MODE_PRIVATE
     )
+
+    @ExperimentalCoroutinesApi
+    override fun getUserSettingsAsFlow() = callbackFlow {
+        send(read())
+
+        val callback = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            if (key == NAME_USER_SETTINGS) {
+                sendBlocking(read())
+            }
+        }
+
+        sharedPreferences.registerOnSharedPreferenceChangeListener(callback)
+
+        awaitClose { sharedPreferences.unregisterOnSharedPreferenceChangeListener(callback) }
+    }
 
     override fun read(): UserSettings {
         val serialized = sharedPreferences
