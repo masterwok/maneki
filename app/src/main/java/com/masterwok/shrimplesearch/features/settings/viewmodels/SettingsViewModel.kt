@@ -18,8 +18,6 @@ class SettingsViewModel @Inject constructor(
         .getUserSettingsAsFlow()
         .asLiveData(viewModelScope.coroutineContext)
 
-    fun readUserSettings(): UserSettings = userSettingsRepository.read()
-
     fun updateUserSettings(userSettings: UserSettings) = viewModelScope.launch {
         userSettingsRepository.update(userSettings)
     }
