@@ -19,11 +19,13 @@ class MainActivityViewModel @Inject constructor(
             .read()
             .isExitDialogEnabled
 
-    fun disableExitDialog() = userSettingsRepository.update(
-        userSettingsRepository
-            .read()
-            .copy(isExitDialogEnabled = false)
-    )
+    fun disableExitDialog() = viewModelScope.launch {
+        userSettingsRepository.update(
+            userSettingsRepository
+                .read()
+                .copy(isExitDialogEnabled = false)
+        )
+    }
 
     fun cancelQuery() = viewModelScope.launch {
         jackettService.cancelQuery()
