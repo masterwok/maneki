@@ -8,11 +8,13 @@ import com.masterwok.shrimplesearch.common.data.models.UserSettings
 import com.masterwok.shrimplesearch.common.data.models.from
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.UserSettingsRepository
 import com.masterwok.shrimplesearch.di.modules.RepositoryModule
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -61,7 +63,7 @@ class SharedPreferencesUserSettingsRepository @Inject constructor(
         }
     }
 
-    override fun update(userSettings: UserSettings) {
+    override suspend fun update(userSettings: UserSettings) = withContext(Dispatchers.IO) {
         sharedPreferences
             .edit()
             .putString(NAME_USER_SETTINGS, Json.encodeToString(userSettings))

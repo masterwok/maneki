@@ -8,7 +8,7 @@ interface UserSettingsRepository {
 
     fun read(): UserSettings
 
-    fun update(userSettings: UserSettings)
+    suspend fun update(userSettings: UserSettings)
 
     fun getThemeId(): Int
 
