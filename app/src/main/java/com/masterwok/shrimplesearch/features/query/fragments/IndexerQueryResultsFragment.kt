@@ -20,8 +20,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.play.core.ktx.requestReview
-import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
@@ -42,6 +40,7 @@ import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
 import com.masterwok.xamarininterface.enums.QueryState
 import com.masterwok.xamarininterface.models.QueryResultItem
 import kotlinx.android.synthetic.main.fragment_indexer_query_results.*
+import kotlinx.coroutines.Job
 import javax.inject.Inject
 
 
@@ -63,17 +62,8 @@ class IndexerQueryResultsFragment : Fragment() {
     private val userSettings: UserSettings get() = viewModel.getUserSettings()
 
     private lateinit var linearLayoutManager: LinearLayoutManager
-    private lateinit var reviewInfo: ReviewInfo
 
     private var snackbarNewResults: Snackbar? = null
-
-    init {
-        lifecycleScope.launchWhenResumed {
-            reviewInfo = reviewManager.requestReview()
-
-            analyticService.logScreen(IndexerQueryResultsFragment::class.java)
-        }
-    }
 
     private fun openQueryResultItem(queryResultItem: QueryResultItem) = activity.notNull {
         val linkInfo = queryResultItem.linkInfo
@@ -125,6 +115,12 @@ class IndexerQueryResultsFragment : Fragment() {
         initRecyclerView()
         subscribeToViewComponents()
         subscribeToLiveData()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        analyticService.logScreen(IndexerQueryResultsFragment::class.java)
     }
 
     private fun subscribeToViewComponents() {
@@ -259,20 +255,19 @@ class IndexerQueryResultsFragment : Fragment() {
             context.copyToClipboard(CLIPBOARD_LABEL, uri.toString())
         }
 
-    private fun attemptToPresentInAppReview(deferredAction: () -> Unit) {
-        val isReviewInfoInitialized = this::reviewInfo.isInitialized
+    private fun attemptToPresentInAppReview(
+        deferredAction: () -> Unit
+    ): Job = lifecycleScope.launchWhenResumed {
+        viewModel.incrementResultItemTapCount()
 
-        lifecycleScope.launchWhenResumed {
-            if (isReviewInfoInitialized && viewModel.shouldAttemptToPresentInAppReview()) {
-                reviewManager
-                    .launchReviewFlow(requireActivity(), reviewInfo)
-                    .addOnCompleteListener { deferredAction() }
-            } else {
-                deferredAction()
-            }
-
-            viewModel.incrementResultItemTapCount()
+        if (viewModel.reviewInfo == null || !viewModel.shouldAttemptToPresentInAppReview()) {
+            deferredAction()
+            return@launchWhenResumed
         }
+
+        reviewManager
+            .launchReviewFlow(requireActivity(), checkNotNull(viewModel.reviewInfo))
+            .addOnCompleteListener { deferredAction() }
     }
 
     private fun presentBottomSheet(queryResultItem: QueryResultItem) = context.notNull { context ->

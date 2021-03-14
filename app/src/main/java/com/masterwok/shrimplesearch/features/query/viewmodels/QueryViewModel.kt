@@ -1,6 +1,9 @@
 package com.masterwok.shrimplesearch.features.query.viewmodels
 
 import androidx.lifecycle.*
+import com.google.android.play.core.ktx.requestReview
+import com.google.android.play.core.review.ReviewInfo
+import com.google.android.play.core.review.ReviewManager
 import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
 import com.masterwok.shrimplesearch.common.data.models.UserSettings
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.ConfigurationRepository
@@ -26,6 +29,7 @@ class QueryViewModel @Inject constructor(
     private val userSettingsRepository: UserSettingsRepository,
     private val analyticService: AnalyticService,
     private val configurationRepository: ConfigurationRepository,
+    private val reviewManager: ReviewManager,
     @Named(RepositoryModule.NAMED_IN_APP_REVIEW_RESULT_ITEM_TAP_COUNT) private val inAppReviewResultItemTapCount: Int
 ) : ViewModel(), JackettService.Listener {
 
@@ -61,6 +65,24 @@ class QueryViewModel @Inject constructor(
         addSource(_liveDataIndexerQueryResults) { value = getIndexerQueryResults() }
     }
 
+    var reviewInfo: ReviewInfo? = null
+        private set
+
+    init {
+        jackettService.addListener(this)
+
+        viewModelScope.launch {
+            reviewInfo = requestReviewInfo()
+        }
+    }
+
+    private suspend fun requestReviewInfo(): ReviewInfo? = try {
+        reviewManager.requestReview()
+    } catch (exception: Exception) {
+        analyticService.logException(exception, "Failed to request review information.")
+        null
+    }
+
     suspend fun shouldAttemptToPresentInAppReview(): Boolean {
         val count = configurationRepository.getResultItemTapCount()
 
@@ -68,10 +90,6 @@ class QueryViewModel @Inject constructor(
     }
 
     suspend fun incrementResultItemTapCount() = configurationRepository.incrementResultTapCount()
-
-    init {
-        jackettService.addListener(this)
-    }
 
     override fun onCleared() {
         jackettService.removeListener(this@QueryViewModel)
