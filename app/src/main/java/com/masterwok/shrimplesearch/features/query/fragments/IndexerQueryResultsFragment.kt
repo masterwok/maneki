@@ -282,28 +282,31 @@ class IndexerQueryResultsFragment : Fragment() {
                         R.drawable.ic_baseline_share_24,
                         if (hasMagnetUri) R.string.share_magnet else R.string.share_link
                     ) {
-                        attemptToPresentInAppReview { shareQueryResultItem(queryResultItem) }
                         dismiss()
 
                         analyticService.logEvent(AnalyticEvent.ShareResult)
+
+                        attemptToPresentInAppReview { shareQueryResultItem(queryResultItem) }
                     },
                     MaterialDialogIconListItemAdapter.Item(
                         R.drawable.ic_content_copy_black_24dp,
                         if (hasMagnetUri) R.string.copy_magnet else R.string.copy_torrent
                     ) {
-                        attemptToPresentInAppReview { copyQueryResultItem(queryResultItem) }
                         dismiss()
 
                         analyticService.logEvent(AnalyticEvent.CopyResult)
+
+                        attemptToPresentInAppReview { copyQueryResultItem(queryResultItem) }
                     },
                     MaterialDialogIconListItemAdapter.Item(
                         R.drawable.ic_baseline_open_in_new_24,
                         if (hasMagnetUri) R.string.open_magnet else R.string.open_link
                     ) {
                         dismiss()
-                        attemptToPresentInAppReview { openQueryResultItem(queryResultItem) }
 
                         analyticService.logEvent(AnalyticEvent.OpenResult)
+
+                        attemptToPresentInAppReview { openQueryResultItem(queryResultItem) }
                     }
                 )
 
