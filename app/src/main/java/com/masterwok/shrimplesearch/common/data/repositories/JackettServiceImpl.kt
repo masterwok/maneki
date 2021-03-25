@@ -2,16 +2,14 @@ package com.masterwok.shrimplesearch.common.data.repositories
 
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettService
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.UserSettingsRepository
-import com.masterwok.shrimplesearch.common.utils.notNull
-import com.masterwok.xamarininterface.enums.QueryState
 import com.masterwok.xamarininterface.contracts.IJackettHarness
 import com.masterwok.xamarininterface.contracts.IJackettHarnessListener
+import com.masterwok.xamarininterface.enums.QueryState
 import com.masterwok.xamarininterface.models.IndexerQueryResult
 import com.masterwok.xamarininterface.models.Query
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.withContext
-import java.lang.ref.WeakReference
 
 class JackettServiceImpl constructor(
     private val jackettHarness: IJackettHarness,
@@ -19,7 +17,7 @@ class JackettServiceImpl constructor(
     private val indexerBlockList: List<String>
 ) : JackettService {
 
-    private val jackettHarnessListener: IJackettHarnessListener = JackettHarnessListener(this)
+    private val jackettHarnessListener: IJackettHarnessListener = JackettHarnessListener()
 
     private val listeners = mutableListOf<JackettService.Listener>()
 
@@ -78,29 +76,25 @@ class JackettServiceImpl constructor(
         listeners.remove(listener)
     }
 
-    private class JackettHarnessListener(jackettService: JackettServiceImpl) :
-        IJackettHarnessListener {
+    private inner class JackettHarnessListener : IJackettHarnessListener {
 
-        private val weakJackettService = WeakReference(jackettService)
-
-        override fun onIndexersInitialized() = weakJackettService.get().notNull { jackettService ->
-            jackettService.listeners.forEach { it.onIndexersInitialized() }
+        override fun onIndexersInitialized() = listeners.forEach {
+            it.onIndexersInitialized()
         }
 
-        override fun onIndexerInitialized() = weakJackettService.get().notNull { jackettService ->
-            jackettService.listeners.forEach { it.onIndexerInitialized() }
+        override fun onIndexerInitialized() = listeners.forEach {
+            it.onIndexerInitialized()
         }
 
-        override fun onResultsUpdated() = weakJackettService.get().notNull { jackettService ->
-            if (jackettService.queryState != QueryState.Aborted) {
-                jackettService.listeners.forEach { it.onResultsUpdated() }
+        override fun onResultsUpdated() {
+            if (queryState != QueryState.Aborted) {
+                listeners.forEach { it.onResultsUpdated() }
             }
         }
 
-        override fun onQueryStateChange(queryState: QueryState) =
-            weakJackettService.get().notNull { jackettService ->
-                jackettService.listeners.forEach { it.onQueryStateChange(queryState) }
-            }
+        override fun onQueryStateChange(queryState: QueryState) = listeners.forEach {
+            it.onQueryStateChange(queryState)
+        }
     }
 
 }

@@ -1,11 +1,16 @@
 package com.masterwok.shrimplesearch.features.query.viewmodels
 
 import androidx.lifecycle.*
+import com.google.android.play.core.ktx.requestReview
+import com.google.android.play.core.review.ReviewInfo
+import com.google.android.play.core.review.ReviewManager
 import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
 import com.masterwok.shrimplesearch.common.data.models.UserSettings
+import com.masterwok.shrimplesearch.common.data.repositories.contracts.ConfigurationRepository
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.JackettService
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.UserSettingsRepository
 import com.masterwok.shrimplesearch.common.data.services.contracts.AnalyticService
+import com.masterwok.shrimplesearch.di.modules.RepositoryModule
 import com.masterwok.shrimplesearch.features.query.constants.IndexerQueryResultSortBy
 import com.masterwok.shrimplesearch.features.query.constants.OrderBy
 import com.masterwok.shrimplesearch.features.query.constants.QueryResultSortBy
@@ -16,12 +21,16 @@ import com.masterwok.xamarininterface.models.Query
 import com.masterwok.xamarininterface.models.QueryResultItem
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Named
 
 
 class QueryViewModel @Inject constructor(
     private val jackettService: JackettService,
     private val userSettingsRepository: UserSettingsRepository,
-    private val analyticService: AnalyticService
+    private val analyticService: AnalyticService,
+    private val configurationRepository: ConfigurationRepository,
+    private val reviewManager: ReviewManager,
+    @Named(RepositoryModule.NAMED_IN_APP_REVIEW_RESULT_ITEM_TAP_COUNT) private val inAppReviewResultItemTapCount: Int
 ) : ViewModel(), JackettService.Listener {
 
     private val _liveDataIndexerQueryResults = MutableLiveData(
@@ -56,9 +65,31 @@ class QueryViewModel @Inject constructor(
         addSource(_liveDataIndexerQueryResults) { value = getIndexerQueryResults() }
     }
 
+    var reviewInfo: ReviewInfo? = null
+        private set
+
     init {
         jackettService.addListener(this)
+
+        viewModelScope.launch {
+            reviewInfo = requestReviewInfo()
+        }
     }
+
+    private suspend fun requestReviewInfo(): ReviewInfo? = try {
+        reviewManager.requestReview()
+    } catch (exception: Exception) {
+        analyticService.logException(exception, "Failed to request review information.")
+        null
+    }
+
+    suspend fun shouldAttemptToPresentInAppReview(): Boolean {
+        val count = configurationRepository.getResultItemTapCount()
+
+        return if (count == 0L) false else count % inAppReviewResultItemTapCount == 0L
+    }
+
+    suspend fun incrementResultItemTapCount() = configurationRepository.incrementResultTapCount()
 
     override fun onCleared() {
         jackettService.removeListener(this@QueryViewModel)

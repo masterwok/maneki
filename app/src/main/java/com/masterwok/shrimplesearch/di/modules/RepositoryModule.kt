@@ -1,9 +1,12 @@
 package com.masterwok.shrimplesearch.di.modules
 
 import com.masterwok.shrimplesearch.common.DEFAULT_USER_SETTINGS
+import com.masterwok.shrimplesearch.common.IN_APP_REVIEW_RESULT_ITEM_TAP_COUNT
 import com.masterwok.shrimplesearch.common.SHARED_PREFERENCES_NAME
 import com.masterwok.shrimplesearch.common.data.models.UserSettings
+import com.masterwok.shrimplesearch.common.data.repositories.SharedPreferencesConfigurationRepository
 import com.masterwok.shrimplesearch.common.data.repositories.SharedPreferencesUserSettingsRepository
+import com.masterwok.shrimplesearch.common.data.repositories.contracts.ConfigurationRepository
 import com.masterwok.shrimplesearch.common.data.repositories.contracts.UserSettingsRepository
 import dagger.Binds
 import dagger.Module
@@ -26,13 +29,29 @@ class RepositoryModule {
         abstract fun bindSharedPreferencesUserSettingsRepository(
             sharedPreferencesUserSettingsRepository: SharedPreferencesUserSettingsRepository
         ): UserSettingsRepository
+
+        @Singleton
+        @Binds
+        abstract fun bindConfigurationRepository(
+            sharedPreferencesUserConfigurationRepository: SharedPreferencesConfigurationRepository
+        ): ConfigurationRepository
     }
 
     @Provides
-    @Named("shared_preferences_name")
+    @Named(NAMED_SHARED_PREFERENCES_NAME)
     fun provideSharedPreferencesName(): String = SHARED_PREFERENCES_NAME
 
     @Provides
-    @Named("default_user_settings")
+    @Named(NAMED_DEFAULT_USER_SETTINGS)
     fun provideDefaultUserSettings(): UserSettings = DEFAULT_USER_SETTINGS
+
+    @Provides
+    @Named(NAMED_IN_APP_REVIEW_RESULT_ITEM_TAP_COUNT)
+    fun provideInAppReviewResultItemTapCount(): Int = IN_APP_REVIEW_RESULT_ITEM_TAP_COUNT
+
+    companion object {
+        const val NAMED_SHARED_PREFERENCES_NAME = "shared_preferences_name"
+        const val NAMED_DEFAULT_USER_SETTINGS = "default_user_settings"
+        const val NAMED_IN_APP_REVIEW_RESULT_ITEM_TAP_COUNT = "in_app_review_result_item_tap_count"
+    }
 }

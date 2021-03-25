@@ -60,27 +60,6 @@ class AboutFragment : Fragment() {
 
     private fun subscribeToViewComponents() {
         buttonViewOnGitHub.setOnClickListener { openGitHubProjectUri() }
-        buttonViewReview.setOnClickListener { openReviewPlayStore() }
-        buttonViewShare.setOnClickListener { onShareButtonTapped() }
-    }
-
-    private fun onShareButtonTapped() = activity.notNull { activity ->
-        analyticService.logEvent(AnalyticEvent.ShareManeki)
-
-        val chooserTitle = activity.getString(R.string.share_chooser_title)
-        val shareText = activity.getString(
-            R.string.share_text,
-            activity.getPlayStoreUri().toString()
-        )
-
-        val intent = ShareCompat
-            .IntentBuilder
-            .from(activity)
-            .setType("text/plain")
-            .setText(shareText)
-            .intent
-
-        activity.startActivity(Intent.createChooser(intent, chooserTitle))
     }
 
     private fun openGitHubProjectUri() = context.notNull { context ->
@@ -93,15 +72,6 @@ class AboutFragment : Fragment() {
         } catch (exception: ActivityNotFoundException) {
             analyticService.logException(exception, "No activity found to handle open GitHub Uri")
             presentUnableToOpenGitHubDialog()
-        }
-    }
-
-    private fun openReviewPlayStore() = context.notNull { context ->
-        try {
-            context.startPlayStoreActivity()
-        } catch (exception: ActivityNotFoundException) {
-            analyticService.logException(exception, "No activity found to handle open GitHub Uri")
-            presentUnableToOpenPlayStoreDialog()
         }
     }
 

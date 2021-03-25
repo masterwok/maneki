@@ -6,10 +6,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.core.app.ShareCompat
-import androidx.fragment.app.Fragment
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.play.core.review.ReviewManager
 import com.masterwok.shrimplesearch.R
 import com.masterwok.shrimplesearch.common.constants.AnalyticEvent
 import com.masterwok.shrimplesearch.common.data.models.UserSettings
@@ -34,12 +36,11 @@ import com.masterwok.shrimplesearch.features.query.adapters.MaterialDialogIconLi
 import com.masterwok.shrimplesearch.features.query.components.SortComponent
 import com.masterwok.shrimplesearch.features.query.constants.IndexerQueryResultSortBy
 import com.masterwok.shrimplesearch.features.query.constants.OrderBy
-import com.masterwok.xamarininterface.enums.QueryState
 import com.masterwok.shrimplesearch.features.query.viewmodels.QueryViewModel
+import com.masterwok.xamarininterface.enums.QueryState
 import com.masterwok.xamarininterface.models.QueryResultItem
 import kotlinx.android.synthetic.main.fragment_indexer_query_results.*
-import kotlinx.android.synthetic.main.fragment_indexer_query_results.progressBar
-import kotlinx.android.synthetic.main.fragment_indexer_query_results.recyclerView
+import kotlinx.coroutines.Job
 import javax.inject.Inject
 
 
@@ -51,15 +52,16 @@ class IndexerQueryResultsFragment : Fragment() {
     @Inject
     lateinit var analyticService: AnalyticService
 
-    private lateinit var linearLayoutManager: LinearLayoutManager
+    @Inject
+    lateinit var reviewManager: ReviewManager
 
     private val viewModel: QueryViewModel by viewModels(this::requireActivity) { viewModelFactory }
 
-    private val queryResultsAdapter = IndexerQueryResultsAdapter { queryResultItem ->
-        presentBottomSheet(queryResultItem)
-    }
+    private val queryResultsAdapter = IndexerQueryResultsAdapter { presentBottomSheet(it) }
 
     private val userSettings: UserSettings get() = viewModel.getUserSettings()
+
+    private lateinit var linearLayoutManager: LinearLayoutManager
 
     private var snackbarNewResults: Snackbar? = null
 
@@ -121,7 +123,6 @@ class IndexerQueryResultsFragment : Fragment() {
         analyticService.logScreen(IndexerQueryResultsFragment::class.java)
     }
 
-
     private fun subscribeToViewComponents() {
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -157,12 +158,13 @@ class IndexerQueryResultsFragment : Fragment() {
             adapter = queryResultsAdapter
         }
 
-        viewModel.liveDataQueryState.observe(viewLifecycleOwner, ::onQueryStateChange)
+        viewModel.liveDataQueryState.observe(owner = viewLifecycleOwner, ::onQueryStateChange)
     }
 
     private fun subscribeToLiveData() {
         viewModel.liveDataSelectedIndexerQueryResultItem.observe(
-            viewLifecycleOwner, ::configure
+            owner = viewLifecycleOwner,
+            ::configure
         )
     }
 
@@ -243,7 +245,6 @@ class IndexerQueryResultsFragment : Fragment() {
             .setType("text/plain")
             .setText(uri.toString())
             .startChooser()
-
     }
 
     private fun copyQueryResultItem(queryResultItem: QueryResultItem) =
@@ -253,6 +254,21 @@ class IndexerQueryResultsFragment : Fragment() {
 
             context.copyToClipboard(CLIPBOARD_LABEL, uri.toString())
         }
+
+    private fun attemptToPresentInAppReview(
+        deferredAction: () -> Unit
+    ): Job = lifecycleScope.launchWhenResumed {
+        viewModel.incrementResultItemTapCount()
+
+        if (viewModel.reviewInfo == null || !viewModel.shouldAttemptToPresentInAppReview()) {
+            deferredAction()
+            return@launchWhenResumed
+        }
+
+        reviewManager
+            .launchReviewFlow(requireActivity(), checkNotNull(viewModel.reviewInfo))
+            .addOnCompleteListener { deferredAction() }
+    }
 
     private fun presentBottomSheet(queryResultItem: QueryResultItem) = context.notNull { context ->
         val hasMagnetUri = queryResultItem
@@ -266,25 +282,31 @@ class IndexerQueryResultsFragment : Fragment() {
                         R.drawable.ic_baseline_share_24,
                         if (hasMagnetUri) R.string.share_magnet else R.string.share_link
                     ) {
-                        analyticService.logEvent(AnalyticEvent.ShareResult)
-                        shareQueryResultItem(queryResultItem)
                         dismiss()
+
+                        analyticService.logEvent(AnalyticEvent.ShareResult)
+
+                        attemptToPresentInAppReview { shareQueryResultItem(queryResultItem) }
                     },
                     MaterialDialogIconListItemAdapter.Item(
                         R.drawable.ic_content_copy_black_24dp,
                         if (hasMagnetUri) R.string.copy_magnet else R.string.copy_torrent
                     ) {
-                        analyticService.logEvent(AnalyticEvent.CopyResult)
-                        copyQueryResultItem(queryResultItem)
                         dismiss()
+
+                        analyticService.logEvent(AnalyticEvent.CopyResult)
+
+                        attemptToPresentInAppReview { copyQueryResultItem(queryResultItem) }
                     },
                     MaterialDialogIconListItemAdapter.Item(
                         R.drawable.ic_baseline_open_in_new_24,
                         if (hasMagnetUri) R.string.open_magnet else R.string.open_link
                     ) {
-                        analyticService.logEvent(AnalyticEvent.OpenResult)
-                        openQueryResultItem(queryResultItem)
                         dismiss()
+
+                        analyticService.logEvent(AnalyticEvent.OpenResult)
+
+                        attemptToPresentInAppReview { openQueryResultItem(queryResultItem) }
                     }
                 )
 
