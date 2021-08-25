@@ -5,18 +5,18 @@ apply plugin: 'kotlin-android'
 
 String xamarinTargetFrameworkVersion = 'v10.0' // Corresponds to compileSdkVersion
 
-Path frameworksPath = new File('/Library/Frameworks').toPath()
-Path monoFrameworkPath = frameworksPath.resolve('Mono.framework/Versions/Current')
-Path msbuildPath = monoFrameworkPath.resolve('Commands/msbuild')
-Path xamarinAndroidPath = frameworksPath.resolve('Xamarin.Android.framework/Versions/Current')
-
+Path frameworksPath = new File('/usr/lib').toPath()
+Path msbuildPath = new File('/usr/bin/msbuild').toPath()
+Path xamarinAndroidPath = frameworksPath.resolve('xamarin.android')
+Path androidSdkPath = new File('/home/jt/Android/Sdk').toPath()
+Path javaSdkPath = new File('/opt/android-studio-beta/jre').toPath()
 Path projectPath = new File('../jackett-harness/Android').toPath()
 Path appPath = projectPath.resolve('App')
 Path objPath = appPath.resolve('obj')
 
-String envPath = [System.getenv('PATH'), monoFrameworkPath.resolve('Commands').toString()].join(':')
-Path monoAndroidPath = xamarinAndroidPath.resolve("lib/xbuild-frameworks/MonoAndroid/$xamarinTargetFrameworkVersion/mono.android.jar")
-Path javaRuntimePath = xamarinAndroidPath.resolve("lib/xbuild/Xamarin/Android/java_runtime.jar")
+String envPath = [System.getenv('PATH')].join(':')
+Path monoAndroidPath = xamarinAndroidPath.resolve("xbuild-frameworks/MonoAndroid/$xamarinTargetFrameworkVersion/mono.android.jar")
+Path javaRuntimePath = xamarinAndroidPath.resolve("xbuild/Xamarin/Android/java_runtime.jar")
 
 
 android {
@@ -110,18 +110,17 @@ task cleanXamarin(type: Exec) {
 task compileDebugXamarin(type: Exec) {
     workingDir appPath
     executable msbuildPath
-    args '/target:BuildApk', '/property:Configuration=Debug', '/property:Platform=AnyCPU'
+    args '/target:BuildApk', '/property:Configuration=Debug', '/property:Platform=AnyCPU', "/property:AndroidSdkDirectory=$androidSdkPath", "/property:javaSdkDirectory=$javaSdkPath"
     inputs.dir(projectPath)
     outputs.dirs(objPath.resolve('Debug'))
     environment('PATH', envPath)
-    // Workaround for /Library/Frameworks/Xamarin.Android.framework/Versions/Current/bin/generator: line 6: exec: mono: not found
     dependsOn copyDebugBindingsJar
 }
 
 task compileReleaseXamarin(type: Exec) {
     workingDir appPath
     executable msbuildPath
-    args '/target:BuildApk', '/property:Configuration=Release', '/property:Platform=AnyCPU'
+    args '/target:BuildApk', '/property:Configuration=Release', '/property:Platform=AnyCPU', "/property:AndroidSdkDirectory=$androidSdkPath", "/property:javaSdkDirectory=$javaSdkPath"
     inputs.dir(projectPath)
     outputs.dirs(objPath.resolve('Release'))
     environment('PATH', envPath)
