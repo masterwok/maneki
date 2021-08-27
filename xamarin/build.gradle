@@ -3,7 +3,7 @@ import java.nio.file.Path
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
-String xamarinTargetFrameworkVersion = 'v10.0' // Corresponds to compileSdkVersion
+String xamarinTargetFrameworkVersion = 'v11.0' // Corresponds to compileSdkVersion
 
 Path frameworksPath = new File('/usr/lib').toPath()
 Path msbuildPath = new File('/usr/bin/msbuild').toPath()
@@ -144,11 +144,11 @@ class UnpackXamarinApk extends Copy {
 
         from project.zipTree(file).matching {
             include([
-                    'assemblies/**'
-                    , 'lib/**'
-                    , 'typemap.**'
-                    , 'environment'
-                    , 'NOTICE'
+                    'assemblies/**',
+                    'lib/**',
+                    'typemap.**',
+                    'environment',
+                    'NOTICE'
             ])
         }
         into outputDir
